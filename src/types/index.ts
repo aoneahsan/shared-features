@@ -11,6 +11,7 @@ export * from './campaigns';
 
 // Firebase Config Types
 export type {
+  FirebaseConfig,
   ConsumerPlatform,
   SharedFeaturesConfig,
   SharedFeaturesState,

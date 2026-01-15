@@ -12,7 +12,6 @@ import { getFirestore, Firestore } from 'firebase/firestore';
 import { getAuth, Auth } from 'firebase/auth';
 import {
   SharedFeaturesConfig,
-  AONEAHSAN_FIREBASE_IDENTIFIERS,
   setState,
   getState,
   isInitialized,
@@ -72,20 +71,19 @@ async function getOrCreateDeviceId(): Promise<string> {
  * This creates a secondary Firebase app connection to aoneahsan.com's
  * Firebase project, separate from the consumer project's own Firebase.
  *
- * Consumer projects only need to provide ONE env var: the API key.
- * Other Firebase identifiers (domain, projectId, etc.) are built-in since
- * they're just public identifiers, not secrets.
- *
- * @param config - Configuration object (apiKey + projectId, projectName, platform)
+ * @param config - Configuration object with Firebase config and project info
  * @returns Initialized state object
  *
  * @example
  * ```typescript
  * import { initSharedFeatures } from 'shared-features';
  *
- * // Only API key needed from env - other identifiers are built-in
  * initSharedFeatures({
- *   apiKey: import.meta.env.VITE_SHARED_FEATURES_API_KEY,
+ *   firebaseConfig: {
+ *     apiKey: import.meta.env.VITE_SHARED_FEATURES_API_KEY,
+ *     authDomain: import.meta.env.VITE_SHARED_FEATURES_AUTH_DOMAIN,
+ *     projectId: import.meta.env.VITE_SHARED_FEATURES_PROJECT_ID,
+ *   },
  *   projectId: 'ztools',
  *   projectName: 'ZTools',
  *   platform: 'web',
@@ -95,9 +93,15 @@ async function getOrCreateDeviceId(): Promise<string> {
 export async function initSharedFeatures(
   config: SharedFeaturesConfig
 ): Promise<{ app: FirebaseApp; db: Firestore; auth: Auth }> {
-  // Return existing instance if already initialized
+  // Return existing instance if already initialized with same config
   if (isInitialized() && firebaseApp && firestoreDb && firebaseAuth) {
-    return { app: firebaseApp, db: firestoreDb, auth: firebaseAuth };
+    const currentConfig = getState().config;
+    if (
+      currentConfig &&
+      currentConfig.firebaseConfig.projectId === config.firebaseConfig.projectId
+    ) {
+      return { app: firebaseApp, db: firestoreDb, auth: firebaseAuth };
+    }
   }
 
   // Check if app already exists
@@ -109,12 +113,8 @@ export async function initSharedFeatures(
   if (existingApp) {
     firebaseApp = existingApp;
   } else {
-    // Combine API key from config with built-in identifiers
-    const firebaseConfig = {
-      apiKey: config.apiKey,
-      ...AONEAHSAN_FIREBASE_IDENTIFIERS,
-    };
-    firebaseApp = initializeApp(firebaseConfig, SHARED_FEATURES_APP_NAME);
+    // Initialize new Firebase app with config from environment variables
+    firebaseApp = initializeApp(config.firebaseConfig, SHARED_FEATURES_APP_NAME);
   }
 
   // Get Firestore and Auth instances

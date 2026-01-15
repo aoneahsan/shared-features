@@ -33,12 +33,16 @@ yarn add @capacitor/preferences
 
 ## Setup
 
-### 1. Add environment variable
-
-Only ONE env var needed:
+### 1. Add environment variables
 
 ```env
-VITE_SHARED_FEATURES_API_KEY=your-api-key-from-aoneahsan
+# aoneahsan.com Firebase config (get from admin)
+VITE_SHARED_FEATURES_API_KEY=
+VITE_SHARED_FEATURES_AUTH_DOMAIN=
+VITE_SHARED_FEATURES_PROJECT_ID=
+VITE_SHARED_FEATURES_STORAGE_BUCKET=
+VITE_SHARED_FEATURES_MESSAGING_SENDER_ID=
+VITE_SHARED_FEATURES_APP_ID=
 ```
 
 ### 2. Initialize the package
@@ -47,10 +51,16 @@ VITE_SHARED_FEATURES_API_KEY=your-api-key-from-aoneahsan
 // src/main.tsx or src/App.tsx
 import { initSharedFeatures } from 'shared-features';
 
-// Only API key from env - other Firebase identifiers are built-in
 if (import.meta.env.VITE_SHARED_FEATURES_API_KEY) {
   initSharedFeatures({
-    apiKey: import.meta.env.VITE_SHARED_FEATURES_API_KEY,
+    firebaseConfig: {
+      apiKey: import.meta.env.VITE_SHARED_FEATURES_API_KEY,
+      authDomain: import.meta.env.VITE_SHARED_FEATURES_AUTH_DOMAIN,
+      projectId: import.meta.env.VITE_SHARED_FEATURES_PROJECT_ID,
+      storageBucket: import.meta.env.VITE_SHARED_FEATURES_STORAGE_BUCKET,
+      messagingSenderId: import.meta.env.VITE_SHARED_FEATURES_MESSAGING_SENDER_ID,
+      appId: import.meta.env.VITE_SHARED_FEATURES_APP_ID,
+    },
     projectId: 'your-project-id',   // e.g., 'ztools', '2fa-studio'
     projectName: 'Your Project Name', // e.g., 'ZTools', '2FA Studio'
     platform: 'web', // or 'android', 'ios', 'extension'

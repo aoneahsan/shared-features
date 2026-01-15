@@ -7,17 +7,17 @@
  */
 
 /**
- * Non-secret Firebase identifiers for aoneahsan.com's Firebase project.
- * These are just domain names and IDs - NOT secrets.
- * The API key must be provided via environment variable.
+ * Firebase configuration object
  */
-export const AONEAHSAN_FIREBASE_IDENTIFIERS = {
-  authDomain: 'aiahsan.firebaseapp.com',
-  projectId: 'aiahsan',
-  storageBucket: 'aiahsan.firebasestorage.app',
-  messagingSenderId: '553709271878',
-  appId: '1:553709271878:web:fca28e9e529468399c8347',
-} as const;
+export interface FirebaseConfig {
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket?: string;
+  messagingSenderId?: string;
+  appId?: string;
+  measurementId?: string;
+}
 
 /**
  * Target platform for the consumer project
@@ -26,14 +26,13 @@ export type ConsumerPlatform = 'web' | 'android' | 'ios' | 'extension';
 
 /**
  * Configuration for initializing shared-features
- * Consumer projects only need to provide API key and their project info.
  */
 export interface SharedFeaturesConfig {
   /**
-   * Firebase API key for aoneahsan.com project.
-   * Get from aoneahsan.com Firebase Console or ask admin.
+   * Firebase configuration for aoneahsan.com's Firebase project.
+   * All values from environment variables.
    */
-  apiKey: string;
+  firebaseConfig: FirebaseConfig;
 
   /**
    * Unique identifier for this project (e.g., 'ztools', '2fa-studio')
