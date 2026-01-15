@@ -33,40 +33,30 @@ yarn add @capacitor/preferences
 
 ## Setup
 
-### 1. Initialize the package
+### 1. Add environment variable
 
-```typescript
-// src/config/shared-features.ts
-import { initSharedFeatures } from 'shared-features';
-
-export const sharedFeatures = initSharedFeatures({
-  firebaseConfig: {
-    apiKey: import.meta.env.VITE_ZAIONS_FIREBASE_API_KEY,
-    authDomain: 'aoneahsan-portfolio.firebaseapp.com',
-    projectId: 'aoneahsan-portfolio',
-  },
-  projectId: 'your-project-id',
-  projectName: 'Your Project Name',
-  platform: 'web', // or 'android', 'ios', 'extension'
-  debug: import.meta.env.DEV,
-});
-```
-
-### 2. Add environment variables
-
-Create or update your `.env` file:
+Only ONE env var needed:
 
 ```env
-# shared-features configuration
-VITE_ZAIONS_FIREBASE_API_KEY=your-api-key
+VITE_SHARED_FEATURES_API_KEY=your-api-key-from-aoneahsan
 ```
 
-### 3. Initialize on app startup
+### 2. Initialize the package
 
 ```typescript
 // src/main.tsx or src/App.tsx
 import { initSharedFeatures } from 'shared-features';
-import './config/shared-features'; // Import to initialize
+
+// Only API key from env - other Firebase identifiers are built-in
+if (import.meta.env.VITE_SHARED_FEATURES_API_KEY) {
+  initSharedFeatures({
+    apiKey: import.meta.env.VITE_SHARED_FEATURES_API_KEY,
+    projectId: 'your-project-id',   // e.g., 'ztools', '2fa-studio'
+    projectName: 'Your Project Name', // e.g., 'ZTools', '2FA Studio'
+    platform: 'web', // or 'android', 'ios', 'extension'
+    debug: import.meta.env.DEV, // optional
+  });
+}
 ```
 
 ## Usage

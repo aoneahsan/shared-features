@@ -12,6 +12,7 @@ import { getFirestore, Firestore } from 'firebase/firestore';
 import { getAuth, Auth } from 'firebase/auth';
 import {
   SharedFeaturesConfig,
+  AONEAHSAN_FIREBASE_IDENTIFIERS,
   setState,
   getState,
   isInitialized,
@@ -71,19 +72,20 @@ async function getOrCreateDeviceId(): Promise<string> {
  * This creates a secondary Firebase app connection to aoneahsan.com's
  * Firebase project, separate from the consumer project's own Firebase.
  *
- * @param config - Configuration object
+ * Consumer projects only need to provide ONE env var: the API key.
+ * Other Firebase identifiers (domain, projectId, etc.) are built-in since
+ * they're just public identifiers, not secrets.
+ *
+ * @param config - Configuration object (apiKey + projectId, projectName, platform)
  * @returns Initialized state object
  *
  * @example
  * ```typescript
  * import { initSharedFeatures } from 'shared-features';
  *
- * const sharedFeatures = initSharedFeatures({
- *   firebaseConfig: {
- *     apiKey: import.meta.env.VITE_ZAIONS_FIREBASE_API_KEY,
- *     authDomain: 'aoneahsan-portfolio.firebaseapp.com',
- *     projectId: 'aoneahsan-portfolio',
- *   },
+ * // Only API key needed from env - other identifiers are built-in
+ * initSharedFeatures({
+ *   apiKey: import.meta.env.VITE_SHARED_FEATURES_API_KEY,
  *   projectId: 'ztools',
  *   projectName: 'ZTools',
  *   platform: 'web',
@@ -93,15 +95,9 @@ async function getOrCreateDeviceId(): Promise<string> {
 export async function initSharedFeatures(
   config: SharedFeaturesConfig
 ): Promise<{ app: FirebaseApp; db: Firestore; auth: Auth }> {
-  // Return existing instance if already initialized with same config
+  // Return existing instance if already initialized
   if (isInitialized() && firebaseApp && firestoreDb && firebaseAuth) {
-    const currentConfig = getState().config;
-    if (
-      currentConfig &&
-      currentConfig.firebaseConfig.projectId === config.firebaseConfig.projectId
-    ) {
-      return { app: firebaseApp, db: firestoreDb, auth: firebaseAuth };
-    }
+    return { app: firebaseApp, db: firestoreDb, auth: firebaseAuth };
   }
 
   // Check if app already exists
@@ -113,11 +109,12 @@ export async function initSharedFeatures(
   if (existingApp) {
     firebaseApp = existingApp;
   } else {
-    // Initialize new Firebase app with unique name
-    firebaseApp = initializeApp(
-      config.firebaseConfig,
-      SHARED_FEATURES_APP_NAME
-    );
+    // Combine API key from config with built-in identifiers
+    const firebaseConfig = {
+      apiKey: config.apiKey,
+      ...AONEAHSAN_FIREBASE_IDENTIFIERS,
+    };
+    firebaseApp = initializeApp(firebaseConfig, SHARED_FEATURES_APP_NAME);
   }
 
   // Get Firestore and Auth instances
