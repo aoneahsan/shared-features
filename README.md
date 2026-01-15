@@ -43,6 +43,7 @@ VITE_SHARED_FEATURES_PROJECT_ID=
 VITE_SHARED_FEATURES_STORAGE_BUCKET=
 VITE_SHARED_FEATURES_MESSAGING_SENDER_ID=
 VITE_SHARED_FEATURES_APP_ID=
+VITE_SHARED_FEATURES_MEASUREMENT_ID=
 ```
 
 ### 2. Initialize the package
@@ -60,6 +61,7 @@ if (import.meta.env.VITE_SHARED_FEATURES_API_KEY) {
       storageBucket: import.meta.env.VITE_SHARED_FEATURES_STORAGE_BUCKET,
       messagingSenderId: import.meta.env.VITE_SHARED_FEATURES_MESSAGING_SENDER_ID,
       appId: import.meta.env.VITE_SHARED_FEATURES_APP_ID,
+      measurementId: import.meta.env.VITE_SHARED_FEATURES_MEASUREMENT_ID,
     },
     projectId: 'your-project-id',   // e.g., 'ztools', '2fa-studio'
     projectName: 'Your Project Name', // e.g., 'ZTools', '2FA Studio'
