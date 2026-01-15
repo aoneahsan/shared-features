@@ -1,0 +1,90 @@
+{
+  "name": "shared-features",
+  "version": "1.0.0",
+  "description": "Shared features for Zaions projects - centralized ads, contacts, feature requests, and more",
+  "author": "Ahsan Mahmood <aoneahsan@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aoneahsan/shared-features"
+  },
+  "keywords": [
+    "zaions",
+    "shared-features",
+    "ads",
+    "campaigns",
+    "react",
+    "firebase",
+    "cross-promotion"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.cjs"
+    },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.cjs"
+    },
+    "./services": {
+      "types": "./dist/services/index.d.ts",
+      "import": "./dist/services/index.js",
+      "require": "./dist/services/index.cjs"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "dev": "vite build --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "yarn build"
+  },
+  "peerDependencies": {
+    "@capacitor/preferences": ">=6.0.0",
+    "@radix-ui/react-icons": ">=1.0.0",
+    "@radix-ui/themes": ">=3.0.0",
+    "firebase": ">=10.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "zustand": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@capacitor/preferences": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@capacitor/preferences": "^8.0.0",
+    "@radix-ui/react-icons": "^1.3.2",
+    "@radix-ui/themes": "^3.2.1",
+    "@types/react": "^19.1.7",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "firebase": "^12.8.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0",
+    "vite-plugin-dts": "^4.5.4",
+    "zustand": "^5.0.10"
+  },
+  "dependencies": {}
+}
