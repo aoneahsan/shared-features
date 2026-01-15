@@ -196,3 +196,98 @@ export function useCampaigns(options: UseCampaignsOptions): UseCampaignsResult {
 export function useCampaign(options: Omit<UseCampaignsOptions, 'maxCampaigns'>) {
   return useCampaigns({ ...options, maxCampaigns: 1 });
 }
+
+// Storage keys for modal hooks
+const STORAGE_KEYS = {
+  oneTimeShown: 'shared_features_onetime_ad_shown',
+  appVersion: 'shared_features_app_version',
+} as const;
+
+/**
+ * Hook to manage one-time ad modal visibility
+ * Shows modal on first visit, then remembers user has seen it
+ *
+ * @example
+ * ```tsx
+ * const { shouldShow, markAsShown } = useOneTimeAdModal();
+ *
+ * if (shouldShow) {
+ *   return <AdModal onClose={markAsShown} />;
+ * }
+ * ```
+ */
+export function useOneTimeAdModal() {
+  const [hasShown, setHasShown] = useState(false);
+  const [shouldShow, setShouldShow] = useState(false);
+
+  useEffect(() => {
+    // Check if modal has been shown before
+    const hasSeenModal = localStorage.getItem(STORAGE_KEYS.oneTimeShown);
+    if (!hasSeenModal) {
+      setShouldShow(true);
+    }
+  }, []);
+
+  const markAsShown = useCallback(() => {
+    localStorage.setItem(STORAGE_KEYS.oneTimeShown, 'true');
+    setHasShown(true);
+    setShouldShow(false);
+  }, []);
+
+  return {
+    /** Whether the modal should be displayed */
+    shouldShow: shouldShow && !hasShown,
+    /** Mark the modal as shown (call when user dismisses) */
+    markAsShown,
+  };
+}
+
+/**
+ * Hook to manage update ad modal visibility
+ * Shows modal when app version changes
+ *
+ * @param currentVersion - Current app version (defaults to VITE_APP_VERSION env var or '1.0.0')
+ *
+ * @example
+ * ```tsx
+ * const { shouldShow, currentVersion, markAsShown } = useUpdateAdModal();
+ *
+ * if (shouldShow) {
+ *   return <AdUpdateModal version={currentVersion} onClose={markAsShown} />;
+ * }
+ * ```
+ */
+export function useUpdateAdModal(currentVersion?: string) {
+  const version = currentVersion || import.meta.env.VITE_APP_VERSION || '1.0.0';
+  const [shouldShow, setShouldShow] = useState(false);
+  const [previousVersion, setPreviousVersion] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedVersion = localStorage.getItem(STORAGE_KEYS.appVersion);
+
+    if (!storedVersion) {
+      // First time user - store version but don't show update modal
+      localStorage.setItem(STORAGE_KEYS.appVersion, version);
+    } else if (storedVersion !== version) {
+      // Version changed - show update modal
+      setShouldShow(true);
+      setPreviousVersion(storedVersion);
+    }
+  }, [version]);
+
+  const markAsShown = useCallback(() => {
+    localStorage.setItem(STORAGE_KEYS.appVersion, version);
+    setShouldShow(false);
+  }, [version]);
+
+  return {
+    /** Whether the modal should be displayed */
+    shouldShow,
+    /** Previous app version (before update) */
+    previousVersion,
+    /** Current app version */
+    currentVersion: version,
+    /** Mark the modal as shown (call when user dismisses) */
+    markAsShown,
+  };
+}

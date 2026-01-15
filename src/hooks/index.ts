@@ -6,5 +6,10 @@
  * @author Ahsan Mahmood <aoneahsan@gmail.com>
  */
 
-export { useCampaigns, useCampaign } from './useCampaigns';
+export {
+  useCampaigns,
+  useCampaign,
+  useOneTimeAdModal,
+  useUpdateAdModal,
+} from './useCampaigns';
 export type { UseCampaignsOptions, UseCampaignsResult } from './useCampaigns';

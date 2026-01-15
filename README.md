@@ -5,6 +5,9 @@ Centralized common features for Zaions projects. Manage ads, contacts, feature r
 ## Features
 
 - **Advertising Campaigns** - Cross-promote Zaions products across all projects
+  - 5 Ad Components (AdPanel, AdSlider, AdModal, AdUpdateModal, AdBanner)
+  - 10 Display Variants (5 small, 5 large)
+  - Frequency capping and analytics
 - **Products Catalog** - Centralized product information
 - **Contact Forms** - (Coming soon)
 - **Feature Requests** - (Coming soon)
@@ -23,7 +26,7 @@ yarn add shared-features
 This package requires the following peer dependencies:
 
 ```bash
-yarn add react react-dom firebase @radix-ui/themes zustand
+yarn add react react-dom firebase @radix-ui/themes zustand lucide-react
 # Optional for mobile:
 yarn add @capacitor/preferences
 ```
@@ -175,16 +178,90 @@ interface UseCampaignsResult {
 }
 ```
 
-### `AdPanel`
+### Components
 
-Component to display a single ad.
+#### `AdPanel`
+
+Simple single-ad panel for sidebars and footers.
 
 ```tsx
-<AdPanel
-  placement="sidebar_panel"
-  variant="small_panel_2"
-  className="my-ad"
+<AdPanel placement="sidebar_panel" variant="small_panel_2" className="my-ad" />
+```
+
+#### `AdSlider`
+
+Small promotional slider using small panel variants.
+
+```tsx
+<AdSlider placement="footer_slider" className="my-slider" />
+```
+
+#### `AdBanner`
+
+Permanent promotional banner with auto-rotation and progress indicators.
+
+```tsx
+<AdBanner
+  placement="home_banner"
+  rotationInterval={10000}
+  maxCampaigns={5}
 />
+```
+
+#### `AdModal`
+
+One-time promotional modal shown on first visit.
+
+```tsx
+import { AdModal, useOneTimeAdModal } from 'shared-features';
+
+function App() {
+  const { shouldShow, markAsShown } = useOneTimeAdModal();
+
+  return (
+    <>
+      {shouldShow && <AdModal onClose={markAsShown} />}
+      {/* Your app content */}
+    </>
+  );
+}
+```
+
+#### `AdUpdateModal`
+
+Carousel modal shown when app version changes.
+
+```tsx
+import { AdUpdateModal, useUpdateAdModal } from 'shared-features';
+
+function App() {
+  const { shouldShow, currentVersion, markAsShown } = useUpdateAdModal();
+
+  return (
+    <>
+      {shouldShow && <AdUpdateModal onClose={markAsShown} />}
+      {/* Your app content */}
+    </>
+  );
+}
+```
+
+### Modal Hooks
+
+#### `useOneTimeAdModal()`
+
+Manages one-time modal visibility (first visit).
+
+```typescript
+const { shouldShow, markAsShown } = useOneTimeAdModal();
+```
+
+#### `useUpdateAdModal(currentVersion?)`
+
+Manages update modal visibility (version change).
+
+```typescript
+const { shouldShow, previousVersion, currentVersion, markAsShown } = useUpdateAdModal();
 ```
 
 ## Frequency Capping

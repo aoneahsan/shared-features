@@ -380,47 +380,33 @@ export interface CampaignAnalytics {
 // ============================================================================
 
 /**
- * Props for small panel variants
+ * Props for small panel variant components
  */
 export interface SmallPanelProps {
-  campaign: Campaign;
-  product: Product;
-  variant: SmallPanelVariant;
-  onClose: () => void;
-  onClick: () => void;
+  /** Campaign with product data */
+  campaign: CampaignWithProduct;
+  /** Called when user clicks CTA */
+  onCTAClick?: () => void;
+  /** Called when user closes/dismisses the ad */
+  onClose?: () => void;
 }
 
 /**
- * Props for large panel variants
+ * Props for large panel variant components
  */
 export interface LargePanelProps {
-  campaign: Campaign;
-  product: Product;
-  variant: LargePanelVariant;
-  onClose: () => void;
-  onClick: () => void;
-}
-
-/**
- * Props for ad slider component
- */
-export interface AdSliderProps {
-  placement: AdPlacement;
-  variant?: SmallPanelVariant;
-  autoplay?: boolean;
-  interval?: number;
-  maxCampaigns?: number;
-  className?: string;
-}
-
-/**
- * Props for ad modal component
- */
-export interface AdModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  campaign: CampaignWithProduct | null;
-  variant?: LargePanelVariant;
+  /** Campaign with product data */
+  campaign: CampaignWithProduct;
+  /** Called when user clicks CTA */
+  onCTAClick?: () => void;
+  /** Called when user closes/dismisses the ad */
+  onClose?: () => void;
+  /** Whether to show slide indicator */
+  showIndicator?: boolean;
+  /** Current slide index (for carousel) */
+  currentIndex?: number;
+  /** Total number of slides (for carousel) */
+  totalCount?: number;
 }
 
 /**

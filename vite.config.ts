@@ -35,6 +35,7 @@ export default defineConfig({
         '@radix-ui/themes',
         '@radix-ui/react-icons',
         '@capacitor/preferences',
+        'lucide-react',
         'zustand',
         'zustand/middleware',
       ],

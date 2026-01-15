@@ -1,6 +1,6 @@
 {
   "name": "shared-features",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Shared features for Zaions projects - centralized ads, contacts, feature requests, and more",
   "author": "Ahsan Mahmood <aoneahsan@gmail.com>",
   "license": "MIT",
@@ -60,13 +60,14 @@
     "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
-    "@capacitor/preferences": ">=6.0.0",
-    "@radix-ui/react-icons": ">=1.0.0",
-    "@radix-ui/themes": ">=3.0.0",
-    "firebase": ">=10.0.0",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
-    "zustand": ">=4.0.0"
+    "@capacitor/preferences": ">=8.0.0",
+    "@radix-ui/react-icons": ">=1.3.2",
+    "@radix-ui/themes": ">=3.2.1",
+    "firebase": ">=12.8.0",
+    "lucide-react": ">=0.400.0",
+    "react": ">=19.2.8",
+    "react-dom": ">=19.2.3",
+    "zustand": ">=5.0.10"
   },
   "peerDependenciesMeta": {
     "@capacitor/preferences": {
@@ -77,12 +78,13 @@
     "@capacitor/preferences": "^8.0.0",
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/themes": "^3.2.1",
-    "@types/react": "^19.1.7",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.5.2",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
     "firebase": "^12.8.0",
+    "lucide-react": "^0.511.0",
     "typescript": "^5.9.3",
-    "vite": "^7.3.0",
+    "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
     "zustand": "^5.0.10"
   },
