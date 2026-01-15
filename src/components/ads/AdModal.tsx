@@ -12,7 +12,7 @@ import { Box, Flex, Text, Heading, Button, Dialog, Checkbox } from '@radix-ui/th
 import { ExternalLink, X, Gift } from 'lucide-react';
 import { useCampaign, useOneTimeAdModal } from '../../hooks/useCampaigns';
 import type { AdPlacement } from '../../types/campaigns';
-import { getConfig } from '../../firebase/config';
+import { getConfig, isInitialized } from '../../firebase/config';
 
 export interface AdModalProps {
   /** Ad placement (defaults to onetime_modal) */
@@ -46,7 +46,6 @@ export function AdModal({
 }: AdModalProps) {
   const [dontShowAgain, setDontShowAgain] = useState(false);
   const hasTrackedImpression = useRef(false);
-  const config = getConfig();
 
   const { shouldShow, markAsShown } = useOneTimeAdModal();
 
@@ -83,6 +82,11 @@ export function AdModal({
     onClose?.();
   }, [campaign, recordClose, markAsShown, onClose]);
 
+  // Don't render if shared-features not initialized
+  if (!isInitialized()) {
+    return null;
+  }
+
   // Don't show if not eligible or loading
   if (!shouldShow || loading) {
     return null;
@@ -90,6 +94,7 @@ export function AdModal({
 
   // Show welcome modal without campaign
   if (!campaign) {
+    const config = getConfig();
     const defaultTitle = welcomeTitle || `Welcome to ${config.projectName}!`;
     const defaultDesc = welcomeDescription || 'Discover amazing features and tools at your fingertips.';
 
