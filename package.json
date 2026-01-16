@@ -1,7 +1,7 @@
 {
   "name": "shared-features",
-  "version": "0.0.4",
-  "description": "Shared features for Zaions projects - centralized ads, contacts, feature requests, and more",
+  "version": "0.0.5",
+  "description": "Shared features for Zaions projects - centralized ads, notifications, broadcasts, contacts, and more",
   "author": "Ahsan Mahmood <aoneahsan@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -13,6 +13,9 @@
     "shared-features",
     "ads",
     "campaigns",
+    "notifications",
+    "broadcasts",
+    "in-app-notifications",
     "react",
     "firebase",
     "cross-promotion"
@@ -46,6 +49,11 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/types/index.js",
       "require": "./dist/types/index.cjs"
+    },
+    "./notifications": {
+      "types": "./dist/notifications/index.d.ts",
+      "import": "./dist/notifications/index.js",
+      "require": "./dist/notifications/index.cjs"
     }
   },
   "files": [

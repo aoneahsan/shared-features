@@ -7,6 +7,7 @@
  * Features:
  * - Advertising campaigns (cross-promotion)
  * - Products catalog
+ * - In-App Notifications (broadcasts, events, templates)
  * - Contact forms (coming soon)
  * - Feature requests (coming soon)
  * - Payment options (coming soon)
@@ -57,3 +58,9 @@ export * from './hooks';
 // ============================================================================
 
 export * from './components';
+
+// ============================================================================
+// NOTIFICATIONS (Event System)
+// ============================================================================
+
+export * from './notifications';

@@ -8,3 +8,6 @@
 
 // Ad Components
 export * from './ads';
+
+// Notification Components
+export * from './notifications';

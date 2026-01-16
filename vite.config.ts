@@ -9,6 +9,7 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       include: ['src'],
+      exclude: ['src/templates/**'],
       outDir: 'dist',
     }),
   ],
@@ -20,6 +21,7 @@ export default defineConfig({
         'hooks/index': resolve(__dirname, 'src/hooks/index.ts'),
         'services/index': resolve(__dirname, 'src/services/index.ts'),
         'types/index': resolve(__dirname, 'src/types/index.ts'),
+        'notifications/index': resolve(__dirname, 'src/notifications/index.ts'),
       },
       formats: ['es', 'cjs'],
     },

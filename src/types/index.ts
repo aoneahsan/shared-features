@@ -9,6 +9,9 @@
 // Campaign/Advertising Types
 export * from './campaigns';
 
+// Notification Types
+export * from './notifications';
+
 // Firebase Config Types
 export type {
   FirebaseConfig,
