@@ -65,7 +65,7 @@
     "@radix-ui/themes": ">=3.2.1",
     "firebase": ">=12.8.0",
     "lucide-react": ">=0.400.0",
-    "react": ">=19.2.8",
+    "react": ">=19.2.3",
     "react-dom": ">=19.2.3",
     "zustand": ">=5.0.10"
   },
