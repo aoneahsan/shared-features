@@ -10,7 +10,7 @@ Centralized common features for Zaions projects. Manage ads, contacts, feature r
 
 ## Common Errors Reference
 
-**CRITICAL**: Review before making changes: `/home/ahsan/Documents/01-code/docs/COMMON-ERRORS-TRACKER.md`
+**CRITICAL**: Review before making changes: `/home/ahsan/Documents/01-code/docs/troubleshooting/COMMON-ERRORS-TRACKER.md`
 
 ### Package-Specific Error Prevention
 
