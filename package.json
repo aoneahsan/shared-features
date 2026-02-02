@@ -1,6 +1,9 @@
 {
   "name": "shared-features",
-  "version": "0.0.7",
+  "version": "0.0.8",
+  "engines": {
+    "node": ">=24.13.0"
+  },
   "description": "Shared features for Zaions projects - centralized ads, notifications, broadcasts, contacts, and more",
   "author": "Ahsan Mahmood <aoneahsan@gmail.com>",
   "license": "MIT",
@@ -58,7 +61,8 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "AI-INTEGRATION-GUIDE.md"
   ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly",
@@ -86,9 +90,12 @@
     "@capacitor/preferences": "^8.0.0",
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/themes": "^3.2.1",
-    "@types/react": "^19.2.8",
+    "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.53.1",
+    "@typescript-eslint/parser": "^8.53.1",
     "@vitejs/plugin-react": "^5.1.2",
+    "eslint": "^9.39.2",
     "firebase": "^12.8.0",
     "lucide-react": "^0.562.0",
     "typescript": "^5.9.3",

@@ -1,5 +1,7 @@
 # shared-features
 
+- **[AI Integration Guide](./AI-INTEGRATION-GUIDE.md)** - Quick reference for AI development agents (Claude, Cursor, Copilot)
+
 Centralized common features for Zaions projects. Manage ads, notifications, contacts, and more from a single admin panel at [aoneahsan.com](https://aoneahsan.com).
 
 ---
