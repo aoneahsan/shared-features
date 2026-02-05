@@ -32,11 +32,13 @@ import {
   type Service,
   type Skill,
   type Testimonial,
+  type Project,
   type FetchSocialLinksOptions,
   type FetchServicesOptions,
   type FetchSkillsOptions,
   type FetchTestimonialsOptions,
   type FetchPaymentOptionsOptions,
+  type FetchProjectsOptions,
 } from '../types/commonFeatures';
 
 // ============================================================================
@@ -58,6 +60,7 @@ let paymentOptionsCache: Cache<PaymentOption[]> | null = null;
 let servicesCache: Cache<Service[]> | null = null;
 let skillsCache: Cache<Skill[]> | null = null;
 let testimonialsCache: Cache<Testimonial[]> | null = null;
+let projectsCache: Cache<Project[]> | null = null;
 
 function isCacheValid<T>(cache: Cache<T> | null): boolean {
   if (!cache || !cache.data) return false;
@@ -73,6 +76,7 @@ export function clearAllCommonFeaturesCache(): void {
   servicesCache = null;
   skillsCache = null;
   testimonialsCache = null;
+  projectsCache = null;
 }
 
 // ============================================================================
@@ -595,4 +599,106 @@ export async function fetchTestimonials(options: FetchTestimonialsOptions = {}):
 
 export function clearTestimonialsCache(): void {
   testimonialsCache = null;
+}
+
+// ============================================================================
+// PROJECTS
+// ============================================================================
+
+function docToProject(docId: string, data: Record<string, unknown>): Project {
+  return {
+    id: docId,
+    title: (data.title as string) || '',
+    slug: (data.slug as string) || '',
+    description: (data.description as string) || '',
+    shortDescription: data.shortDescription as string | undefined,
+    category: data.category as Project['category'],
+    status: data.status as Project['status'],
+    thumbnailUrl: data.thumbnailUrl as string | undefined,
+    images: data.images as string[] | undefined,
+    technologies: (data.technologies as string[]) || [],
+    features: data.features as string[] | undefined,
+    links: data.links as Project['links'] | undefined,
+    clientName: data.clientName as string | undefined,
+    startDate: data.startDate as string | undefined,
+    endDate: data.endDate as string | undefined,
+    isActive: (data.isActive as boolean) ?? true,
+    isFeatured: (data.isFeatured as boolean) ?? false,
+    order: (data.order as number) ?? 0,
+    updatedAt: data.updatedAt as Timestamp,
+  };
+}
+
+export async function fetchProjects(options: FetchProjectsOptions = {}): Promise<Project[]> {
+  if (!isFeatureEnabled('projects')) {
+    const config = getConfig();
+    if (config.debug) console.log('[shared-features] projects feature is disabled');
+    return [];
+  }
+
+  if (!options.category && !options.status && !options.featuredOnly && !options.limit && options.activeOnly !== false && isCacheValid(projectsCache)) {
+    return projectsCache!.data ?? [];
+  }
+
+  try {
+    const db = getSharedFeaturesDb();
+    let q = query(collection(db, COMMON_FEATURE_COLLECTIONS.PROJECTS), orderBy('order', 'asc'));
+
+    if (options.limit) {
+      q = query(q, firestoreLimit(options.limit));
+    }
+
+    const snapshot = await getDocs(q);
+    let items = snapshot.docs.map((d) => docToProject(d.id, d.data()));
+
+    if (options.activeOnly !== false) {
+      items = items.filter((i) => i.isActive);
+    }
+
+    if (options.featuredOnly) {
+      items = items.filter((i) => i.isFeatured);
+    }
+
+    if (options.category) {
+      items = items.filter((i) => i.category === options.category);
+    }
+
+    if (options.status) {
+      items = items.filter((i) => i.status === options.status);
+    }
+
+    if (!options.category && !options.status && !options.featuredOnly && !options.limit && options.activeOnly !== false) {
+      projectsCache = { data: items, timestamp: Date.now() };
+    }
+
+    return items;
+  } catch (error) {
+    const config = getConfig();
+    if (config.debug) console.error('[shared-features] Error fetching projects:', error);
+    return projectsCache?.data ?? [];
+  }
+}
+
+export async function fetchProjectBySlug(slug: string): Promise<Project | null> {
+  if (!isFeatureEnabled('projects')) return null;
+
+  try {
+    // First check cache
+    if (isCacheValid(projectsCache)) {
+      const cached = projectsCache!.data?.find((p) => p.slug === slug);
+      if (cached) return cached;
+    }
+
+    // Fetch all and find
+    const projects = await fetchProjects();
+    return projects.find((p) => p.slug === slug) ?? null;
+  } catch (error) {
+    const config = getConfig();
+    if (config.debug) console.error('[shared-features] Error fetching project by slug:', error);
+    return null;
+  }
+}
+
+export function clearProjectsCache(): void {
+  projectsCache = null;
 }

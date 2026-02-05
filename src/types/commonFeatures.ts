@@ -29,6 +29,7 @@ export const COMMON_FEATURE_COLLECTIONS = {
   SERVICES: 'zaions_services',
   SKILLS: 'zaions_skills',
   TESTIMONIALS: 'zaions_testimonials',
+  PROJECTS: 'zaions_projects',
 } as const;
 
 // ============================================================================
@@ -403,4 +404,80 @@ export interface FetchTestimonialsOptions {
 export interface FetchPaymentOptionsOptions {
   activeOnly?: boolean;
   type?: PaymentType;
+}
+
+// ============================================================================
+// PROJECTS / PORTFOLIO
+// ============================================================================
+
+export type ProjectStatus = 'completed' | 'in-progress' | 'planned' | 'archived';
+
+export const PROJECT_STATUS_NAMES: Record<ProjectStatus, string> = {
+  completed: 'Completed',
+  'in-progress': 'In Progress',
+  planned: 'Planned',
+  archived: 'Archived',
+};
+
+export type ProjectCategory =
+  | 'web-app'
+  | 'mobile-app'
+  | 'desktop-app'
+  | 'api'
+  | 'library'
+  | 'cli-tool'
+  | 'browser-extension'
+  | 'open-source'
+  | 'client-work'
+  | 'personal'
+  | 'other';
+
+export const PROJECT_CATEGORY_NAMES: Record<ProjectCategory, string> = {
+  'web-app': 'Web Application',
+  'mobile-app': 'Mobile App',
+  'desktop-app': 'Desktop App',
+  api: 'API / Backend',
+  library: 'Library / Package',
+  'cli-tool': 'CLI Tool',
+  'browser-extension': 'Browser Extension',
+  'open-source': 'Open Source',
+  'client-work': 'Client Work',
+  personal: 'Personal Project',
+  other: 'Other',
+};
+
+export interface ProjectLink {
+  type: 'live' | 'github' | 'demo' | 'docs' | 'playstore' | 'appstore' | 'npm' | 'other';
+  url: string;
+  label?: string;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  shortDescription?: string;
+  category: ProjectCategory;
+  status: ProjectStatus;
+  thumbnailUrl?: string;
+  images?: string[];
+  technologies: string[];
+  features?: string[];
+  links?: ProjectLink[];
+  clientName?: string;
+  startDate?: string;
+  endDate?: string;
+  isActive: boolean;
+  isFeatured: boolean;
+  order: number;
+  updatedAt: Timestamp;
+}
+
+export interface FetchProjectsOptions {
+  category?: ProjectCategory;
+  status?: ProjectStatus;
+  activeOnly?: boolean;
+  featuredOnly?: boolean;
+  limit?: number;
 }

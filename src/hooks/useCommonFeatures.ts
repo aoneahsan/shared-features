@@ -27,6 +27,9 @@ import {
   clearSkillsCache,
   fetchTestimonials,
   clearTestimonialsCache,
+  fetchProjects,
+  fetchProjectBySlug,
+  clearProjectsCache,
 } from '../services/commonFeatures';
 import type {
   ContactInfo,
@@ -37,6 +40,7 @@ import type {
   Service,
   Skill,
   Testimonial,
+  Project,
   UseCommonFeatureOptions,
   UseCommonFeatureResult,
   UseCommonFeaturesListResult,
@@ -45,6 +49,7 @@ import type {
   FetchSkillsOptions,
   FetchTestimonialsOptions,
   FetchPaymentOptionsOptions,
+  FetchProjectsOptions,
 } from '../types/commonFeatures';
 
 // ============================================================================
@@ -543,6 +548,136 @@ export function useTestimonials(
 
   const refetch = useCallback(async () => {
     clearTestimonialsCache();
+    await fetch();
+  }, [fetch]);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    if (autoFetch) fetch();
+    return () => {
+      mountedRef.current = false;
+    };
+  }, [autoFetch, fetch]);
+
+  return { data, loading, error, refetch };
+}
+
+// ============================================================================
+// PROJECTS
+// ============================================================================
+
+/**
+ * Hook to fetch projects
+ *
+ * @example
+ * ```tsx
+ * const { data: projects, loading } = useProjects({ featuredOnly: true });
+ *
+ * if (loading) return <Spinner />;
+ *
+ * return (
+ *   <div>
+ *     {projects.map(project => (
+ *       <div key={project.id}>
+ *         <h2>{project.title}</h2>
+ *         <p>{project.description}</p>
+ *       </div>
+ *     ))}
+ *   </div>
+ * );
+ * ```
+ */
+export function useProjects(
+  options: FetchProjectsOptions & UseCommonFeatureOptions = {}
+): UseCommonFeaturesListResult<Project> {
+  const { autoFetch = true, category, status, activeOnly, featuredOnly, limit } = options;
+
+  const [data, setData] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(autoFetch);
+  const [error, setError] = useState<string | null>(null);
+  const mountedRef = useRef(true);
+
+  const fetch = useCallback(async () => {
+    if (!isInitialized()) {
+      setError('shared-features not initialized');
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await fetchProjects({ category, status, activeOnly, featuredOnly, limit });
+      if (mountedRef.current) setData(result);
+    } catch (err) {
+      if (mountedRef.current) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch projects');
+      }
+    } finally {
+      if (mountedRef.current) setLoading(false);
+    }
+  }, [category, status, activeOnly, featuredOnly, limit]);
+
+  const refetch = useCallback(async () => {
+    clearProjectsCache();
+    await fetch();
+  }, [fetch]);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    if (autoFetch) fetch();
+    return () => {
+      mountedRef.current = false;
+    };
+  }, [autoFetch, fetch]);
+
+  return { data, loading, error, refetch };
+}
+
+/**
+ * Hook to fetch a single project by slug
+ */
+export function useProject(
+  slug: string,
+  options: { autoFetch?: boolean } = {}
+): UseCommonFeatureResult<Project> {
+  const { autoFetch = true } = options;
+
+  const [data, setData] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(autoFetch);
+  const [error, setError] = useState<string | null>(null);
+  const mountedRef = useRef(true);
+
+  const fetch = useCallback(async () => {
+    if (!isInitialized()) {
+      setError('shared-features not initialized');
+      setLoading(false);
+      return;
+    }
+
+    if (!slug) {
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await fetchProjectBySlug(slug);
+      if (mountedRef.current) setData(result);
+    } catch (err) {
+      if (mountedRef.current) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch project');
+      }
+    } finally {
+      if (mountedRef.current) setLoading(false);
+    }
+  }, [slug]);
+
+  const refetch = useCallback(async () => {
+    clearProjectsCache();
     await fetch();
   }, [fetch]);
 

@@ -30,6 +30,7 @@ import {
   useSkills,
   useTestimonials,
   useServices,
+  useProjects,
 } from '../../hooks/useCommonFeatures';
 import type {
   ContactInfo,
@@ -39,6 +40,7 @@ import type {
   Skill,
   Testimonial,
   Service,
+  Project,
   SocialPlatform,
 } from '../../types/commonFeatures';
 
@@ -430,6 +432,82 @@ export function ServicesGrid({ data: propData, featuredOnly = false, maxItems, c
               <Flex gap="1" wrap="wrap">
                 {service.technologies.slice(0, 5).map((tech, i) => (
                   <Badge key={i} size="1" color="gray">{tech}</Badge>
+                ))}
+              </Flex>
+            )}
+          </Flex>
+        </Card>
+      ))}
+    </Grid>
+  );
+}
+
+// ============================================================================
+// PROJECTS GRID
+// ============================================================================
+
+interface ProjectsGridProps {
+  data?: Project[];
+  featuredOnly?: boolean;
+  maxItems?: number;
+  columns?: '1' | '2' | '3';
+}
+
+export function ProjectsGrid({ data: propData, featuredOnly = false, maxItems, columns = '3' }: ProjectsGridProps) {
+  const { data: hookData, loading } = useProjects({ autoFetch: !propData, featuredOnly });
+  let data = propData ?? hookData;
+
+  if (maxItems && data.length > maxItems) {
+    data = data.slice(0, maxItems);
+  }
+
+  if (loading || data.length === 0) return null;
+
+  return (
+    <Grid columns={columns} gap="4">
+      {data.map((project) => (
+        <Card key={project.id}>
+          <Flex direction="column" gap="2">
+            {project.thumbnailUrl && (
+              <Box
+                style={{
+                  height: 140,
+                  borderRadius: 'var(--radius-2)',
+                  overflow: 'hidden',
+                  marginBottom: 'var(--space-2)',
+                }}
+              >
+                <img
+                  src={project.thumbnailUrl}
+                  alt={project.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+
+            <Flex align="center" gap="2">
+              <Code size={18} />
+              <Text size="3" weight="bold">{project.title}</Text>
+            </Flex>
+
+            <Text size="2" color="gray">
+              {project.shortDescription || project.description}
+            </Text>
+
+            {project.technologies && project.technologies.length > 0 && (
+              <Flex gap="1" wrap="wrap">
+                {project.technologies.slice(0, 5).map((tech, i) => (
+                  <Badge key={i} size="1" color="gray">{tech}</Badge>
+                ))}
+              </Flex>
+            )}
+
+            {project.links && project.links.length > 0 && (
+              <Flex gap="2" mt="2">
+                {project.links.map((link, i) => (
+                  <Link key={i} href={link.url} target="_blank" size="1">
+                    {link.label || link.type}
+                  </Link>
                 ))}
               </Flex>
             )}
