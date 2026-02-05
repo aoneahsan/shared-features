@@ -66,3 +66,51 @@ export {
   getBroadcastAnalytics,
   getOverallAnalytics,
 } from './admin-notifications';
+
+// Feature Flags Services
+export {
+  fetchFeatureFlags,
+  subscribeToFeatureFlags,
+  checkFeatureAvailability,
+  isFeatureEnabled,
+  getFeatureVersion,
+  getSharedFeaturesStatus,
+  updateFeatureConfig,
+  updateGlobalFlags,
+  initializeFeatureFlags,
+  clearFeatureFlagsCache,
+  COLLECTION_FEATURE_FLAGS,
+  FEATURE_FLAGS_DOC_ID,
+} from './featureFlags';
+
+// Common Features Services
+export {
+  // Contact Info
+  fetchContactInfo,
+  subscribeToContactInfo,
+  clearContactInfoCache,
+  // Developer Info
+  fetchDeveloperInfo,
+  subscribeToDeveloperInfo,
+  clearDeveloperInfoCache,
+  // Address Info
+  fetchAddressInfo,
+  clearAddressInfoCache,
+  // Social Links
+  fetchSocialLinks,
+  clearSocialLinksCache,
+  // Payment Options
+  fetchPaymentOptions,
+  clearPaymentOptionsCache,
+  // Services
+  fetchServices,
+  clearServicesCache,
+  // Skills
+  fetchSkills,
+  clearSkillsCache,
+  // Testimonials
+  fetchTestimonials,
+  clearTestimonialsCache,
+  // Clear all
+  clearAllCommonFeaturesCache,
+} from './commonFeatures';

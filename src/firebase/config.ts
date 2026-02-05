@@ -25,6 +25,35 @@ export interface FirebaseConfig {
 export type ConsumerPlatform = 'web' | 'android' | 'ios' | 'extension';
 
 /**
+ * Feature version preferences for a consumer project
+ * Specifies which API versions the consumer supports
+ */
+export interface ConsumerFeatureVersions {
+  /** Campaigns API version */
+  campaigns?: number;
+  /** Broadcasts API version */
+  broadcasts?: number;
+  /** Contact info API version */
+  contactInfo?: number;
+  /** Developer info API version */
+  developerInfo?: number;
+  /** Social links API version */
+  socialLinks?: number;
+  /** Payment options API version */
+  paymentOptions?: number;
+  /** Address info API version */
+  addressInfo?: number;
+  /** Services API version */
+  services?: number;
+  /** Skills API version */
+  skills?: number;
+  /** Testimonials API version */
+  testimonials?: number;
+  /** Projects API version */
+  projects?: number;
+}
+
+/**
  * Configuration for initializing shared-features
  */
 export interface SharedFeaturesConfig {
@@ -53,6 +82,13 @@ export interface SharedFeaturesConfig {
    * Whether to enable debug logging (default: false)
    */
   debug?: boolean;
+
+  /**
+   * Feature version preferences for this consumer.
+   * Specifies which API versions this consumer supports.
+   * If not specified, latest versions are used.
+   */
+  featureVersions?: ConsumerFeatureVersions;
 }
 
 /**

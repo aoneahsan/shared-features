@@ -5,14 +5,19 @@
  * All data is managed from aoneahsan.com admin panel.
  *
  * Features:
+ * - Feature Flags (version management, feature toggles)
  * - Advertising campaigns (cross-promotion)
  * - Products catalog
  * - In-App Notifications (broadcasts, events, templates)
- * - Contact forms (coming soon)
- * - Feature requests (coming soon)
- * - Payment options (coming soon)
- * - Social links (coming soon)
- * - Developer info (coming soon)
+ * - Common Features:
+ *   - Contact Info
+ *   - Developer Info
+ *   - Social Links
+ *   - Address Info
+ *   - Payment Options
+ *   - Services
+ *   - Skills
+ *   - Testimonials
  *
  * @author Ahsan Mahmood <aoneahsan@gmail.com>
  * @license MIT

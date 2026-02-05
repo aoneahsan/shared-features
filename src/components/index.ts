@@ -11,3 +11,15 @@ export * from './ads';
 
 // Notification Components
 export * from './notifications';
+
+// Common Features Components
+export {
+  ContactCard,
+  DeveloperCard,
+  SocialLinksBar,
+  AddressCard,
+  SkillsDisplay,
+  TestimonialsGrid,
+  ServicesGrid,
+  FooterSection,
+} from './common';

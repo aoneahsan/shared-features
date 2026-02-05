@@ -12,10 +12,17 @@ export * from './campaigns';
 // Notification Types
 export * from './notifications';
 
+// Feature Flags Types
+export * from './featureFlags';
+
+// Common Features Types
+export * from './commonFeatures';
+
 // Firebase Config Types
 export type {
   FirebaseConfig,
   ConsumerPlatform,
+  ConsumerFeatureVersions,
   SharedFeaturesConfig,
   SharedFeaturesState,
 } from '../firebase/config';

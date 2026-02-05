@@ -6,12 +6,13 @@ Centralized common features for Zaions projects. Manage ads, notifications, cont
 
 ---
 
-## Two Core Systems
+## Three Core Systems
 
-This package provides **two separate systems** for cross-project communication:
+This package provides **three systems** for cross-project feature management:
 
 | System | Purpose | Firestore Collections | Admin Location |
 |--------|---------|----------------------|----------------|
+| **Feature Flags** | Version management, feature toggles | `zaions_feature_flags` | `/admin/settings` |
 | **Advertising Campaigns** | Promote Zaions products across apps | `zaions_campaigns`, `zaions_products`, `zaions_impressions` | `/admin/campaigns` |
 | **Broadcasts/Notifications** | In-app notifications, announcements, alerts | `zaions_broadcasts`, `zaions_broadcast_events`, `zaions_notification_templates` | `/admin/notifications` |
 
@@ -98,8 +99,152 @@ if (import.meta.env.VITE_SHARED_FEATURES_API_KEY) {
     projectName: 'Your Project Name', // e.g., 'ZTools', '2FA Studio'
     platform: 'web', // or 'android', 'ios', 'extension'
     debug: import.meta.env.DEV, // optional
+    // Optional: Lock to specific feature versions
+    featureVersions: {
+      campaigns: 1,
+      broadcasts: 1,
+    },
   });
 }
+```
+
+---
+
+# FEATURE FLAGS SYSTEM
+
+Manage feature availability, versioning, and breaking changes across all consumer projects.
+
+## Why Feature Flags?
+
+- **Version Control**: Roll out breaking changes gradually
+- **Feature Toggles**: Enable/disable features globally
+- **Deprecation Warnings**: Warn consumers about outdated versions
+- **Maintenance Mode**: Show maintenance messages across all apps
+- **Platform/Project Targeting**: Enable features for specific platforms or projects
+
+## Firestore Collection
+
+| Collection | Purpose | Access |
+|------------|---------|--------|
+| `zaions_feature_flags` | Global feature configuration (singleton) | Public read, Admin write |
+
+## Checking Feature Availability
+
+### Check Overall Status
+
+```tsx
+import { useFeatureFlags } from 'shared-features';
+
+function App() {
+  const { status, loading, isFeatureAvailable, hasDeprecatedFeatures } = useFeatureFlags();
+
+  if (loading) return <Spinner />;
+
+  // Handle maintenance mode
+  if (status?.maintenanceMode) {
+    return <MaintenancePage message={status.maintenanceMessage} />;
+  }
+
+  // Warn about deprecated features
+  if (hasDeprecatedFeatures) {
+    console.warn('Some features are deprecated:', status?.deprecatedFeatures);
+  }
+
+  // Check specific feature
+  if (isFeatureAvailable('contactInfo')) {
+    return <ContactInfo />;
+  }
+
+  return <App />;
+}
+```
+
+### Check Single Feature
+
+```tsx
+import { useFeature } from 'shared-features';
+
+function ContactSection() {
+  const { available, loading, deprecated, deprecationWarning } = useFeature('contactInfo');
+
+  if (loading) return <Spinner />;
+  if (!available) return <LegacyContactInfo />;
+
+  if (deprecated) {
+    console.warn(deprecationWarning);
+  }
+
+  return <NewContactInfo />;
+}
+```
+
+### Conditional Rendering with Feature Gates
+
+```tsx
+import { useFeatureGate } from 'shared-features';
+
+function MyComponent() {
+  const { shouldRender, FallbackOrChildren } = useFeatureGate('socialLinks');
+
+  return (
+    <FallbackOrChildren fallback={<OldSocialLinks />}>
+      <NewSocialLinks />
+    </FallbackOrChildren>
+  );
+}
+```
+
+### Real-time Updates
+
+```tsx
+import { useFeatureFlagsSubscription } from 'shared-features';
+
+function App() {
+  useFeatureFlagsSubscription((status) => {
+    if (status?.maintenanceMode) {
+      showMaintenanceBanner(status.maintenanceMessage);
+    }
+  });
+
+  return <YourApp />;
+}
+```
+
+## Available Features
+
+| Feature ID | Description | Status |
+|------------|-------------|--------|
+| `campaigns` | Advertising campaigns | ✅ Enabled |
+| `broadcasts` | Broadcast notifications | ✅ Enabled |
+| `contactInfo` | Contact information | ⏳ Coming Soon |
+| `developerInfo` | Developer information | ⏳ Coming Soon |
+| `socialLinks` | Social media links | ⏳ Coming Soon |
+| `paymentOptions` | Payment methods | ⏳ Coming Soon |
+| `addressInfo` | Address information | ⏳ Coming Soon |
+| `services` | Professional services | ⏳ Coming Soon |
+| `skills` | Skills display | ⏳ Coming Soon |
+| `testimonials` | Client testimonials | ⏳ Coming Soon |
+| `projects` | Portfolio projects | ⏳ Coming Soon |
+
+## Feature Versioning
+
+When breaking changes are introduced:
+
+1. Admin bumps feature version in `zaions_feature_flags`
+2. Consumers using old version get deprecation warnings
+3. Once `minVersion` is bumped, old consumers get `upgradeRequired: true`
+4. Consumers update their code and bump `featureVersions` in config
+
+```typescript
+// Consumer specifies supported versions
+initSharedFeatures({
+  // ... other config
+  featureVersions: {
+    campaigns: 1,    // Using v1 API
+    broadcasts: 1,   // Using v1 API
+    contactInfo: 2,  // Updated to v2 API
+  },
+});
 ```
 
 ---
@@ -345,8 +490,66 @@ interface SharedFeaturesConfig {
   projectName: string;    // e.g., 'ZTools'
   platform: 'web' | 'android' | 'ios' | 'extension';
   debug?: boolean;
+  featureVersions?: ConsumerFeatureVersions; // Optional version preferences
 }
 ```
+
+## Feature Flag Hooks
+
+### `useFeatureFlags(options?)`
+
+Check overall feature flags status.
+
+```typescript
+interface UseFeatureFlagsOptions {
+  autoRefresh?: boolean;      // Auto-refresh flags periodically
+  refreshInterval?: number;   // Refresh interval in ms (default: 5 min)
+  autoFetch?: boolean;        // Fetch on mount (default: true)
+}
+
+interface UseFeatureFlagsResult {
+  status: SharedFeaturesStatus | null;
+  loading: boolean;
+  error: string | null;
+  refetch: () => Promise<void>;
+  isFeatureAvailable: (featureId: FeatureId) => boolean;
+  getFeatureAvailability: (featureId: FeatureId) => FeatureAvailability | null;
+  hasDeprecatedFeatures: boolean;
+  hasUpgradeRequired: boolean;
+}
+```
+
+### `useFeature(featureId)`
+
+Check a single feature's availability.
+
+```typescript
+const {
+  available,           // Feature can be used
+  loading,             // Check in progress
+  enabled,             // Feature is enabled (but might need upgrade)
+  deprecated,          // Using deprecated version
+  upgradeRequired,     // Must upgrade to use
+  deprecationWarning,  // Warning message
+  unavailableReason,   // Why unavailable
+} = useFeature('contactInfo');
+```
+
+### `useFeatureGate(featureId)`
+
+Conditional rendering helper.
+
+```typescript
+const { shouldRender, loading, deprecated, FallbackOrChildren } = useFeatureGate('socialLinks');
+```
+
+### `useFeatureFlagsSubscription(callback)`
+
+Real-time feature flag updates.
+
+### `useSharedFeaturesOperational()`
+
+Quick check if shared-features is operational.
 
 ## Advertising Hooks
 

@@ -1,52 +1,30 @@
 # shared-features Package
 
 **Package Name**: `shared-features`
-**Version**: 0.0.3
+**Version**: 0.1.0
 **NPM**: https://www.npmjs.com/package/shared-features
 
-Centralized common features for Zaions projects. Manage ads, contacts, feature requests, and more from aoneahsan.com admin panel.
+Centralized common features for Zaions projects. Manage ads, contacts, developer info, and more from aoneahsan.com admin panel.
 
 ---
 
-## Common Errors Reference
+## Features
 
-**CRITICAL**: Review before making changes: `/home/ahsan/Documents/01-code/docs/troubleshooting/COMMON-ERRORS-TRACKER.md`
+### Implemented
 
-### Package-Specific Error Prevention
-
-#### 1. NEVER Hardcode Configuration
-```typescript
-// WRONG - Never do this
-export const FIREBASE_CONFIG = { projectId: "aoneahsan-com" };
-
-// CORRECT - Consumer provides all config
-export interface SharedFeaturesConfig {
-  firebaseConfig: FirebaseConfig; // ALL 7 fields from consumer's env vars
-}
-```
-
-#### 2. React Components Must Handle Uninitialized State
-```typescript
-// CORRECT Pattern for all components
-export function AdComponent() {
-  // 1. ALL hooks first
-  const [state, setState] = useState();
-  const { data } = useHook();
-
-  // 2. Check initialization AFTER hooks
-  if (!isInitialized()) {
-    return null;
-  }
-
-  // 3. Safe to use getConfig() now
-  const config = getConfig();
-}
-```
-
-#### 3. Complete Firebase Config (7 Fields)
-Consumer must provide ALL fields:
-- `apiKey`, `authDomain`, `projectId`, `storageBucket`
-- `messagingSenderId`, `appId`, `measurementId`
+| Feature | Types | Service | Hook | Component |
+|---------|-------|---------|------|-----------|
+| Feature Flags | `featureFlags.ts` | `featureFlags.ts` | `useFeatureFlags.ts` | - |
+| Advertising | `campaigns.ts` | `campaigns.ts` | `useCampaigns.ts` | `ads/*` |
+| Broadcasts | `notifications.ts` | `broadcasts.ts` | `useBroadcasts.ts` | `notifications/*` |
+| Contact Info | `commonFeatures.ts` | `commonFeatures.ts` | `useContactInfo` | `ContactCard` |
+| Developer Info | `commonFeatures.ts` | `commonFeatures.ts` | `useDeveloperInfo` | `DeveloperCard` |
+| Social Links | `commonFeatures.ts` | `commonFeatures.ts` | `useSocialLinks` | `SocialLinksBar` |
+| Address Info | `commonFeatures.ts` | `commonFeatures.ts` | `useAddressInfo` | `AddressCard` |
+| Payment Options | `commonFeatures.ts` | `commonFeatures.ts` | `usePaymentOptions` | - |
+| Services | `commonFeatures.ts` | `commonFeatures.ts` | `useServices` | `ServicesGrid` |
+| Skills | `commonFeatures.ts` | `commonFeatures.ts` | `useSkills` | `SkillsDisplay` |
+| Testimonials | `commonFeatures.ts` | `commonFeatures.ts` | `useTestimonials` | `TestimonialsGrid` |
 
 ---
 
@@ -54,24 +32,53 @@ Consumer must provide ALL fields:
 
 ```
 src/
-├── components/ads/     # AdModal, AdSlider, AdBanner, AdUpdateModal, AdPanel
-├── hooks/              # useCampaigns, useOneTimeAdModal, useUpdateAdModal
-├── services/           # campaigns.ts, analytics.ts
-├── firebase/           # init.ts, config.ts
-└── types/              # campaigns.ts
+├── components/
+│   ├── ads/           # AdModal, AdSlider, AdBanner, etc.
+│   ├── notifications/ # BroadcastBanner, AnnouncementModal
+│   └── common/        # ContactCard, DeveloperCard, SocialLinksBar, etc.
+├── hooks/
+│   ├── useCampaigns.ts
+│   ├── useBroadcasts.ts
+│   ├── useFeatureFlags.ts
+│   └── useCommonFeatures.ts
+├── services/
+│   ├── campaigns.ts
+│   ├── broadcasts.ts
+│   ├── featureFlags.ts
+│   └── commonFeatures.ts
+├── firebase/          # init.ts, config.ts
+└── types/
+    ├── campaigns.ts
+    ├── notifications.ts
+    ├── featureFlags.ts
+    └── commonFeatures.ts
 ```
 
-## Development
+---
 
-```bash
-yarn build          # Build package
-yarn link           # Register for local development
-```
+## Firestore Collections
+
+| Collection | Type | Purpose |
+|------------|------|---------|
+| `zaions_feature_flags` | Singleton | Feature toggles & versioning |
+| `zaions_campaigns` | Collection | Ad campaigns |
+| `zaions_products` | Collection | Products catalog |
+| `zaions_impressions` | Collection | Ad analytics |
+| `zaions_broadcasts` | Collection | Notifications |
+| `zaions_contact_info` | Singleton | Contact information |
+| `zaions_developer_info` | Singleton | Developer profile |
+| `zaions_social_links` | Collection | Social media links |
+| `zaions_address_info` | Singleton | Physical address |
+| `zaions_payment_options` | Collection | Payment methods |
+| `zaions_services` | Collection | Professional services |
+| `zaions_skills` | Collection | Skills list |
+| `zaions_testimonials` | Collection | Client testimonials |
+
+---
 
 ## Consumer Integration
 
 ```typescript
-// Consumer's main.tsx
 import { initSharedFeatures } from 'shared-features';
 
 initSharedFeatures({
@@ -87,8 +94,21 @@ initSharedFeatures({
   projectId: 'consumer-project-id',
   projectName: 'Consumer Project Name',
   platform: 'web',
+  featureVersions: { campaigns: 1, broadcasts: 1 },
 });
 ```
+
+---
+
+## Common Errors Reference
+
+**CRITICAL**: Review before making changes: `/home/ahsan/Documents/01-code/docs/troubleshooting/COMMON-ERRORS-TRACKER.md`
+
+### Error Prevention
+
+1. **NEVER Hardcode Configuration** - Consumer provides all config
+2. **React Components Must Handle Uninitialized State** - Check `isInitialized()` after hooks
+3. **Complete Firebase Config (7 Fields)** - All fields required
 
 ---
 
@@ -98,15 +118,17 @@ initSharedFeatures({
 - TypeScript declarations must be generated
 - Both ESM and CJS outputs required
 
-**Last Updated**: 2026-02-02
+**Last Updated**: 2026-02-05
 
 ---
 
 ## Package Update History
 
-| Date | Updated By | Notes |
-|------|------------|-------|
-| 2026-02-02 | Claude | Full update to latest versions, ESLint flat config created |
+| Date | Version | Notes |
+|------|---------|-------|
+| 2026-02-05 | 0.1.0 | Added all common features (contact, developer, social, address, payment, services, skills, testimonials) |
+| 2026-02-05 | 0.0.9 | Added Feature Flags System |
+| 2026-02-02 | 0.0.8 | Full update to latest versions |
 
 ---
 
@@ -114,22 +136,15 @@ initSharedFeatures({
 
 | Date | Audit Type | Status | Issues Found | Issues Resolved |
 |------|------------|--------|--------------|-----------------|
+| 2026-02-05 | Feature Addition | Passed | 0 | 0 |
 | 2026-02-02 | Package Update | Passed | 0 | 1 |
-| 2026-01-23 | Full Audit | Passed with issues | 2 | 0 |
 
 ### Last Audit Details
 - **Package Manager**: yarn confirmed
-- **Dependencies**: Updated to latest (2026-02-02)
+- **Dependencies**: Up to date
 - **Build**: Passes (0 errors)
-- **Lint**: Passes (0 warnings) - ESLint v9 flat config created
+- **Lint**: Passes (0 warnings)
 - **TypeScript**: Passes (0 errors)
-- **Features**: Core features complete (ads, broadcasts, notifications)
-- **TODOs**: 9 found (1 in AdPanel.tsx, 8 in templates - intentional placeholders)
-- **Coming Soon**: 5 items in index.ts (contacts, feature requests, payment, social links, developer info)
-- **SEO**: N/A (npm package)
-- **OG Assets**: N/A (npm package)
+- **Features**: All common features implemented
 
-### Outstanding Issues
-1. 5 "coming soon" features documented but not implemented
-
-### Next Audit Due: 2026-02-09 (7 days from last)
+### Next Audit Due: 2026-02-12 (7 days from last)
