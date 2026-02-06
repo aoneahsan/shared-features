@@ -111,6 +111,56 @@ export {
   // Testimonials
   fetchTestimonials,
   clearTestimonialsCache,
+  // Projects
+  fetchProjects,
+  fetchProjectBySlug,
+  clearProjectsCache,
   // Clear all
   clearAllCommonFeaturesCache,
 } from './commonFeatures';
+
+// Admin Common Features Services
+export {
+  // Contact Info Admin
+  saveContactInfo,
+  updateContactInfo,
+  type ContactInfoInput,
+  // Developer Info Admin
+  saveDeveloperInfo,
+  updateDeveloperInfo,
+  type DeveloperInfoInput,
+  // Address Info Admin
+  saveAddressInfo,
+  updateAddressInfo,
+  type AddressInfoInput,
+  // Social Links Admin
+  createSocialLink,
+  updateSocialLink,
+  deleteSocialLink,
+  type SocialLinkInput,
+  // Payment Options Admin
+  createPaymentOption,
+  updatePaymentOption,
+  deletePaymentOption,
+  type PaymentOptionInput,
+  // Services Admin
+  createService,
+  updateService,
+  deleteService,
+  type ServiceInput,
+  // Skills Admin
+  createSkill,
+  updateSkill,
+  deleteSkill,
+  type SkillInput,
+  // Testimonials Admin
+  createTestimonial,
+  updateTestimonial,
+  deleteTestimonial,
+  type TestimonialInput,
+  // Projects Admin
+  createProject,
+  updateProject,
+  deleteProject,
+  type ProjectInput,
+} from './admin-commonFeatures';

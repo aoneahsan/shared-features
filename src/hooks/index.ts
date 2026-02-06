@@ -50,4 +50,6 @@ export {
   useServices,
   useSkills,
   useTestimonials,
+  useProjects,
+  useProject,
 } from './useCommonFeatures';
