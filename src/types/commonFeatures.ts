@@ -37,21 +37,22 @@ export type CommonFeatureCollectionKey =
   | 'PROJECTS';
 
 const DEFAULT_COMMON_FEATURE_COLLECTIONS: Record<CommonFeatureCollectionKey, string> = {
-  CONTACT_INFO: 'zaions_contact_info',
-  DEVELOPER_INFO: 'zaions_developer_info',
-  SOCIAL_LINKS: 'zaions_social_links',
-  ADDRESS_INFO: 'zaions_address_info',
-  PAYMENT_OPTIONS: 'zaions_payment_options',
-  SERVICES: 'zaions_services',
-  SKILLS: 'zaions_skills',
-  TESTIMONIALS: 'zaions_testimonials',
-  PROJECTS: 'zaions_projects',
+  CONTACT_INFO: 'portfolio_contact_info',
+  DEVELOPER_INFO: 'portfolio_developer_info',
+  SOCIAL_LINKS: 'portfolio_social_links',
+  ADDRESS_INFO: 'portfolio_address_info',
+  PAYMENT_OPTIONS: 'portfolio_payment_options',
+  SERVICES: 'portfolio_services',
+  SKILLS: 'portfolio_skills',
+  TESTIMONIALS: 'testimonials',
+  PROJECTS: 'portfolio_projects',
 };
 
 /**
- * Active collection names. Defaults to zaions_ prefixed collections.
+ * Active collection names. Defaults to portfolio_ prefixed collections
+ * managed from aoneahsan-portfolio admin panel.
  * Can be overridden via initSharedFeatures({ collectionNames: {...} })
- * to point to existing collections in the consumer's Firestore.
+ * if a consumer needs custom collection names.
  */
 export let COMMON_FEATURE_COLLECTIONS: Record<CommonFeatureCollectionKey, string> = {
   ...DEFAULT_COMMON_FEATURE_COLLECTIONS,
