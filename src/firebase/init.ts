@@ -16,6 +16,7 @@ import {
   getState,
   isInitialized,
 } from './config';
+import { setCommonFeatureCollectionNames } from '../types/commonFeatures';
 
 const SHARED_FEATURES_APP_NAME = 'shared-features';
 
@@ -120,6 +121,11 @@ export async function initSharedFeatures(
   // Get Firestore and Auth instances
   firestoreDb = getFirestore(firebaseApp);
   firebaseAuth = getAuth(firebaseApp);
+
+  // Apply collection name overrides if provided
+  if (config.collectionNames) {
+    setCommonFeatureCollectionNames(config.collectionNames);
+  }
 
   // Get or create device ID
   const deviceId = await getOrCreateDeviceId();

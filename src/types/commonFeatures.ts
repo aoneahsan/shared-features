@@ -20,7 +20,23 @@ import type { Timestamp } from 'firebase/firestore';
 // COLLECTION NAMES
 // ============================================================================
 
-export const COMMON_FEATURE_COLLECTIONS = {
+/**
+ * Keys for common feature collection name overrides.
+ * Consumers can pass custom collection names via initSharedFeatures()
+ * to reuse existing collections instead of creating new ones.
+ */
+export type CommonFeatureCollectionKey =
+  | 'CONTACT_INFO'
+  | 'DEVELOPER_INFO'
+  | 'SOCIAL_LINKS'
+  | 'ADDRESS_INFO'
+  | 'PAYMENT_OPTIONS'
+  | 'SERVICES'
+  | 'SKILLS'
+  | 'TESTIMONIALS'
+  | 'PROJECTS';
+
+const DEFAULT_COMMON_FEATURE_COLLECTIONS: Record<CommonFeatureCollectionKey, string> = {
   CONTACT_INFO: 'zaions_contact_info',
   DEVELOPER_INFO: 'zaions_developer_info',
   SOCIAL_LINKS: 'zaions_social_links',
@@ -30,7 +46,29 @@ export const COMMON_FEATURE_COLLECTIONS = {
   SKILLS: 'zaions_skills',
   TESTIMONIALS: 'zaions_testimonials',
   PROJECTS: 'zaions_projects',
-} as const;
+};
+
+/**
+ * Active collection names. Defaults to zaions_ prefixed collections.
+ * Can be overridden via initSharedFeatures({ collectionNames: {...} })
+ * to point to existing collections in the consumer's Firestore.
+ */
+export let COMMON_FEATURE_COLLECTIONS: Record<CommonFeatureCollectionKey, string> = {
+  ...DEFAULT_COMMON_FEATURE_COLLECTIONS,
+};
+
+/**
+ * Override collection names for common features.
+ * Called internally by initSharedFeatures when collectionNames config is provided.
+ */
+export function setCommonFeatureCollectionNames(
+  overrides: Partial<Record<CommonFeatureCollectionKey, string>>
+): void {
+  COMMON_FEATURE_COLLECTIONS = {
+    ...DEFAULT_COMMON_FEATURE_COLLECTIONS,
+    ...overrides,
+  };
+}
 
 // ============================================================================
 // CONTACT INFO

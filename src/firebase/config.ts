@@ -6,6 +6,8 @@
  * @author Ahsan Mahmood <aoneahsan@gmail.com>
  */
 
+import type { CommonFeatureCollectionKey } from '../types/commonFeatures';
+
 /**
  * Firebase configuration object
  */
@@ -89,6 +91,22 @@ export interface SharedFeaturesConfig {
    * If not specified, latest versions are used.
    */
   featureVersions?: ConsumerFeatureVersions;
+
+  /**
+   * Override collection names for common features.
+   * Use this to point shared-features at existing collections
+   * instead of creating new zaions_ prefixed ones.
+   *
+   * @example
+   * ```typescript
+   * collectionNames: {
+   *   PROJECTS: 'portfolio_projects',
+   *   CONTACT_INFO: 'portfolio_contact_info',
+   *   TESTIMONIALS: 'testimonials',
+   * }
+   * ```
+   */
+  collectionNames?: Partial<Record<CommonFeatureCollectionKey, string>>;
 }
 
 /**
