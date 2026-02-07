@@ -223,6 +223,8 @@ export type PaymentType =
   | 'upi'
   | 'venmo'
   | 'cashapp'
+  | 'platform'
+  | 'wallet'
   | 'other';
 
 export const PAYMENT_TYPE_NAMES: Record<PaymentType, string> = {
@@ -234,6 +236,8 @@ export const PAYMENT_TYPE_NAMES: Record<PaymentType, string> = {
   upi: 'UPI',
   venmo: 'Venmo',
   cashapp: 'Cash App',
+  platform: 'Platform',
+  wallet: 'Digital Wallet',
   other: 'Other',
 };
 
@@ -257,7 +261,9 @@ export interface PaymentOption {
   id: string;
   type: PaymentType;
   name: string;
+  displayName?: string;
   description?: string;
+  instructions?: string;
   icon?: string;
   details: BankDetails | CryptoDetails | Record<string, string>;
   isActive: boolean;
@@ -466,6 +472,8 @@ export type ProjectCategory =
   | 'library'
   | 'cli-tool'
   | 'browser-extension'
+  | 'extension'
+  | 'full-stack'
   | 'open-source'
   | 'client-work'
   | 'personal'
@@ -479,6 +487,8 @@ export const PROJECT_CATEGORY_NAMES: Record<ProjectCategory, string> = {
   library: 'Library / Package',
   'cli-tool': 'CLI Tool',
   'browser-extension': 'Browser Extension',
+  extension: 'Extension',
+  'full-stack': 'Full Stack',
   'open-source': 'Open Source',
   'client-work': 'Client Work',
   personal: 'Personal Project',

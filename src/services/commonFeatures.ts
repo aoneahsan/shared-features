@@ -84,6 +84,8 @@ export function clearAllCommonFeaturesCache(): void {
 // ============================================================================
 
 function docToContactInfo(docId: string, data: Record<string, unknown>): ContactInfo {
+  // Portfolio may nest timezone in location object
+  const locationObj = data.location as Record<string, unknown> | undefined;
   return {
     id: docId,
     email: (data.email as string) || '',
@@ -92,10 +94,10 @@ function docToContactInfo(docId: string, data: Record<string, unknown>): Contact
     whatsapp: data.whatsapp as string | undefined,
     telegram: data.telegram as string | undefined,
     skype: data.skype as string | undefined,
-    freelanceAvailable: (data.freelanceAvailable as boolean) ?? false,
+    freelanceAvailable: ((data.freelanceAvailable ?? data.availableForFreelance) as boolean) ?? false,
     workingHours: data.workingHours as string | undefined,
-    timezone: data.timezone as string | undefined,
-    preferredContact: data.preferredContact as ContactInfo['preferredContact'],
+    timezone: (data.timezone ?? (typeof locationObj === 'object' && locationObj ? locationObj.timezone : undefined)) as string | undefined,
+    preferredContact: (data.preferredContact ?? data.preferredContactMethod) as ContactInfo['preferredContact'],
     responseTime: data.responseTime as string | undefined,
     updatedAt: data.updatedAt as Timestamp,
   };
@@ -221,16 +223,18 @@ export function clearDeveloperInfoCache(): void {
 // ============================================================================
 
 function docToAddressInfo(docId: string, data: Record<string, unknown>): AddressInfo {
+  // Portfolio may nest address fields in addressDetails object
+  const details = (data.addressDetails as Record<string, unknown>) || {};
   return {
     id: docId,
     label: data.label as string | undefined,
-    streetAddress: data.streetAddress as string | undefined,
-    city: data.city as string | undefined,
-    state: data.state as string | undefined,
-    postalCode: data.postalCode as string | undefined,
-    country: data.country as string | undefined,
-    fullAddress: data.fullAddress as string | undefined,
-    googleMapsUrl: data.googleMapsUrl as string | undefined,
+    streetAddress: (data.streetAddress ?? details.streetAddress) as string | undefined,
+    city: (data.city ?? details.city) as string | undefined,
+    state: (data.state ?? details.state) as string | undefined,
+    postalCode: (data.postalCode ?? details.postalCode) as string | undefined,
+    country: (data.country ?? details.country) as string | undefined,
+    fullAddress: (data.fullAddress ?? data.displayAddress) as string | undefined,
+    googleMapsUrl: (data.googleMapsUrl ?? data.googleMapsLink) as string | undefined,
     isPublic: (data.isPublic as boolean) ?? false,
     updatedAt: data.updatedAt as Timestamp,
   };
@@ -274,6 +278,21 @@ export function clearAddressInfoCache(): void {
 // SOCIAL LINKS
 // ============================================================================
 
+/**
+ * Build showIn array from individual boolean fields written by portfolio admin.
+ * Portfolio writes showInFooter, showInContact, showInAbout, showInHeader as booleans.
+ */
+function buildShowInArray(data: Record<string, unknown>): SocialLink['showIn'] | undefined {
+  const hasAnyBool = 'showInFooter' in data || 'showInContact' in data || 'showInAbout' in data || 'showInHeader' in data;
+  if (!hasAnyBool) return undefined;
+  const result: SocialLink['showIn'] = [];
+  if (data.showInFooter) result.push('footer');
+  if (data.showInContact) result.push('contact');
+  if (data.showInAbout) result.push('about');
+  if (data.showInHeader) result.push('header');
+  return result.length > 0 ? result : ['footer'];
+}
+
 function docToSocialLink(docId: string, data: Record<string, unknown>): SocialLink {
   return {
     id: docId,
@@ -283,8 +302,8 @@ function docToSocialLink(docId: string, data: Record<string, unknown>): SocialLi
     username: data.username as string | undefined,
     icon: data.icon as string | undefined,
     order: (data.order as number) ?? 0,
-    isActive: (data.isActive as boolean) ?? true,
-    showIn: (data.showIn as SocialLink['showIn']) ?? ['footer'],
+    isActive: ((data.isActive ?? data.enabled) as boolean) ?? true,
+    showIn: (data.showIn as SocialLink['showIn']) ?? buildShowInArray(data) ?? ['footer'],
     updatedAt: data.updatedAt as Timestamp,
   };
 }
@@ -344,10 +363,12 @@ function docToPaymentOption(docId: string, data: Record<string, unknown>): Payme
     id: docId,
     type: data.type as PaymentOption['type'],
     name: (data.name as string) || '',
+    displayName: data.displayName as string | undefined,
     description: data.description as string | undefined,
+    instructions: data.instructions as string | undefined,
     icon: data.icon as string | undefined,
     details: (data.details as PaymentOption['details']) || {},
-    isActive: (data.isActive as boolean) ?? true,
+    isActive: ((data.isActive ?? data.enabled) as boolean) ?? true,
     isPrimary: (data.isPrimary as boolean) ?? false,
     order: (data.order as number) ?? 0,
     updatedAt: data.updatedAt as Timestamp,
@@ -537,18 +558,18 @@ export function clearSkillsCache(): void {
 function docToTestimonial(docId: string, data: Record<string, unknown>): Testimonial {
   return {
     id: docId,
-    authorName: (data.authorName as string) || '',
-    authorTitle: data.authorTitle as string | undefined,
-    authorCompany: data.authorCompany as string | undefined,
-    authorAvatar: data.authorAvatar as string | undefined,
-    authorLinkedin: data.authorLinkedin as string | undefined,
-    content: (data.content as string) || '',
+    authorName: ((data.authorName ?? data.name) as string) || '',
+    authorTitle: (data.authorTitle ?? data.title) as string | undefined,
+    authorCompany: (data.authorCompany ?? data.company) as string | undefined,
+    authorAvatar: (data.authorAvatar ?? data.avatar) as string | undefined,
+    authorLinkedin: (data.authorLinkedin ?? data.profileUrl) as string | undefined,
+    content: ((data.content ?? data.text) as string) || '',
     shortContent: data.shortContent as string | undefined,
     rating: data.rating as number | undefined,
     projectName: data.projectName as string | undefined,
     projectUrl: data.projectUrl as string | undefined,
     date: data.date as Timestamp | undefined,
-    isActive: (data.isActive as boolean) ?? true,
+    isActive: ((data.isActive ?? data.enabled) as boolean) ?? true,
     isFeatured: (data.isFeatured as boolean) ?? false,
     order: (data.order as number) ?? 0,
     updatedAt: data.updatedAt as Timestamp,
@@ -605,24 +626,43 @@ export function clearTestimonialsCache(): void {
 // PROJECTS
 // ============================================================================
 
+/**
+ * Build ProjectLink[] from flat URL fields written by portfolio admin.
+ * Portfolio writes liveUrl, githubUrl, playStoreUrl, etc. as individual string fields.
+ */
+function buildLinksFromFlatUrls(data: Record<string, unknown>): Project['links'] | undefined {
+  const links: NonNullable<Project['links']> = [];
+  if (data.liveUrl) links.push({ type: 'live', url: data.liveUrl as string });
+  if (data.githubUrl) links.push({ type: 'github', url: data.githubUrl as string });
+  if (data.playStoreUrl) links.push({ type: 'playstore', url: data.playStoreUrl as string });
+  if (data.appStoreUrl) links.push({ type: 'appstore', url: data.appStoreUrl as string });
+  if (data.npmUrl) links.push({ type: 'npm', url: data.npmUrl as string });
+  if (data.docsUrl) links.push({ type: 'docs', url: data.docsUrl as string });
+  if (data.demoUrl) links.push({ type: 'demo', url: data.demoUrl as string });
+  if (data.chromeExtensionUrl) links.push({ type: 'other', url: data.chromeExtensionUrl as string, label: 'Chrome Extension' });
+  if (data.firefoxExtensionUrl) links.push({ type: 'other', url: data.firefoxExtensionUrl as string, label: 'Firefox Extension' });
+  if (data.edgeExtensionUrl) links.push({ type: 'other', url: data.edgeExtensionUrl as string, label: 'Edge Extension' });
+  return links.length > 0 ? links : undefined;
+}
+
 function docToProject(docId: string, data: Record<string, unknown>): Project {
   return {
     id: docId,
     title: (data.title as string) || '',
-    slug: (data.slug as string) || '',
-    description: (data.description as string) || '',
+    slug: ((data.slug ?? data.appIdentifier) as string) || '',
+    description: ((data.description ?? data.longDescription) as string) || '',
     shortDescription: data.shortDescription as string | undefined,
     category: data.category as Project['category'],
     status: data.status as Project['status'],
     thumbnailUrl: data.thumbnailUrl as string | undefined,
     images: data.images as string[] | undefined,
-    technologies: (data.technologies as string[]) || [],
+    technologies: ((data.technologies ?? data.techStack) as string[]) || [],
     features: data.features as string[] | undefined,
-    links: data.links as Project['links'] | undefined,
+    links: (data.links as Project['links']) ?? buildLinksFromFlatUrls(data),
     clientName: data.clientName as string | undefined,
     startDate: data.startDate as string | undefined,
     endDate: data.endDate as string | undefined,
-    isActive: (data.isActive as boolean) ?? true,
+    isActive: ((data.isActive ?? data.enabled) as boolean) ?? true,
     isFeatured: (data.isFeatured as boolean) ?? false,
     order: (data.order as number) ?? 0,
     updatedAt: data.updatedAt as Timestamp,
