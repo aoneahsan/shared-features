@@ -57,7 +57,7 @@ import {
 import { cn } from '@/lib/utils';
 import { trackPageView, trackEvent } from '@/lib/analytics';
 import { useAuth } from '@/context/AuthContext';
-import Switch from '@radix-ui/react-switch';
+import { Switch } from '@radix-ui/react-switch';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -145,7 +145,7 @@ function ProductCardSkeleton() {
 }
 
 export default function ProductsAdminPage() {
-  const { isAdmin, user } = useAuth();
+  const { isAdmin } = useAuth();
   const [products, setProducts] = useState<ProductDoc[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

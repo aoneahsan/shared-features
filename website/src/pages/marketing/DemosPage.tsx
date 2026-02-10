@@ -17,7 +17,6 @@ import {
   Star,
   Briefcase,
   Palette,
-  ArrowLeft,
   MonitorPlay,
   ChevronRight,
   MessageSquare,
@@ -29,7 +28,7 @@ import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn, copyToClipboard } from '@/lib/utils';
-import { trackPageView, trackClick, trackCodeCopy } from '@/lib/analytics';
+import { trackPageView, trackCodeCopy } from '@/lib/analytics';
 import { APP_NAME, DEVELOPER } from '@/config/constants';
 
 /* -------------------------------------------------------------------------- */
@@ -199,9 +198,9 @@ function MockAdSlider() {
 
   return (
     <div className="overflow-hidden rounded-xl">
-      <div className={cn('bg-gradient-to-r p-6 text-white transition-all duration-500', slides[active].color)}>
-        <p className="text-lg font-bold">{slides[active].title}</p>
-        <p className="mt-1 text-sm opacity-90">{slides[active].subtitle}</p>
+      <div className={cn('bg-gradient-to-r p-6 text-white transition-all duration-500', slides[active]?.color)}>
+        <p className="text-lg font-bold">{slides[active]?.title}</p>
+        <p className="mt-1 text-sm opacity-90">{slides[active]?.subtitle}</p>
         <button className="mt-3 rounded-lg bg-white/20 px-4 py-1.5 text-xs font-semibold backdrop-blur">
           Learn More
         </button>

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Disallow protected areas
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /login
+
+# Sitemap
+Sitemap: https://shared-features.zaions.com/sitemap.xml

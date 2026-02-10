@@ -980,7 +980,7 @@ export default function DocsPage() {
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
+        if (visible.length > 0 && visible[0]) {
           setActiveId(visible[0].target.id);
         }
       },

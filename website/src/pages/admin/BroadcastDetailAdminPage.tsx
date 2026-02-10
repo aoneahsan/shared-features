@@ -15,7 +15,6 @@ import {
   Bell,
   Info,
   CheckCircle,
-  AlertCircle,
   XCircle,
   Clock,
   Star,
@@ -213,8 +212,8 @@ export default function BroadcastDetailAdminPage() {
     );
   }
 
-  const typeColors = broadcast ? (TYPE_COLORS[broadcast.type] ?? TYPE_COLORS.info) : TYPE_COLORS.info;
-  const TypeIcon = broadcast ? (TYPE_ICONS[broadcast.type] ?? Info) : Info;
+  const typeColors = (broadcast && broadcast.type in TYPE_COLORS ? TYPE_COLORS[broadcast.type] : TYPE_COLORS.info)!;
+  const TypeIcon = (broadcast && broadcast.type in TYPE_ICONS ? TYPE_ICONS[broadcast.type] : Info)!;
 
   return (
     <div className="min-h-screen bg-surface-50">

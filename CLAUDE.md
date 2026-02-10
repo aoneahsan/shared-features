@@ -118,7 +118,34 @@ initSharedFeatures({
 - TypeScript declarations must be generated
 - Both ESM and CJS outputs required
 
-**Last Updated**: 2026-02-05
+**Last Updated**: 2026-02-10
+
+---
+
+## Website
+
+**Location**: `/website`
+**Port**: 5944
+**Stack**: React 19 + Vite 7 + Tailwind v4 + Radix UI + D3.js
+
+### Website Features
+- 47 total pages (Marketing, Dashboard, Admin)
+- Full admin panel managing all 15 Firestore collections
+- Google OAuth authentication (admin: aoneahsan@gmail.com)
+- 6 D3.js analytics charts
+- Complete documentation with code examples
+- Interactive component demos
+- SEO optimized (sitemap.xml, robots.txt, meta tags)
+
+### Website Commands
+```bash
+cd website && yarn dev    # Start dev server on port 5944
+cd website && yarn build  # Build for production
+```
+
+### Tracking
+- **Plan**: `docs/website-plan/WEBSITE-MASTER-PLAN.md`
+- **Tracker**: `docs/tracking/website-implementation-tracker.json`
 
 ---
 
@@ -126,6 +153,7 @@ initSharedFeatures({
 
 | Date | Version | Notes |
 |------|---------|-------|
+| 2026-02-10 | 0.1.7 | Added complete website with 47 pages, admin panel for all collections, D3 analytics |
 | 2026-02-07 | 0.1.6 | Added portfolio field name fallbacks in docTo* functions, new types (platform/wallet PaymentType, extension/full-stack ProjectCategory, displayName/instructions on PaymentOption) |
 | 2026-02-05 | 0.1.0 | Added all common features (contact, developer, social, address, payment, services, skills, testimonials) |
 | 2026-02-05 | 0.0.9 | Added Feature Flags System |

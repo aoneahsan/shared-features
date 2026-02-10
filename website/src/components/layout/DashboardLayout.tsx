@@ -42,10 +42,8 @@ export function DashboardLayout() {
     if (!location.hash) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
-  }, [location.pathname]);
-
-  useEffect(() => {
     setSidebarOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   const handleLogout = async () => {

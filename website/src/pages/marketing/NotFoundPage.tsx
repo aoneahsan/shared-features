@@ -25,7 +25,7 @@ const rotateAnimation = {
   transition: {
     duration: 20,
     repeat: Infinity,
-    ease: 'linear',
+    ease: 'linear' as const,
   },
 };
 

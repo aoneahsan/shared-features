@@ -13,7 +13,6 @@ import {
   Settings,
   Monitor,
   Phone,
-  Mail,
   User,
   Share2,
   MapPin,
@@ -337,9 +336,11 @@ export default function HomePage() {
   }
 
   async function handleCopyCode() {
-    const success = await copyToClipboard(CODE_TABS[activeTab].code);
+    const tab = CODE_TABS[activeTab];
+    if (!tab) return;
+    const success = await copyToClipboard(tab.code);
     if (success) {
-      trackCodeCopy(`code_preview_${CODE_TABS[activeTab].label.toLowerCase()}`);
+      trackCodeCopy(`code_preview_${tab.label.toLowerCase()}`);
     }
   }
 
@@ -579,7 +580,7 @@ export default function HomePage() {
               {/* Code content */}
               <div className="p-5 overflow-x-auto">
                 <div className="min-w-0">
-                  {CODE_TABS[activeTab].highlighted}
+                  {CODE_TABS[activeTab]?.highlighted}
                 </div>
               </div>
             </div>

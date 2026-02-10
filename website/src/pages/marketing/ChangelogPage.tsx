@@ -335,7 +335,7 @@ export default function ChangelogPage() {
                   Changelog
                 </h1>
                 <p className="font-body text-sm text-surface-500">
-                  {CHANGELOG.length} releases &middot; Latest v{CHANGELOG[0].version}
+                  {CHANGELOG.length} releases &middot; Latest v{CHANGELOG[0]?.version ?? '0.0.0'}
                 </p>
               </div>
             </div>

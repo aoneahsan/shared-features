@@ -32,7 +32,6 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  CardFooter,
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -55,7 +54,7 @@ import {
 import { cn } from '@/lib/utils';
 import { trackPageView, trackEvent } from '@/lib/analytics';
 import { useAuth } from '@/context/AuthContext';
-import Switch from '@radix-ui/react-switch';
+import { Switch } from '@radix-ui/react-switch';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';

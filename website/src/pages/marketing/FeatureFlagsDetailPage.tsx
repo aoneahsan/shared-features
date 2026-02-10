@@ -11,10 +11,6 @@ import {
   Wrench,
   Smartphone,
   AlertCircle,
-  Shield,
-  Globe,
-  Clock,
-  Eye,
   Copy,
   Check,
   Home,
@@ -32,9 +28,8 @@ import {
 } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
 import { trackPageView, trackClick, trackCodeCopy } from '@/lib/analytics';
 import { copyToClipboard } from '@/lib/utils';
 

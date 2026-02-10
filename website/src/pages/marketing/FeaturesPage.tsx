@@ -19,15 +19,6 @@ import {
   Check,
   X,
   Layers,
-  Zap,
-  Shield,
-  BarChart3,
-  Clock,
-  Target,
-  Bell,
-  Sliders,
-  Eye,
-  Globe,
 } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';

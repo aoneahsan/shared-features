@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { trackPageView, trackClick } from '@/lib/analytics';
@@ -346,7 +346,7 @@ export default function CommonFeaturesDetailPage() {
                         </Badge>
                         {feature.component && (
                           <Badge size="sm" className="bg-accent-50 text-accent-700 font-mono">
-                            {feature.component.includes(',') ? feature.component.split(',')[0].trim() : feature.component}
+                            {feature.component.includes(',') ? feature.component.split(',')[0]?.trim() : feature.component}
                           </Badge>
                         )}
                         <Badge size="sm" variant="outline" className="font-mono text-xs">

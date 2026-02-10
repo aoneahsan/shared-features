@@ -8,7 +8,6 @@ import {
   Database,
   ShieldCheck,
   CheckCircle2,
-  XCircle,
   Copy,
   Check,
   AlertTriangle,
@@ -19,7 +18,7 @@ import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { APP_NAME, DEVELOPER } from '@/config/constants';
+import { DEVELOPER } from '@/config/constants';
 import { trackPageView, trackClick } from '@/lib/analytics';
 import { copyToClipboard } from '@/lib/utils';
 

@@ -7,7 +7,6 @@ import {
   ChevronRight,
   Bell,
   AlertTriangle,
-  Info,
   MessageSquare,
   PanelTop,
   Maximize,
@@ -15,14 +14,10 @@ import {
   Globe,
   Clock,
   Target,
-  Shield,
   Eye,
   Copy,
   Check,
   Home,
-  Smartphone,
-  Users,
-  Zap,
 } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';

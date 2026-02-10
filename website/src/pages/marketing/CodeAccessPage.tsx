@@ -4,7 +4,6 @@ import {
   Github,
   Package,
   Mail,
-  Shield,
   CheckCircle2,
   Terminal,
   Users,
@@ -14,7 +13,6 @@ import {
   ChevronUp,
   Copy,
   Check,
-  FileCode2,
   Scale,
   ExternalLink,
 } from 'lucide-react';
@@ -22,7 +20,7 @@ import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { APP_NAME, DEVELOPER, GITHUB_URL, NPM_URL } from '@/config/constants';
+import { APP_NAME, DEVELOPER, NPM_URL } from '@/config/constants';
 import { trackPageView, trackClick } from '@/lib/analytics';
 import { cn, copyToClipboard } from '@/lib/utils';
 

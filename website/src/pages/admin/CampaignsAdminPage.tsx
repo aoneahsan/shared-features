@@ -56,7 +56,6 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
-import { cn } from '@/lib/utils';
 import { trackPageView, trackEvent } from '@/lib/analytics';
 import { useAuth } from '@/context/AuthContext';
 import { useForm, Controller } from 'react-hook-form';

@@ -10,7 +10,6 @@ import {
   Target,
   Eye,
   Layers,
-  Sliders,
   Monitor,
   Smartphone,
   Layout,
@@ -19,7 +18,6 @@ import {
   Maximize,
   MessageCircle,
   Square,
-  SlidersHorizontal,
   Gauge,
   Copy,
   Check,
@@ -27,9 +25,8 @@ import {
 } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
 import { trackPageView, trackClick, trackCodeCopy } from '@/lib/analytics';
 import { copyToClipboard } from '@/lib/utils';
 import { useState } from 'react';
