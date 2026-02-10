@@ -90,7 +90,8 @@ export type AdPlacement =
   | 'notification'
   | 'footer_slider'
   | 'sidebar_panel'
-  | 'home_banner';
+  | 'home_banner'
+  | 'topbar_banner';
 
 /**
  * Small panel variant styles
@@ -460,6 +461,7 @@ export const PLACEMENT_NAMES: Record<AdPlacement, string> = {
   footer_slider: 'Web App Footer Slider',
   sidebar_panel: 'Web App Sidebar Panel',
   home_banner: 'Home Page Banner',
+  topbar_banner: 'Topbar Banner (Dismissible)',
 };
 
 /**

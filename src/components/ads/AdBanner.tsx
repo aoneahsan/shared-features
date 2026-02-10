@@ -1,17 +1,21 @@
 /**
- * AdBanner Component (Permanent)
+ * AdBanner Component
  *
  * A sleek, modern advertising banner that showcases products.
  * Clean design with smooth animations and auto-rotation.
+ * Supports dismissible mode for topbar banners.
  *
  * @author Ahsan Mahmood <aoneahsan@gmail.com>
  */
 
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Box, Flex, Text, Button, Badge } from '@radix-ui/themes';
-import { ExternalLink, Sparkles, Check } from 'lucide-react';
+import { Box, Flex, Text, Button, Badge, IconButton } from '@radix-ui/themes';
+import { ExternalLink, Sparkles, Check, X } from 'lucide-react';
 import { useCampaigns } from '../../hooks/useCampaigns';
 import type { AdPlacement, CampaignWithProduct } from '../../types/campaigns';
+
+// Storage key for dismissed banners (per session or persistent)
+const DISMISSED_BANNERS_KEY = 'sf_dismissed_banners';
 
 export interface AdBannerProps {
   /** Ad placement (defaults to home_banner) */
@@ -20,6 +24,10 @@ export interface AdBannerProps {
   rotationInterval?: number;
   /** Maximum number of campaigns to fetch */
   maxCampaigns?: number;
+  /** Whether the banner can be dismissed/closed by user */
+  dismissible?: boolean;
+  /** How long to remember dismissal: 'session' (until tab close) or 'persistent' (localStorage) */
+  dismissDuration?: 'session' | 'persistent';
   /** Custom CSS class */
   className?: string;
   /** Custom styles */
@@ -27,25 +35,82 @@ export interface AdBannerProps {
 }
 
 /**
- * AdBanner - Permanent promotional banner with rotation
+ * AdBanner - Promotional banner with rotation
  *
  * @example
  * ```tsx
  * <AdBanner />
  * <AdBanner placement="home_banner" rotationInterval={5000} />
+ * <AdBanner placement="topbar_banner" dismissible dismissDuration="session" />
  * ```
  */
 export function AdBanner({
   placement = 'home_banner',
   rotationInterval = 10000,
   maxCampaigns = 5,
+  dismissible = false,
+  dismissDuration = 'session',
   className,
   style,
 }: AdBannerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isDismissed, setIsDismissed] = useState(false);
   const trackedImpressions = useRef<Set<string>>(new Set());
+
+  // Check if banner was previously dismissed
+  useEffect(() => {
+    if (!dismissible) return;
+
+    const checkDismissed = () => {
+      if (dismissDuration === 'persistent') {
+        try {
+          const dismissed = localStorage.getItem(DISMISSED_BANNERS_KEY);
+          if (dismissed) {
+            const dismissedPlacements = JSON.parse(dismissed) as string[];
+            if (dismissedPlacements.includes(placement)) {
+              setIsDismissed(true);
+            }
+          }
+        } catch {
+          // Ignore localStorage errors
+        }
+      } else {
+        // Session storage
+        try {
+          const dismissed = sessionStorage.getItem(DISMISSED_BANNERS_KEY);
+          if (dismissed) {
+            const dismissedPlacements = JSON.parse(dismissed) as string[];
+            if (dismissedPlacements.includes(placement)) {
+              setIsDismissed(true);
+            }
+          }
+        } catch {
+          // Ignore sessionStorage errors
+        }
+      }
+    };
+
+    checkDismissed();
+  }, [dismissible, dismissDuration, placement]);
+
+  // Handle dismiss
+  const handleDismiss = useCallback(() => {
+    setIsDismissed(true);
+
+    const storage = dismissDuration === 'persistent' ? localStorage : sessionStorage;
+    try {
+      const existing = storage.getItem(DISMISSED_BANNERS_KEY);
+      const dismissedPlacements: string[] = existing ? JSON.parse(existing) : [];
+      if (!dismissedPlacements.includes(placement)) {
+        dismissedPlacements.push(placement);
+        storage.setItem(DISMISSED_BANNERS_KEY, JSON.stringify(dismissedPlacements));
+      }
+    } catch {
+      // Ignore storage errors
+    }
+  }, [dismissDuration, placement]);
 
   const {
     campaigns,
@@ -112,7 +177,7 @@ export function AdBanner({
     }, 200);
   }, [currentIndex]);
 
-  if (loading || campaigns.length === 0) return null;
+  if (loading || campaigns.length === 0 || isDismissed) return null;
 
   const campaign = campaigns[currentIndex];
   if (!campaign) return null;
@@ -135,6 +200,26 @@ export function AdBanner({
         ...style,
       }}
     >
+      {/* Dismiss button */}
+      {dismissible && (
+        <IconButton
+          size="1"
+          variant="ghost"
+          color="gray"
+          onClick={handleDismiss}
+          style={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            zIndex: 10,
+            cursor: 'pointer',
+          }}
+          aria-label="Close banner"
+        >
+          <X size={16} />
+        </IconButton>
+      )}
+
       {/* Colored accent bar */}
       <Box style={{ height: 3, background: displayColor }} />
 
