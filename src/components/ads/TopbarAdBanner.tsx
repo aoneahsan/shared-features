@@ -254,17 +254,18 @@ export function TopbarAdBanner({
         {/* Right: Navigation + Dismiss */}
         <Flex gap="1" align="center">
           {campaigns.length > 1 && (
-            <IconButton
-              size="1"
-              variant="ghost"
-              color="gray"
-              onClick={goToNext}
-              style={{ cursor: 'pointer' }}
-              aria-label="Next ad"
-              display={{ initial: 'none', sm: 'flex' }}
-            >
-              <ChevronRight size={16} />
-            </IconButton>
+            <Box display={{ initial: 'none', sm: 'block' }}>
+              <IconButton
+                size="1"
+                variant="ghost"
+                color="gray"
+                onClick={goToNext}
+                style={{ cursor: 'pointer' }}
+                aria-label="Next ad"
+              >
+                <ChevronRight size={16} />
+              </IconButton>
+            </Box>
           )}
           <IconButton
             size="1"

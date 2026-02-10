@@ -191,17 +191,18 @@ export function AdCarousel({
           >
             {/* Left arrow (desktop) */}
             {campaigns.length > 1 && (
-              <IconButton
-                size="2"
-                variant="ghost"
-                color="gray"
-                onClick={goToPrev}
-                style={{ cursor: 'pointer', flexShrink: 0 }}
-                aria-label="Previous"
-                display={{ initial: 'none', sm: 'flex' }}
-              >
-                <ChevronLeft size={20} />
-              </IconButton>
+              <Box display={{ initial: 'none', sm: 'block' }} style={{ flexShrink: 0 }}>
+                <IconButton
+                  size="2"
+                  variant="ghost"
+                  color="gray"
+                  onClick={goToPrev}
+                  style={{ cursor: 'pointer' }}
+                  aria-label="Previous"
+                >
+                  <ChevronLeft size={20} />
+                </IconButton>
+              </Box>
             )}
 
             {/* Content */}
@@ -276,17 +277,18 @@ export function AdCarousel({
 
             {/* Right arrow (desktop) */}
             {campaigns.length > 1 && (
-              <IconButton
-                size="2"
-                variant="ghost"
-                color="gray"
-                onClick={goToNext}
-                style={{ cursor: 'pointer', flexShrink: 0 }}
-                aria-label="Next"
-                display={{ initial: 'none', sm: 'flex' }}
-              >
-                <ChevronRight size={20} />
-              </IconButton>
+              <Box display={{ initial: 'none', sm: 'block' }} style={{ flexShrink: 0 }}>
+                <IconButton
+                  size="2"
+                  variant="ghost"
+                  color="gray"
+                  onClick={goToNext}
+                  style={{ cursor: 'pointer' }}
+                  aria-label="Next"
+                >
+                  <ChevronRight size={20} />
+                </IconButton>
+              </Box>
             )}
           </Flex>
 
