@@ -51,6 +51,7 @@ const TestimonialsAdminPage = lazy(() => import('@/pages/admin/TestimonialsAdmin
 const ProjectsAdminPage = lazy(() => import('@/pages/admin/ProjectsAdminPage'));
 const AnalyticsAdminPage = lazy(() => import('@/pages/admin/AnalyticsAdminPage'));
 const ImpressionsAdminPage = lazy(() => import('@/pages/admin/ImpressionsAdminPage'));
+const SeedDataPage = lazy(() => import('@/pages/admin/SeedDataPage'));
 
 const NotFoundPage = lazy(() => import('@/pages/marketing/NotFoundPage'));
 
@@ -122,6 +123,7 @@ export const router = createBrowserRouter([
           { path: '/admin/projects', element: <ProjectsAdminPage /> },
           { path: '/admin/analytics', element: <AnalyticsAdminPage /> },
           { path: '/admin/impressions', element: <ImpressionsAdminPage /> },
+          { path: '/admin/seed', element: <SeedDataPage /> },
         ],
       },
     ],

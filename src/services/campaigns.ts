@@ -254,30 +254,72 @@ export async function fetchCampaigns(
 export async function fetchActiveCampaigns(
   placement: AdPlacement
 ): Promise<CampaignWithProduct[]> {
+  const config = getConfig();
   const now = Timestamp.now();
 
   const campaigns = await fetchCampaigns({ status: 'active' });
 
+  // Debug logging in development
+  if (config.debug) {
+    console.log(`[shared-features] fetchActiveCampaigns for placement: ${placement}`);
+    console.log(`[shared-features] Current project: ${config.projectId}`);
+    console.log(`[shared-features] Found ${campaigns.length} active campaigns`);
+  }
+
   // Ensure products are loaded
   if (!productsCache || productsCache.size === 0) {
     await fetchProducts();
+    if (config.debug) {
+      console.log(`[shared-features] Loaded ${productsCache?.size || 0} products`);
+    }
   }
 
   // Filter by placement and date range
   const eligible = campaigns.filter((c) => {
     // Placement check
-    if (!c.placements.includes(placement)) return false;
+    if (!c.placements.includes(placement)) {
+      if (config.debug) {
+        console.log(`[shared-features] Campaign ${c.id} excluded: wrong placement`);
+      }
+      return false;
+    }
 
     // Date range check
-    if (c.startDate.toMillis() > now.toMillis()) return false;
-    if (c.endDate && c.endDate.toMillis() < now.toMillis()) return false;
+    if (c.startDate.toMillis() > now.toMillis()) {
+      if (config.debug) {
+        console.log(`[shared-features] Campaign ${c.id} excluded: hasn't started yet`);
+      }
+      return false;
+    }
+    if (c.endDate && c.endDate.toMillis() < now.toMillis()) {
+      if (config.debug) {
+        console.log(`[shared-features] Campaign ${c.id} excluded: has ended`);
+      }
+      return false;
+    }
 
     // Max impressions check
-    if (c.maxImpressions !== null && c.totalImpressions >= c.maxImpressions)
+    if (c.maxImpressions !== null && c.totalImpressions >= c.maxImpressions) {
+      if (config.debug) {
+        console.log(`[shared-features] Campaign ${c.id} excluded: max impressions reached`);
+      }
       return false;
+    }
+
+    // excludeProductUsers check - don't show ads for the current product on its own site
+    if (c.excludeProductUsers && c.productId === config.projectId) {
+      if (config.debug) {
+        console.log(`[shared-features] Campaign ${c.id} excluded: excludeProductUsers enabled for current project`);
+      }
+      return false;
+    }
 
     return true;
   });
+
+  if (config.debug) {
+    console.log(`[shared-features] ${eligible.length} campaigns eligible after filtering`);
+  }
 
   // Resolve products
   const result: CampaignWithProduct[] = [];
@@ -286,7 +328,13 @@ export async function fetchActiveCampaigns(
     const product = await getProductById(campaign.productId);
     if (product && product.enabled) {
       result.push({ ...campaign, product });
+    } else if (config.debug) {
+      console.log(`[shared-features] Campaign ${campaign.id} excluded: product not found or disabled (productId: ${campaign.productId})`);
     }
+  }
+
+  if (config.debug) {
+    console.log(`[shared-features] Returning ${result.length} campaigns with products`);
   }
 
   return result;
