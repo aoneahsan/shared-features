@@ -192,22 +192,35 @@ export interface SocialLink {
 // ADDRESS INFO
 // ============================================================================
 
+export interface AddressCoordinates {
+  lat: number;
+  lng: number;
+}
+
 export interface AddressInfo {
   id: string;
   label?: string;
   streetAddress?: string;
+  apartment?: string;
   city?: string;
   state?: string;
   postalCode?: string;
   country?: string;
+  landmark?: string;
   fullAddress?: string;
   googleMapsUrl?: string;
+  googleMapsEmbedUrl?: string;
+  coordinates?: AddressCoordinates;
+  showMap: boolean;
   isPublic: boolean;
+  workingHours?: string;
+  additionalInfo?: string;
   updatedAt: Timestamp;
 }
 
 export const DEFAULT_ADDRESS_INFO: Omit<AddressInfo, 'id' | 'updatedAt'> = {
   isPublic: false,
+  showMap: false,
 };
 
 // ============================================================================

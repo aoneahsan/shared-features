@@ -225,17 +225,27 @@ export function clearDeveloperInfoCache(): void {
 function docToAddressInfo(docId: string, data: Record<string, unknown>): AddressInfo {
   // Portfolio may nest address fields in addressDetails object
   const details = (data.addressDetails as Record<string, unknown>) || {};
+  const coords = data.coordinates as { lat?: number; lng?: number } | undefined;
   return {
     id: docId,
     label: data.label as string | undefined,
     streetAddress: (data.streetAddress ?? details.streetAddress) as string | undefined,
+    apartment: (data.apartment ?? details.apartment) as string | undefined,
     city: (data.city ?? details.city) as string | undefined,
     state: (data.state ?? details.state) as string | undefined,
     postalCode: (data.postalCode ?? details.postalCode) as string | undefined,
     country: (data.country ?? details.country) as string | undefined,
+    landmark: (data.landmark ?? details.landmark) as string | undefined,
     fullAddress: (data.fullAddress ?? data.displayAddress) as string | undefined,
     googleMapsUrl: (data.googleMapsUrl ?? data.googleMapsLink) as string | undefined,
+    googleMapsEmbedUrl: data.googleMapsEmbedUrl as string | undefined,
+    coordinates: coords && typeof coords.lat === 'number' && typeof coords.lng === 'number'
+      ? { lat: coords.lat, lng: coords.lng }
+      : undefined,
+    showMap: (data.showMap as boolean) ?? false,
     isPublic: (data.isPublic as boolean) ?? false,
+    workingHours: data.workingHours as string | undefined,
+    additionalInfo: data.additionalInfo as string | undefined,
     updatedAt: data.updatedAt as Timestamp,
   };
 }

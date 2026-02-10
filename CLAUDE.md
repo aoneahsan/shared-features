@@ -1,7 +1,7 @@
 # shared-features Package
 
 **Package Name**: `shared-features`
-**Version**: 0.1.6
+**Version**: 0.1.7
 **NPM**: https://www.npmjs.com/package/shared-features
 
 Centralized common features for Zaions projects. Manage ads, contacts, developer info, and more from aoneahsan.com admin panel.
@@ -153,7 +153,7 @@ cd website && yarn build  # Build for production
 
 | Date | Version | Notes |
 |------|---------|-------|
-| 2026-02-10 | 0.1.7 | Added complete website with 47 pages, admin panel for all collections, D3 analytics |
+| 2026-02-10 | 0.1.7 | Extended AddressInfo type with apartment, landmark, googleMapsEmbedUrl, showMap, workingHours, additionalInfo, coordinates; Website with 47 pages |
 | 2026-02-07 | 0.1.6 | Added portfolio field name fallbacks in docTo* functions, new types (platform/wallet PaymentType, extension/full-stack ProjectCategory, displayName/instructions on PaymentOption) |
 | 2026-02-05 | 0.1.0 | Added all common features (contact, developer, social, address, payment, services, skills, testimonials) |
 | 2026-02-05 | 0.0.9 | Added Feature Flags System |
