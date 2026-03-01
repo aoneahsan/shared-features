@@ -1,0 +1,5 @@
+platforms:
+  android:
+    packageName: com.aoneahsan.sharedfeatures
+  ios:
+    bundleId: com.aoneahsan.sharedfeatures
