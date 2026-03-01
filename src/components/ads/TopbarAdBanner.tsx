@@ -164,6 +164,15 @@ export function TopbarAdBanner({
     }, 200);
   }, [campaigns.length, resetTimer]);
 
+  // Hover handlers for pause functionality - must be before early returns (hooks rules)
+  const handleMouseEnter = useCallback(() => {
+    setIsPaused(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsPaused(false);
+  }, []);
+
   if (loading || campaigns.length === 0 || isDismissed) return null;
 
   const campaign = campaigns[currentIndex];
@@ -175,15 +184,6 @@ export function TopbarAdBanner({
   const displayCta = campaign.customCta || 'Learn More';
   const displayColor = campaign.customProductColor || product.color || '#3B82F6';
   const displayIcon = campaign.customIcon || product.icon64 || '';
-
-  // Hover handlers for pause functionality
-  const handleMouseEnter = useCallback(() => {
-    setIsPaused(true);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsPaused(false);
-  }, []);
 
   return (
     <Box
