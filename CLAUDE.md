@@ -1,181 +1,113 @@
 # shared-features Package
 
 **Package Name**: `shared-features`
-**Version**: 0.1.12
-**NPM**: https://www.npmjs.com/package/shared-features
+**Version**: `0.1.13`
+**NPM**: `https://www.npmjs.com/package/shared-features`
+**Last Updated**: `2026-03-24`
 
-Centralized common features for Zaions projects. Manage ads, contacts, developer info, and more from aoneahsan.com admin panel.
+Centralized shared product features for Zaions projects, including advertising campaigns, broadcasts, common profile/contact data, feature flags, analytics helpers, and consumer-facing notification event tooling.
 
----
+## Current Verified State
 
-## Features
+- Reviewed on: `2026-03-24`
+- Build: `yarn build` passed
+- Typecheck: `yarn typecheck` passed
+- Lint: `yarn lint` passed
 
-### Implemented
+## Implemented Feature Areas
 
-| Feature | Types | Service | Hook | Component |
-|---------|-------|---------|------|-----------|
+| Area | Types | Service | Hook | Components / Templates |
+| --- | --- | --- | --- | --- |
 | Feature Flags | `featureFlags.ts` | `featureFlags.ts` | `useFeatureFlags.ts` | - |
-| Advertising | `campaigns.ts` | `campaigns.ts` | `useCampaigns.ts` | `ads/*` |
-| Broadcasts | `notifications.ts` | `broadcasts.ts` | `useBroadcasts.ts` | `notifications/*` |
-| Contact Info | `commonFeatures.ts` | `commonFeatures.ts` | `useContactInfo` | `ContactCard` |
-| Developer Info | `commonFeatures.ts` | `commonFeatures.ts` | `useDeveloperInfo` | `DeveloperCard` |
-| Social Links | `commonFeatures.ts` | `commonFeatures.ts` | `useSocialLinks` | `SocialLinksBar` |
-| Address Info | `commonFeatures.ts` | `commonFeatures.ts` | `useAddressInfo` | `AddressCard` |
-| Payment Options | `commonFeatures.ts` | `commonFeatures.ts` | `usePaymentOptions` | - |
-| Services | `commonFeatures.ts` | `commonFeatures.ts` | `useServices` | `ServicesGrid` |
-| Skills | `commonFeatures.ts` | `commonFeatures.ts` | `useSkills` | `SkillsDisplay` |
-| Testimonials | `commonFeatures.ts` | `commonFeatures.ts` | `useTestimonials` | `TestimonialsGrid` |
-
----
+| Advertising Campaigns | `campaigns.ts` | `campaigns.ts`, `analytics.ts` | `useCampaigns.ts` | `ads/*` |
+| Broadcasts / Notifications | `notifications.ts` | `broadcasts.ts`, `admin-notifications.ts` | `useBroadcasts.ts` | `notifications/*`, `notifications/events/*` |
+| Common Profile Data | `commonFeatures.ts` | `commonFeatures.ts`, `admin-commonFeatures.ts` | `useCommonFeatures.ts` | `components/common/*` |
+| Firebase Initialization | - | `firebase/init.ts`, `firebase/config.ts` | - | - |
+| Consumer Notification Templates | notification-related types | template helpers | - | `templates/consumer/*` |
 
 ## Package Structure
 
-```
+```text
 src/
-├── components/
-│   ├── ads/           # AdModal, AdSlider, AdBanner, etc.
-│   ├── notifications/ # BroadcastBanner, AnnouncementModal
-│   └── common/        # ContactCard, DeveloperCard, SocialLinksBar, etc.
-├── hooks/
-│   ├── useCampaigns.ts
-│   ├── useBroadcasts.ts
-│   ├── useFeatureFlags.ts
-│   └── useCommonFeatures.ts
-├── services/
-│   ├── campaigns.ts
-│   ├── broadcasts.ts
-│   ├── featureFlags.ts
-│   └── commonFeatures.ts
-├── firebase/          # init.ts, config.ts
-└── types/
-    ├── campaigns.ts
-    ├── notifications.ts
-    ├── featureFlags.ts
-    └── commonFeatures.ts
+  components/
+    ads/
+    notifications/
+    common/
+  hooks/
+  services/
+  notifications/events/
+  templates/consumer/
+  firebase/
+  types/
 ```
 
----
+## Working Rules
 
-## Firestore Collections
+- Keep docs aligned with the actual package version and verified repo state.
+- Use `yarn` as the default workflow for this package.
+- When shared modules, exports, or feature areas change, update `README.md`, this file, and the root portfolio file in the same pass.
+- Preserve the package’s role as reusable cross-project infrastructure rather than app-specific implementation.
 
-| Collection | Type | Purpose |
-|------------|------|---------|
-| `zaions_feature_flags` | Singleton | Feature toggles & versioning |
-| `zaions_campaigns` | Collection | Ad campaigns |
-| `zaions_products` | Collection | Products catalog |
-| `zaions_impressions` | Collection | Ad analytics |
-| `zaions_broadcasts` | Collection | Notifications |
-| `zaions_contact_info` | Singleton | Contact information |
-| `zaions_developer_info` | Singleton | Developer profile |
-| `zaions_social_links` | Collection | Social media links |
-| `zaions_address_info` | Singleton | Physical address |
-| `zaions_payment_options` | Collection | Payment methods |
-| `zaions_services` | Collection | Professional services |
-| `zaions_skills` | Collection | Skills list |
-| `zaions_testimonials` | Collection | Client testimonials |
+## Firestore-Oriented Data Areas
 
----
+- `zaions_feature_flags`
+- `zaions_campaigns`
+- `zaions_products`
+- `zaions_impressions`
+- `zaions_broadcasts`
+- `zaions_broadcast_events`
+- `zaions_notification_templates`
+- `zaions_contact_info`
+- `zaions_developer_info`
+- `zaions_social_links`
+- `zaions_address_info`
+- `zaions_payment_options`
+- `zaions_services`
+- `zaions_skills`
+- `zaions_testimonials`
 
-## Consumer Integration
+## Root Portfolio File Maintenance Rule
 
-```typescript
-import { initSharedFeatures } from 'shared-features';
-
-initSharedFeatures({
-  firebaseConfig: {
-    apiKey: import.meta.env.VITE_SHARED_FEATURES_API_KEY,
-    authDomain: import.meta.env.VITE_SHARED_FEATURES_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_SHARED_FEATURES_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_SHARED_FEATURES_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_SHARED_FEATURES_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_SHARED_FEATURES_APP_ID,
-    measurementId: import.meta.env.VITE_SHARED_FEATURES_MEASUREMENT_ID,
-  },
-  projectId: 'consumer-project-id',
-  projectName: 'Consumer Project Name',
-  platform: 'web',
-  featureVersions: { campaigns: 1, broadcasts: 1 },
-});
-```
-
----
-
-## Common Errors Reference
-
-**CRITICAL**: Review before making changes: `/home/ahsan/Documents/01-code/docs/troubleshooting/COMMON-ERRORS-TRACKER.md`
-
-### Error Prevention
-
-1. **NEVER Hardcode Configuration** - Consumer provides all config
-2. **React Components Must Handle Uninitialized State** - Check `isInitialized()` after hooks
-3. **Complete Firebase Config (7 Fields)** - All fields required
-
----
-
-## Build Requirements
-
-- `yarn build` must pass with 0 errors
-- TypeScript declarations must be generated
-- Both ESM and CJS outputs required
-
-**Last Updated**: 2026-02-10
-
----
+- Maintain exactly one current root portfolio info file for this package.
+- File naming format: `SHARED-FEATURES_portfolio-info_YYYY-MM-DD.md`
+- Refresh the portfolio file only after at least 7 days have passed unless a major release or material capability change happens sooner.
+- Keep at most 10 update-history records inside the portfolio file.
+- When the portfolio file changes, update `README.md` and this `CLAUDE.md` in the same pass.
 
 ## Website
 
-**Location**: `/website`
-**Port**: 5944
-**Stack**: React 19 + Vite 7 + Tailwind v4 + Radix UI + D3.js
-
-### Website Features
-- 47 total pages (Marketing, Dashboard, Admin)
-- Full admin panel managing all 15 Firestore collections
-- Google OAuth authentication (admin: aoneahsan@gmail.com)
-- 6 D3.js analytics charts
-- Complete documentation with code examples
-- Interactive component demos
-- SEO optimized (sitemap.xml, robots.txt, meta tags)
-
-### Website Commands
-```bash
-cd website && yarn dev    # Start dev server on port 5944
-cd website && yarn build  # Build for production
-```
-
-### Tracking
-- **Plan**: `docs/website-plan/WEBSITE-MASTER-PLAN.md`
-- **Tracker**: `docs/tracking/website-implementation-tracker.json`
-
----
+- Location: `/website`
+- Stack: React 19 + Vite 7 + Tailwind v4 + Radix UI + D3.js
+- Current package docs mention the website as the admin and operational layer around these shared features
 
 ## Package Update History
 
 | Date | Version | Notes |
-|------|---------|-------|
-| 2026-02-11 | 0.1.12 | Updated TopbarAdBanner (60px max) and AdCarousel (200px max): progress bar on top, dots navigation, pause on hover |
-| 2026-02-10 | 0.1.8 | Added dismissible topbar_banner placement, AdBanner now supports dismissible and dismissDuration props |
-| 2026-02-10 | 0.1.7 | Extended AddressInfo type with apartment, landmark, googleMapsEmbedUrl, showMap, workingHours, additionalInfo, coordinates; Website with 47 pages |
-| 2026-02-07 | 0.1.6 | Added portfolio field name fallbacks in docTo* functions, new types (platform/wallet PaymentType, extension/full-stack ProjectCategory, displayName/instructions on PaymentOption) |
-| 2026-02-05 | 0.1.0 | Added all common features (contact, developer, social, address, payment, services, skills, testimonials) |
-| 2026-02-05 | 0.0.9 | Added Feature Flags System |
+| --- | --- | --- |
+| 2026-03-24 | 0.1.13 | Refreshed docs, verified build/typecheck/lint, added root portfolio maintenance rule |
+| 2026-02-11 | 0.1.12 | Updated TopbarAdBanner and AdCarousel sizing/behavior |
+| 2026-02-10 | 0.1.8 | Added dismissible topbar banner placement |
+| 2026-02-10 | 0.1.7 | Extended AddressInfo and website expansion notes |
+| 2026-02-07 | 0.1.6 | Added portfolio field fallbacks and new type extensions |
+| 2026-02-05 | 0.1.0 | Added common profile/contact/service features |
+| 2026-02-05 | 0.0.9 | Added feature flags system |
 | 2026-02-02 | 0.0.8 | Full update to latest versions |
-
----
 
 ## Comprehensive Audit Record
 
 | Date | Audit Type | Status | Issues Found | Issues Resolved |
-|------|------------|--------|--------------|-----------------|
+| --- | --- | --- | --- | --- |
+| 2026-03-24 | Portfolio + Docs Refresh | Passed | 0 | 0 |
 | 2026-02-05 | Feature Addition | Passed | 0 | 0 |
 | 2026-02-02 | Package Update | Passed | 0 | 1 |
 
 ### Last Audit Details
-- **Package Manager**: yarn confirmed
-- **Dependencies**: Up to date
-- **Build**: Passes (0 errors)
-- **Lint**: Passes (0 warnings)
-- **TypeScript**: Passes (0 errors)
-- **Features**: All common features implemented
 
-### Next Audit Due: 2026-02-12 (7 days from last)
+- Package Manager: yarn confirmed
+- Dependencies: no dependency audit performed in this pass
+- Build: passes
+- Lint: passes
+- TypeScript: passes
+- Features: current feature surface reflected in docs
+
+### Next Audit Due: 2026-03-31

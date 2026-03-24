@@ -4,6 +4,33 @@
 
 Centralized common features for Zaions projects. Manage ads, notifications, contacts, and more from a single admin panel at [aoneahsan.com](https://aoneahsan.com).
 
+## Current State
+
+- Package version: `0.1.13`
+- Verified on: `2026-03-24`
+- Build: `yarn build` succeeds
+- Typecheck: `yarn typecheck` succeeds
+- Lint: `yarn lint` succeeds
+- Root portfolio info file:
+  - `SHARED-FEATURES_portfolio-info_2026-03-24.md`
+
+## Verified Package Architecture
+
+- `src/components/` contains reusable ads, notifications, and common profile UI components.
+- `src/hooks/` contains hooks for campaigns, broadcasts, common features, and feature flags.
+- `src/services/` contains campaign, broadcast, analytics, admin, and common-feature services.
+- `src/notifications/events/` contains event registry and hook tooling.
+- `src/templates/consumer/` contains consumer-facing notification templates and helpers.
+- `src/firebase/` contains Firebase init/config helpers.
+
+## Verification Commands
+
+```bash
+yarn build
+yarn typecheck
+yarn lint
+```
+
 ---
 
 ## Three Core Systems
