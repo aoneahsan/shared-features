@@ -21,7 +21,7 @@ import {
 } from 'firebase/firestore';
 import { getSharedFeaturesDb } from '../firebase/init';
 import { getConfig } from '../firebase/config';
-import { isFeatureEnabled } from './featureFlags';
+import { fetchFeatureFlags, isFeatureEnabled } from './featureFlags';
 import {
   COMMON_FEATURE_COLLECTIONS,
   type ContactInfo,
@@ -79,6 +79,11 @@ export function clearAllCommonFeaturesCache(): void {
   projectsCache = null;
 }
 
+async function ensureFeatureEnabled(featureId: Parameters<typeof isFeatureEnabled>[0]): Promise<boolean> {
+  await fetchFeatureFlags();
+  return isFeatureEnabled(featureId);
+}
+
 // ============================================================================
 // CONTACT INFO
 // ============================================================================
@@ -104,7 +109,7 @@ function docToContactInfo(docId: string, data: Record<string, unknown>): Contact
 }
 
 export async function fetchContactInfo(): Promise<ContactInfo | null> {
-  if (!isFeatureEnabled('contactInfo')) {
+  if (!(await ensureFeatureEnabled('contactInfo'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] contactInfo feature is disabled');
     return null;
@@ -174,7 +179,7 @@ function docToDeveloperInfo(docId: string, data: Record<string, unknown>): Devel
 }
 
 export async function fetchDeveloperInfo(): Promise<DeveloperInfo | null> {
-  if (!isFeatureEnabled('developerInfo')) {
+  if (!(await ensureFeatureEnabled('developerInfo'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] developerInfo feature is disabled');
     return null;
@@ -251,7 +256,7 @@ function docToAddressInfo(docId: string, data: Record<string, unknown>): Address
 }
 
 export async function fetchAddressInfo(): Promise<AddressInfo | null> {
-  if (!isFeatureEnabled('addressInfo')) {
+  if (!(await ensureFeatureEnabled('addressInfo'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] addressInfo feature is disabled');
     return null;
@@ -319,7 +324,7 @@ function docToSocialLink(docId: string, data: Record<string, unknown>): SocialLi
 }
 
 export async function fetchSocialLinks(options: FetchSocialLinksOptions = {}): Promise<SocialLink[]> {
-  if (!isFeatureEnabled('socialLinks')) {
+  if (!(await ensureFeatureEnabled('socialLinks'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] socialLinks feature is disabled');
     return [];
@@ -386,7 +391,7 @@ function docToPaymentOption(docId: string, data: Record<string, unknown>): Payme
 }
 
 export async function fetchPaymentOptions(options: FetchPaymentOptionsOptions = {}): Promise<PaymentOption[]> {
-  if (!isFeatureEnabled('paymentOptions')) {
+  if (!(await ensureFeatureEnabled('paymentOptions'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] paymentOptions feature is disabled');
     return [];
@@ -450,7 +455,7 @@ function docToService(docId: string, data: Record<string, unknown>): Service {
 }
 
 export async function fetchServices(options: FetchServicesOptions = {}): Promise<Service[]> {
-  if (!isFeatureEnabled('services')) {
+  if (!(await ensureFeatureEnabled('services'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] services feature is disabled');
     return [];
@@ -516,7 +521,7 @@ function docToSkill(docId: string, data: Record<string, unknown>): Skill {
 }
 
 export async function fetchSkills(options: FetchSkillsOptions = {}): Promise<Skill[]> {
-  if (!isFeatureEnabled('skills')) {
+  if (!(await ensureFeatureEnabled('skills'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] skills feature is disabled');
     return [];
@@ -587,7 +592,7 @@ function docToTestimonial(docId: string, data: Record<string, unknown>): Testimo
 }
 
 export async function fetchTestimonials(options: FetchTestimonialsOptions = {}): Promise<Testimonial[]> {
-  if (!isFeatureEnabled('testimonials')) {
+  if (!(await ensureFeatureEnabled('testimonials'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] testimonials feature is disabled');
     return [];
@@ -680,7 +685,7 @@ function docToProject(docId: string, data: Record<string, unknown>): Project {
 }
 
 export async function fetchProjects(options: FetchProjectsOptions = {}): Promise<Project[]> {
-  if (!isFeatureEnabled('projects')) {
+  if (!(await ensureFeatureEnabled('projects'))) {
     const config = getConfig();
     if (config.debug) console.log('[shared-features] projects feature is disabled');
     return [];
@@ -730,7 +735,7 @@ export async function fetchProjects(options: FetchProjectsOptions = {}): Promise
 }
 
 export async function fetchProjectBySlug(slug: string): Promise<Project | null> {
-  if (!isFeatureEnabled('projects')) return null;
+  if (!(await ensureFeatureEnabled('projects'))) return null;
 
   try {
     // First check cache
