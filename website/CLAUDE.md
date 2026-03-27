@@ -50,4 +50,18 @@ yarn preview   # Preview build
 
 ---
 
+## AI SEO Optimization (AIO)
+
+**Global Guide**: `~/.claude/AI-SEO-OPTIMIZATION-GUIDE.md`
+
+Optimized for AI-powered search results (ChatGPT, Claude, Perplexity, Google AI Overviews).
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| AI Crawler Access | Done | robots.txt allows GPTBot, ClaudeBot, PerplexityBot, etc. |
+| Schema Markup | Needed | Add SoftwareApplication, Organization schemas |
+| Meta Descriptions | Partial | Ensure under 160 chars, benefit-focused |
+
+---
+
 **Last Updated**: 2026-03-27

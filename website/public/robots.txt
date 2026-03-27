@@ -1,3 +1,7 @@
+# Shared Features Website - robots.txt
+# https://shared-features.zaions.com
+# Last Updated: 2026-03-27
+
 User-agent: *
 Allow: /
 
@@ -5,6 +9,79 @@ Allow: /
 Disallow: /dashboard
 Disallow: /admin
 Disallow: /login
+Disallow: /profile
 
 # Sitemap
 Sitemap: https://shared-features.zaions.com/sitemap.xml
+
+# ============================================
+# AI Search Engine Crawlers (Allow Full Access)
+# ============================================
+# Enable visibility in ChatGPT, Claude, Perplexity, Google AI Overviews
+
+# OpenAI Crawlers (ChatGPT, GPT Search)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic Crawlers (Claude AI)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Google AI (Gemini, AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl (used by many AI systems)
+User-agent: CCBot
+Allow: /
+
+# Amazon AI (Alexa, AWS AI)
+User-agent: Amazonbot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Apple AI (Siri, Apple Intelligence)
+User-agent: Applebot
+Allow: /
+
+# Microsoft AI (Copilot)
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# ============================================
+# Traditional Search Engines
+# ============================================
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+
+# ============================================
+# Blocked Crawlers (SEO Competitor Tools)
+# ============================================
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
