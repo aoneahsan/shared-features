@@ -1,111 +1,122 @@
-# AGENTS.md - Shared Features
+# AGENTS.md - shared-features
 
-> AI Agent Instructions for Shared Features Package Development
+> AI agent instructions for shared-features package development
 
-## Project Overview
-
-Shared features for Zaions projects - centralized ads, notifications, broadcasts, contacts, and cross-promotion functionality.
+## Project Identity
 
 | Property | Value |
 |----------|-------|
-| Package Name | `shared-features` |
-| Version | 0.1.13 |
+| Package | `shared-features` v0.1.13 |
 | License | MIT |
-| Repository | Private |
+| Node | >= 24.13.0 |
+| Build | Vite (library mode) + tsc declarations |
+| Repo | github.com/aoneahsan/shared-features |
 
-### Features
-- Centralized ad management (AdModal, AdSlider, AdBanner)
-- Cross-project notifications
-- Broadcast banners
-- Contact management
-- React components with Radix UI
+---
+
+## CRITICAL: File Freshness Enforcement
+
+**On EVERY session start, agents MUST:**
+1. Check `Last Updated` on root CLAUDE.md and this file
+2. If either is older than 3 days, update before doing any other work
+3. Spot-check 2-3 nested CLAUDE.md/AGENTS.md files for staleness
+4. After any doc changes, update `Last Updated` dates
+
+---
 
 ## Agent Responsibilities
 
 | Agent | Role |
 |-------|------|
-| **Claude Code** | Primary implementation. Writes code, publishes. |
-| **Codex** | Reviews, provides specs. Does NOT implement unless explicitly requested. |
+| **Claude Code** | Primary implementation, builds, publishes, updates docs |
+| **Codex** | Reviews, specs. Does NOT implement unless explicitly requested |
 
-## Setup Instructions
+## Setup & Commands
 
-### Prerequisites
-- Node.js >= 24.13.0
-- Yarn
-
-### Installation
 ```bash
-yarn install
+yarn install          # Install dependencies
+yarn build            # Vite build + type declarations
+yarn dev              # Watch mode for development
+yarn lint             # ESLint check
+yarn typecheck        # TypeScript strict check
+npm publish           # Publish to npm (after build)
 ```
 
-## Build & Test Commands
+## Code Conventions
 
-| Command | Purpose |
-|---------|---------|
-| `yarn build` | Vite build + type declarations |
-| `yarn dev` | Watch mode |
-| `yarn lint` | ESLint |
-| `yarn typecheck` | TypeScript check |
+### Module Export Pattern
 
-## Code Style & Conventions
+6 entry points - every public API must be exported through the correct path:
 
-### Module Exports
 ```typescript
-// Main
-import { SharedFeatures } from 'shared-features';
+// Main entry
+import { initSharedFeatures, getConfig } from 'shared-features';
 
-// Components
-import { AdModal, AdBanner } from 'shared-features/components';
-
-// Hooks
-import { useAds } from 'shared-features/hooks';
-
-// Services
-import { adService } from 'shared-features/services';
-
-// Types
-import type { Ad } from 'shared-features/types';
-
-// Notifications
-import { BroadcastBanner } from 'shared-features/notifications';
+// Sub-entries
+import { AdPanel, AdBanner } from 'shared-features/components';
+import { useCampaigns, useBroadcasts } from 'shared-features/hooks';
+import { getCampaigns, trackImpression } from 'shared-features/services';
+import type { Campaign, Broadcast } from 'shared-features/types';
+import { NotificationEventRegistry } from 'shared-features/notifications';
 ```
+
+### File Conventions
+
+- Max 500 lines per file
+- JSDoc on all public functions
+- Absolute imports with `@/` alias (maps to `src/`)
+- Named exports only (no default exports)
+- TypeScript strict mode enforced
 
 ### UI Framework
-- Uses Radix UI Themes
-- Lucide React icons
-- Zustand for state
 
-## Project-Specific Rules
+- **Radix UI Themes** for all UI components
+- **Lucide React** for icons
+- **Zustand** for state management
+- Components must accept Radix theme tokens, not hardcoded colors
 
-### DO NOTs
-1. **NEVER** break consuming app compatibility
-2. **NEVER** add non-optional dependencies
-3. **NEVER** expose Firebase credentials
+## Compatibility Rules (IRON-SOLID)
 
-### DOs
-1. **DO** test in consuming apps
-2. **DO** maintain Radix UI consistency
-3. **DO** update version when changing API
+1. **NEVER break consuming app imports** - All 6 export entry points must remain stable
+2. **NEVER add required peer dependencies** without major version bump
+3. **NEVER expose Firebase credentials** in code or types
+4. **NEVER bundle peer dependencies** - React, Firebase, Radix, Zustand stay external
+5. **Deprecate before removing** - Mark with `@deprecated` JSDoc, remove in next major
+6. **Test in consuming apps** before publishing any version change
 
-## Consuming Apps
-This package is used by:
-- ZTools (`com.zaions.ztools`)
-- Other Zaions projects
+## Adding New Features Workflow
+
+1. Define types in `src/types/` (or extend existing type file)
+2. Create service in `src/services/` with Firestore integration
+3. Create hook in `src/hooks/` wrapping the service
+4. Create component in `src/components/` if UI is needed
+5. Export from the correct `index.ts` files (folder + root)
+6. Update `vite.config.ts` entry points if adding new sub-entry
+7. Update `package.json` exports map if adding new sub-entry
+8. Run `yarn build && yarn typecheck && yarn lint`
+9. Update README.md, CLAUDE.md, and AGENTS.md
+
+## Firestore Collection Naming
+
+All collections use `zaions_` prefix: `zaions_feature_flags`, `zaions_campaigns`, `zaions_products`, `zaions_impressions`, `zaions_broadcasts`, `zaions_broadcast_events`, `zaions_notification_templates`, `zaions_contact_info`, `zaions_developer_info`, `zaions_social_links`, `zaions_address_info`, `zaions_payment_options`, `zaions_services`, `zaions_skills`, `zaions_testimonials`
 
 ## Testing Requirements
 
-Before publishing:
-```bash
-yarn build      # Must pass
-yarn lint       # Should pass
-yarn typecheck  # Must pass
-```
+Before every publish:
+- `yarn build` MUST pass (zero errors)
+- `yarn typecheck` MUST pass (zero errors)
+- `yarn lint` SHOULD pass (zero warnings)
+- Manual test in at least one consuming app (ZTools preferred)
 
-## Publishing
+## What NOT to Do
 
-```bash
-yarn prepublishOnly  # Builds
-npm publish
-```
+- Do not add app-specific business logic
+- Do not add runtime dependencies (everything is peer)
+- Do not create `.sh` scripts or `scripts/` folder
+- Do not modify `src/templates/` TypeScript declarations (excluded in tsconfig)
+- Do not use localStorage (use `@capacitor/preferences`)
+- Do not hardcode Firebase config values
 
-Then update consuming apps to new version.
+---
+
+**Last Updated**: 2026-04-02
