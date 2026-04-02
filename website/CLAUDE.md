@@ -54,12 +54,16 @@ yarn preview     # Preview production build
 - Admin workspace pages = **dashboard layout** with sidebar
 - Public pages stay public even when user is authenticated
 
-## SEO
+## AI SEO Optimization (AIO)
 
-- AI crawler access configured in `robots.txt` (GPTBot, ClaudeBot, PerplexityBot allowed)
-- Schema markup needed: SoftwareApplication, Organization
-- Post-build SEO: `postbuild-seo.ts` injects meta tags into static HTML
-- Global AI SEO guide: `~/.claude/AI-SEO-OPTIMIZATION-GUIDE.md`
+Global guide: `~/.claude/AI-SEO-OPTIMIZATION-GUIDE.md`
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| AI Crawler Access | Done | robots.txt allows GPTBot, ClaudeBot, PerplexityBot, etc. |
+| Schema Markup | Needed | Add SoftwareApplication, Organization schemas |
+| Meta Descriptions | Partial | Ensure under 160 chars, benefit-focused |
+| Post-build SEO | Done | `postbuild-seo.ts` injects meta tags into static HTML |
 
 ## Implementation Status
 
