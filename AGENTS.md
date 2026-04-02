@@ -24,6 +24,16 @@
 
 ---
 
+## Features
+
+- Centralized ad management (AdModal, AdSlider, AdBanner, AdCarousel, TopbarAdBanner)
+- Cross-project notifications and broadcasts
+- Broadcast banners and announcement modals
+- Contact/profile data management (9 data types)
+- React components with Radix UI + feature flag system
+
+---
+
 ## Agent Responsibilities
 
 | Agent | Role |
