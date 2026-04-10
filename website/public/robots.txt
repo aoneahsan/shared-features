@@ -1,32 +1,37 @@
 # Shared Features Website - robots.txt
 # https://shared-features.zaions.com
-# Last Updated: 2026-03-27
+# Last Updated: 2026-04-11
+
+# Sitemap (top-level, applies to all crawlers)
+Sitemap: https://shared-features.zaions.com/sitemap.xml
+
+# ============================================
+# Default rules (all crawlers)
+# ============================================
 
 User-agent: *
 Allow: /
 
-# Disallow protected areas
+# Private / auth-only routes
 Disallow: /dashboard
 Disallow: /admin
+Disallow: /admin/
 Disallow: /login
 Disallow: /profile
 
-# Sitemap
-Sitemap: https://shared-features.zaions.com/sitemap.xml
-
 # ============================================
-# AI Search Engine Crawlers (Allow Full Access)
+# AI Search Engine Crawlers (explicit allow)
 # ============================================
-# Enable visibility in ChatGPT, Claude, Perplexity, Google AI Overviews
 
-# OpenAI Crawlers (ChatGPT, GPT Search)
+# OpenAI (ChatGPT, GPT Search)
 User-agent: GPTBot
 Allow: /
+Disallow: /admin/
 
 User-agent: ChatGPT-User
 Allow: /
 
-# Anthropic Crawlers (Claude AI)
+# Anthropic (Claude AI)
 User-agent: ClaudeBot
 Allow: /
 
@@ -41,11 +46,11 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# Common Crawl (used by many AI systems)
+# Common Crawl (training data for many AI systems)
 User-agent: CCBot
 Allow: /
 
-# Amazon AI (Alexa, AWS AI)
+# Amazon AI (Alexa)
 User-agent: Amazonbot
 Allow: /
 
@@ -57,10 +62,21 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-# Microsoft AI (Copilot)
-User-agent: Bingbot
+# Cohere AI
+User-agent: cohere-ai
 Allow: /
-Crawl-delay: 1
+
+# You.com AI
+User-agent: YouBot
+Allow: /
+
+# Brave Search AI
+User-agent: BraveBot
+Allow: /
+
+# ByteDance / TikTok AI
+User-agent: Bytespider
+Allow: /
 
 # ============================================
 # Traditional Search Engines
@@ -68,13 +84,27 @@ Crawl-delay: 1
 
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
 
 User-agent: Slurp
 Allow: /
 
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
 # ============================================
-# Blocked Crawlers (SEO Competitor Tools)
+# Blocked Crawlers (scraper / competitor bots)
 # ============================================
 
 User-agent: MJ12bot
@@ -84,4 +114,10 @@ User-agent: AhrefsBot
 Disallow: /
 
 User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
 Disallow: /
