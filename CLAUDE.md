@@ -103,4 +103,30 @@ Integration guide for consumers: `AI-INTEGRATION-GUIDE.md`
 
 ---
 
+## Git Commit Strategy — ONE Commit Per Prompt (IRON-SOLID)
+
+**Never make 20/50/100 small commits for a single user request. ONE commit per prompt is the standard.**
+
+| Rule | Requirement |
+|------|-------------|
+| **Commit frequency** | ONE commit at the END of the full task, not per-file or per-change |
+| **Scope** | Complete the ENTIRE prompt/module/task fully, THEN commit everything together |
+| **NO intermediate commits** | Do NOT commit after each file edit, each module, or each small change — wait until the ENTIRE prompt is done |
+| **Push** | Always push after commit — local and server MUST be fully in sync |
+| **Conflicts** | If remote has changes: commit local first, pull (rebase), resolve conflicts, push |
+
+**Workflow at the end of every prompt:**
+1. Complete ALL work for the user's prompt — no intermediate commits during the work
+2. `git add` the relevant changed files (prefer specific files over `git add -A`)
+3. `git commit` with ONE descriptive message covering the whole task
+4. `git pull --rebase origin main` (resolve conflicts if any)
+5. `git push origin main`
+6. Confirm local and server are fully in sync before ending the response
+
+**Why:** Multiple small commits per prompt create noisy git history, make reverts harder, and are annoying to review. One clean commit per task is the standard.
+
+**Exception:** Only split commits if the user explicitly asks for separate commits, or if changes span truly independent modules that should be tracked separately.
+
+---
+
 **Last Updated**: 2026-04-02
