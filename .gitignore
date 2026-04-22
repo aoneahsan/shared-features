@@ -17,3 +17,6 @@ dist/
 # Environment
 .env
 .env.local
+
+# Firebase hosting cache (per 2026-04-22: untracked across all projects)
+.firebase/hosting.*
