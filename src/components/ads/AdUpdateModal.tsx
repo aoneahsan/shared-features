@@ -45,7 +45,7 @@ export function AdUpdateModal({
   onClose,
 }: AdUpdateModalProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const autoAdvanceRef = useRef<NodeJS.Timeout | null>(null);
+  const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const trackedImpressions = useRef<Set<string>>(new Set());
 
   const { shouldShow, currentVersion, markAsShown } = useUpdateAdModal();
