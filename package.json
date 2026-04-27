@@ -1,6 +1,6 @@
 {
   "name": "shared-features",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "engines": {
     "node": ">=24.13.0"
   },
