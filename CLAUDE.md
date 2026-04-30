@@ -129,4 +129,15 @@ Integration guide for consumers: `AI-INTEGRATION-GUIDE.md`
 
 ---
 
-**Last Updated**: 2026-04-02
+## Portfolio Info File — Weekly Update Rule (IRON-SOLID)
+
+- Maintain ONE dated portfolio info file: `SHARED-FEATURES_portfolio-info_YYYY-MM-DD.md`
+- Refresh weekly (MANDATORY); 3-day skip floor; max 10 history records
+- Required blocks: Identity & Distribution (NPM `shared-features`, consumer list), inline SVG logo, palette, Update History, Vision/Mission, Tech Stack, Best Features (modules), Hidden Facts, Resume bullets, Social angles, SEO keywords, Hashtags
+- After refresh: copy to `~/Documents/ahsan-notebook/static/assets/personal/projects-info-as-portfolio-item/packages/` and delete previous-dated version
+- Tracker: `/home/ahsan/Documents/01-code/docs/tracking/portfolio-info-files-update-tracker.json`
+- Mirrored in `AGENTS.md`
+
+---
+
+**Last Updated**: 2026-04-30
