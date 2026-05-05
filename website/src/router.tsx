@@ -26,6 +26,7 @@ const CookiePolicyPage = lazy(() => import('@/pages/marketing/CookiePolicyPage')
 const DataDeletionPage = lazy(() => import('@/pages/marketing/DataDeletionPage'));
 const SecurityPage = lazy(() => import('@/pages/marketing/SecurityPage'));
 const SitemapPage = lazy(() => import('@/pages/marketing/SitemapPage'));
+const FeedPage = lazy(() => import('@/pages/marketing/FeedPage'));
 const CodeAccessPage = lazy(() => import('@/pages/marketing/CodeAccessPage'));
 
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
@@ -79,6 +80,7 @@ export const router = createBrowserRouter([
       { path: '/data-deletion', element: <DataDeletionPage /> },
       { path: '/security', element: <SecurityPage /> },
       { path: '/sitemap', element: <SitemapPage /> },
+      { path: '/feed', element: <FeedPage /> },
       { path: '/code-access', element: <CodeAccessPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],

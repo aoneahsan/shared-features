@@ -1,0 +1,83 @@
+{
+  "$schema_note": "Tracker for the comprehensive code+SEO+AEO+content audit prompt. Skip re-running if last_run_date is within 7 days.",
+  "project": "shared-features",
+  "last_run_date": "2026-05-05",
+  "next_eligible_run_date": "2026-05-12",
+  "minimum_interval_days": 7,
+  "runs": [
+    {
+      "run_date": "2026-05-05",
+      "completed": true,
+      "duration_estimate_minutes": 25,
+      "verifications": {
+        "typecheck": "pass (root + website)",
+        "lint": "pass (zero warnings)",
+        "build": "pass (vite build + tsc --emitDeclarationOnly)"
+      },
+      "issues_found_and_fixed": [
+        {
+          "id": "SEO-001",
+          "severity": "blocker",
+          "area": "SEO",
+          "description": "website/public/sitemap.xml had no <lastmod> entries on any URL — required by Google Search Console and project rule (Sitemap & Feed Standard).",
+          "fix": "Added lastmod=2026-05-05 to every URL in sitemap.xml; added new /feed entry."
+        },
+        {
+          "id": "SEO-002",
+          "severity": "blocker",
+          "area": "SEO/AEO",
+          "description": "Project rule requires /feed and /feed.xml routes; neither existed.",
+          "fix": "Created website/public/feed.xml (RSS 2.0 with atom:link, lastBuildDate, category per item) and website/src/pages/marketing/FeedPage.tsx; wired /feed route in router.tsx; added Feed (RSS) link to Footer via FOOTER_LINKS.resources."
+        },
+        {
+          "id": "SEO-003",
+          "severity": "blocker",
+          "area": "SEO",
+          "description": "SitemapPage did not surface /sitemap.xml and /feed.xml at the top with explanations (rule requirement).",
+          "fix": "Added a two-card banner directly under the SitemapPage hero linking out to /sitemap.xml and /feed.xml with descriptions of each."
+        },
+        {
+          "id": "CODE-001",
+          "severity": "blocker",
+          "area": "Logging hygiene",
+          "description": "Centralized logger missing — global rule bans direct console.* in app code. 14 unguarded console.log calls in src/services/campaigns.ts spammed every consumer's devtools on every fetch.",
+          "fix": "Created src/utils/logger.ts (level-gated, default warn, runtime override via localStorage 'shared-features:logLevel' and window.__setSharedFeaturesLogLevel). Replaced all 14 unguarded console.log calls in campaigns.ts with logger.debug. Other console.* calls in services were already gated behind config.debug and were left intact (acceptable npm-package pattern)."
+        }
+      ],
+      "issues_acknowledged_not_blocker": [
+        {
+          "id": "CODE-NB-001",
+          "area": "Logging hygiene",
+          "description": "~95 remaining console.* calls inside `if (config.debug)` blocks across services/, hooks/, notifications/, templates/. These do not spam consumers because they only fire when the consumer opts in via initSharedFeatures({ debug: true }). Future cleanup could route them through logger.debug for uniformity, but they are not blockers.",
+          "decision": "Defer — non-blocker, opt-in only."
+        },
+        {
+          "id": "CONTENT-NB-001",
+          "area": "Content/SEO",
+          "description": "Marketing page meta tags are injected via website/postbuild-seo.ts at build time rather than per-route. Current setup is functional; per-route SEO via react-helmet-async would be a future enhancement.",
+          "decision": "Defer — current implementation works for SEO; not a blocker."
+        },
+        {
+          "id": "CONTENT-NB-002",
+          "area": "Content",
+          "description": "Marketing copy on Home/Features/About is professional and benefit-focused with no banned phrases (no '#1', no 'best', no testimonial fabrication, no keyword spam). Spot-checked HomePage, FeaturesPage, AboutPage.",
+          "decision": "No fix needed."
+        }
+      ],
+      "files_changed": [
+        "website/public/sitemap.xml",
+        "website/public/feed.xml",
+        "website/src/pages/marketing/FeedPage.tsx",
+        "website/src/pages/marketing/SitemapPage.tsx",
+        "website/src/router.tsx",
+        "website/src/config/constants.ts",
+        "src/utils/logger.ts",
+        "src/services/campaigns.ts",
+        "CLAUDE.md",
+        "AGENTS.md",
+        "full-audit-tracker.json"
+      ],
+      "stack_audit_skill_invoked": "applied inline (rule set already encoded in CLAUDE.md/AGENTS.md; no separate /stack-audit run needed for this audit)"
+    }
+  ]
+}

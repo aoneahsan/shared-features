@@ -166,4 +166,14 @@ Before every publish:
 
 ---
 
-**Last Updated**: 2026-04-30
+## Full Codebase + SEO/AEO/Content Audit
+
+- **Last run**: 2026-05-05
+- **Next eligible run**: 2026-05-12 (7-day minimum interval)
+- **Tracker**: `full-audit-tracker.json` at project root
+- Before re-running the audit prompt: read the tracker. If `last_run_date` is within 7 days, skip and tell the user.
+- Mirrored in `CLAUDE.md`
+
+---
+
+**Last Updated**: 2026-05-05

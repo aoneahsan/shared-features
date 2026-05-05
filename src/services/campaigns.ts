@@ -23,6 +23,7 @@ import {
 } from 'firebase/firestore';
 import { getSharedFeaturesDb } from '../firebase/init';
 import { getConfig } from '../firebase/config';
+import { logger } from '../utils/logger';
 import type {
   Campaign,
   CampaignWithProduct,
@@ -261,16 +262,16 @@ export async function fetchActiveCampaigns(
 
   // Debug logging in development
   if (config.debug) {
-    console.log(`[shared-features] fetchActiveCampaigns for placement: ${placement}`);
-    console.log(`[shared-features] Current project: ${config.projectId}`);
-    console.log(`[shared-features] Found ${campaigns.length} active campaigns`);
+    logger.debug(`[shared-features] fetchActiveCampaigns for placement: ${placement}`);
+    logger.debug(`[shared-features] Current project: ${config.projectId}`);
+    logger.debug(`[shared-features] Found ${campaigns.length} active campaigns`);
   }
 
   // Ensure products are loaded
   if (!productsCache || productsCache.size === 0) {
     await fetchProducts();
     if (config.debug) {
-      console.log(`[shared-features] Loaded ${productsCache?.size || 0} products`);
+      logger.debug(`[shared-features] Loaded ${productsCache?.size || 0} products`);
     }
   }
 
@@ -279,7 +280,7 @@ export async function fetchActiveCampaigns(
     // Placement check
     if (!c.placements.includes(placement)) {
       if (config.debug) {
-        console.log(`[shared-features] Campaign ${c.id} excluded: wrong placement`);
+        logger.debug(`[shared-features] Campaign ${c.id} excluded: wrong placement`);
       }
       return false;
     }
@@ -287,13 +288,13 @@ export async function fetchActiveCampaigns(
     // Date range check
     if (c.startDate.toMillis() > now.toMillis()) {
       if (config.debug) {
-        console.log(`[shared-features] Campaign ${c.id} excluded: hasn't started yet`);
+        logger.debug(`[shared-features] Campaign ${c.id} excluded: hasn't started yet`);
       }
       return false;
     }
     if (c.endDate && c.endDate.toMillis() < now.toMillis()) {
       if (config.debug) {
-        console.log(`[shared-features] Campaign ${c.id} excluded: has ended`);
+        logger.debug(`[shared-features] Campaign ${c.id} excluded: has ended`);
       }
       return false;
     }
@@ -301,7 +302,7 @@ export async function fetchActiveCampaigns(
     // Max impressions check
     if (c.maxImpressions !== null && c.totalImpressions >= c.maxImpressions) {
       if (config.debug) {
-        console.log(`[shared-features] Campaign ${c.id} excluded: max impressions reached`);
+        logger.debug(`[shared-features] Campaign ${c.id} excluded: max impressions reached`);
       }
       return false;
     }
@@ -309,7 +310,7 @@ export async function fetchActiveCampaigns(
     // excludeProductUsers check - don't show ads for the current product on its own site
     if (c.excludeProductUsers && c.productId === config.projectId) {
       if (config.debug) {
-        console.log(`[shared-features] Campaign ${c.id} excluded: excludeProductUsers enabled for current project`);
+        logger.debug(`[shared-features] Campaign ${c.id} excluded: excludeProductUsers enabled for current project`);
       }
       return false;
     }
@@ -318,7 +319,7 @@ export async function fetchActiveCampaigns(
   });
 
   if (config.debug) {
-    console.log(`[shared-features] ${eligible.length} campaigns eligible after filtering`);
+    logger.debug(`[shared-features] ${eligible.length} campaigns eligible after filtering`);
   }
 
   // Resolve products
@@ -329,12 +330,12 @@ export async function fetchActiveCampaigns(
     if (product && product.enabled) {
       result.push({ ...campaign, product });
     } else if (config.debug) {
-      console.log(`[shared-features] Campaign ${campaign.id} excluded: product not found or disabled (productId: ${campaign.productId})`);
+      logger.debug(`[shared-features] Campaign ${campaign.id} excluded: product not found or disabled (productId: ${campaign.productId})`);
     }
   }
 
   if (config.debug) {
-    console.log(`[shared-features] Returning ${result.length} campaigns with products`);
+    logger.debug(`[shared-features] Returning ${result.length} campaigns with products`);
   }
 
   return result;

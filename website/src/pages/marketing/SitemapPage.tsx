@@ -187,6 +187,39 @@ export default function SitemapPage() {
             description, or tags.
           </p>
         </motion.div>
+
+        {/* Machine-readable feeds */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          className="mx-auto mt-8 grid max-w-3xl gap-3 sm:grid-cols-2"
+        >
+          <a
+            href="/sitemap.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-start gap-3 rounded-lg border border-surface-200 bg-white p-4 hover:border-brand-400 hover:shadow-sm transition"
+          >
+            <Map className="h-5 w-5 shrink-0 text-brand-600" aria-hidden />
+            <div>
+              <div className="font-semibold text-surface-900">sitemap.xml</div>
+              <div className="text-sm text-surface-600">XML sitemap for Google Search Console and other crawlers. Lists every public URL with last-modified dates.</div>
+            </div>
+          </a>
+          <a
+            href="/feed.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-start gap-3 rounded-lg border border-surface-200 bg-white p-4 hover:border-brand-400 hover:shadow-sm transition"
+          >
+            <History className="h-5 w-5 shrink-0 text-brand-600" aria-hidden />
+            <div>
+              <div className="font-semibold text-surface-900">feed.xml</div>
+              <div className="text-sm text-surface-600">RSS 2.0 feed of releases, new modules, and product updates. Subscribe in any RSS reader to stay current.</div>
+            </div>
+          </a>
+        </motion.div>
       </Container>
 
       {/* Search */}

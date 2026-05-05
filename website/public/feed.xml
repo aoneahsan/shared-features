@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Shared Features — Updates &amp; Releases</title>
+    <link>https://shared-features.zaions.com/</link>
+    <description>Release notes, new modules, and product updates for the shared-features React + Firebase package by Zaions.</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 05 May 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://shared-features.zaions.com/feed.xml" rel="self" type="application/rss+xml" />
+
+    <item>
+      <title>v0.1.14 — Sitemap, feed, and centralized logger</title>
+      <link>https://shared-features.zaions.com/changelog</link>
+      <guid isPermaLink="false">shared-features-0.1.14</guid>
+      <pubDate>Mon, 05 May 2026 00:00:00 +0000</pubDate>
+      <category>release</category>
+      <description>sitemap.xml now ships lastmod on every URL, a public RSS feed at /feed.xml, and a configurable logger for consuming apps to silence package-level logs.</description>
+    </item>
+
+    <item>
+      <title>v0.1.13 — Profile data modules and feature flag wiring</title>
+      <link>https://shared-features.zaions.com/changelog</link>
+      <guid isPermaLink="false">shared-features-0.1.13</guid>
+      <pubDate>Wed, 30 Apr 2026 00:00:00 +0000</pubDate>
+      <category>release</category>
+      <description>Eleven common profile-data modules (contact info, developer info, address, social links, payment options, services, skills, testimonials, projects) plus per-feature flag toggles consumable via useCommonFeatures.</description>
+    </item>
+
+    <item>
+      <title>Cross-promotion advertising module</title>
+      <link>https://shared-features.zaions.com/features/advertising</link>
+      <guid isPermaLink="false">shared-features-feature-advertising</guid>
+      <pubDate>Tue, 22 Apr 2026 00:00:00 +0000</pubDate>
+      <category>feature</category>
+      <description>Run cross-promotion campaigns across Zaions products with placement targeting, impression caps, and exclude-existing-user rules.</description>
+    </item>
+
+    <item>
+      <title>Broadcasts: in-app announcements with read tracking</title>
+      <link>https://shared-features.zaions.com/features/broadcasts</link>
+      <guid isPermaLink="false">shared-features-feature-broadcasts</guid>
+      <pubDate>Mon, 14 Apr 2026 00:00:00 +0000</pubDate>
+      <category>feature</category>
+      <description>Push announcements to specific projects with per-user impression, click, and dismiss tracking out of the box.</description>
+    </item>
+
+    <item>
+      <title>Feature flags with deprecation warnings</title>
+      <link>https://shared-features.zaions.com/features/feature-flags</link>
+      <guid isPermaLink="false">shared-features-feature-flags</guid>
+      <pubDate>Mon, 07 Apr 2026 00:00:00 +0000</pubDate>
+      <category>feature</category>
+      <description>Real-time feature flag evaluation backed by Firestore, with built-in deprecation warnings when consumers reference removed flags.</description>
+    </item>
+  </channel>
+</rss>

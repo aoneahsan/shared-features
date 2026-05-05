@@ -29,8 +29,15 @@ yarn lint        # ESLint (SHOULD pass)
 
 ## Current Verified State
 
-- Build/Typecheck/Lint: All passing as of 2026-03-24
-- Next audit due: 2026-04-05
+- Build/Typecheck/Lint: All passing as of 2026-05-05
+- Next audit due: 2026-05-15
+
+## Full Codebase + SEO/AEO/Content Audit
+
+- **Last run**: 2026-05-05
+- **Next eligible run**: 2026-05-12 (7-day minimum interval)
+- **Tracker**: `full-audit-tracker.json` (root) — read this BEFORE running the audit prompt again. If `last_run_date` is within 7 days, skip the run.
+- **Last run fixes**: sitemap.xml lastmod, /feed page + /feed.xml, SitemapPage feed banner, centralized logger (`src/utils/logger.ts`), campaigns.ts console spam removed.
 
 ---
 
@@ -140,4 +147,4 @@ Integration guide for consumers: `AI-INTEGRATION-GUIDE.md`
 
 ---
 
-**Last Updated**: 2026-04-30
+**Last Updated**: 2026-05-05

@@ -44,6 +44,7 @@ export const FOOTER_LINKS = {
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
     { label: 'Sitemap', href: '/sitemap' },
+    { label: 'Feed (RSS)', href: '/feed' },
   ],
   legal: [
     { label: 'Privacy Policy', href: '/privacy' },
