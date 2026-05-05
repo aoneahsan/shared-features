@@ -20,3 +20,6 @@ dist/
 
 # Firebase hosting cache (per 2026-04-22: untracked across all projects)
 .firebase/hosting.*
+
+# Claude Code local state
+.claude/
