@@ -1,0 +1,66 @@
+{
+  "$schema": "shared-features-project-audit-tracker",
+  "description": "Resumable tracker for the shared-features project-wide audit + remediation. Read this FIRST on every re-run of the originating prompt. Find first non-completed batch in batches[], execute it end-to-end, run quality gate, update this file, stop. One batch per session.",
+  "version": 1,
+  "createdOn": "2026-05-12",
+  "owner": "Ahsan Mahmood (aoneahsan@gmail.com)",
+  "auditRoot": "/home/ahsan/Documents/01-code/projects/shared-features/docs/project-audit",
+  "genericRulesMaster": "/home/ahsan/Documents/ahsan-notebook/static/assets/txt-files-important/generic-project-rules.md",
+  "skipFloorDays": 7,
+  "skipFloorWatchedPaths": [
+    "src/",
+    "website/src/",
+    "package.json",
+    "website/package.json"
+  ],
+  "lastSuccessfulRun": null,
+  "auditPhase": {
+    "completed": "2026-05-12",
+    "summary": {
+      "alreadyCompliant": [
+        "Zero banned packages (@capacitor-firebase/crashlytics, @capacitor-firebase/performance) in either package.json",
+        "Zero hardcoded secrets (no AIza... or apps.googleusercontent.com literals in src/ or website/src/)",
+        "yarn typecheck clean at root and at website/",
+        "Website build status per docs/tracking/website-implementation-tracker.json: passing as of 2026-02-10 with 38/38 parts complete"
+      ],
+      "issuesFound": [
+        {
+          "id": "F-LOGGER",
+          "severity": "medium",
+          "title": "Raw console.* callsites in website/src/ violate centralized-logger discipline",
+          "details": "9 direct console.* calls found by grep. Of these, 4 are inside the project's local logger shim or the errorTracking init (analytics.ts inline logger, errorTracking.ts Sentry-init fallbacks) and are intentional. The other 5 are app code that should route through a centralized logger module:",
+          "callsites": [
+            "website/src/context/AuthContext.tsx:51 — console.error('Failed to fetch user document:', error)",
+            "website/src/pages/marketing/FeatureFlagsDetailPage.tsx:122 — console.log('Advertising is disabled via feature flags')",
+            "website/src/pages/dashboard/SettingsPage.tsx:117 — console.error('Failed to save settings:', err)",
+            "website/src/pages/admin/SeedDataPage.tsx:296 — console.error('Error fetching stats:', error)",
+            "website/src/pages/admin/SeedDataPage.tsx:403 — console.error('Error refreshing stats:', error)"
+          ]
+        }
+      ]
+    }
+  },
+  "batches": [
+    {
+      "id": "batch-1",
+      "name": "Centralized logger + console.* migration in website/",
+      "status": "pending",
+      "estimatedHours": 1.5,
+      "skills": ["simplify", "fix"],
+      "tasks": [
+        "Create website/src/utils/logger.ts mirroring the lifewell pattern (variadic API, default level=warn, runtime override via localStorage['sharedfeatures:logLevel'])",
+        "Migrate the 5 app-code console.* callsites in F-LOGGER (AuthContext, FeatureFlagsDetailPage, SettingsPage, SeedDataPage) to logger.*",
+        "Leave the 4 intentional callsites in analytics.ts + errorTracking.ts alone (or replace with new logger if convenient)",
+        "Add ESLint 'no-console: error' to website's eslint config with logger.ts as the only exception",
+        "Verify: yarn typecheck && yarn lint clean"
+      ]
+    }
+  ],
+  "resumeProtocol": {
+    "step1": "Open this tracker.",
+    "step2": "If lastSuccessfulRun is <7 days ago AND every batch is completed: bump verifiedAt, run yarn typecheck + yarn build at root and at website/, stop.",
+    "step3": "If any batch is in_progress: resume that batch first.",
+    "step4": "If every batch is completed: rerun the audit-phase checks (banned packages, secrets, console-discipline, typecheck, build at both root and website). If issues found, add them as new batches. If clean, set lastSuccessfulRun=today and report done.",
+    "step5": "Otherwise: pick the first pending batch, execute, commit, mark completed."
+  }
+}
