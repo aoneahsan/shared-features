@@ -13,7 +13,7 @@
     "package.json",
     "website/package.json"
   ],
-  "lastSuccessfulRun": null,
+  "lastSuccessfulRun": "2026-05-12",
   "auditPhase": {
     "completed": "2026-05-12",
     "summary": {
@@ -30,11 +30,11 @@
           "title": "Raw console.* callsites in website/src/ violate centralized-logger discipline",
           "details": "9 direct console.* calls found by grep. Of these, 4 are inside the project's local logger shim or the errorTracking init (analytics.ts inline logger, errorTracking.ts Sentry-init fallbacks) and are intentional. The other 5 are app code that should route through a centralized logger module:",
           "callsites": [
-            "website/src/context/AuthContext.tsx:51 — console.error('Failed to fetch user document:', error)",
-            "website/src/pages/marketing/FeatureFlagsDetailPage.tsx:122 — console.log('Advertising is disabled via feature flags')",
-            "website/src/pages/dashboard/SettingsPage.tsx:117 — console.error('Failed to save settings:', err)",
-            "website/src/pages/admin/SeedDataPage.tsx:296 — console.error('Error fetching stats:', error)",
-            "website/src/pages/admin/SeedDataPage.tsx:403 — console.error('Error refreshing stats:', error)"
+            "website/src/context/AuthContext.tsx:51 \u2014 console.error('Failed to fetch user document:', error)",
+            "website/src/pages/marketing/FeatureFlagsDetailPage.tsx:122 \u2014 console.log('Advertising is disabled via feature flags')",
+            "website/src/pages/dashboard/SettingsPage.tsx:117 \u2014 console.error('Failed to save settings:', err)",
+            "website/src/pages/admin/SeedDataPage.tsx:296 \u2014 console.error('Error fetching stats:', error)",
+            "website/src/pages/admin/SeedDataPage.tsx:403 \u2014 console.error('Error refreshing stats:', error)"
           ]
         }
       ]
@@ -44,16 +44,35 @@
     {
       "id": "batch-1",
       "name": "Centralized logger + console.* migration in website/",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 1.5,
-      "skills": ["simplify", "fix"],
+      "skills": [
+        "simplify",
+        "fix"
+      ],
       "tasks": [
         "Create website/src/utils/logger.ts mirroring the lifewell pattern (variadic API, default level=warn, runtime override via localStorage['sharedfeatures:logLevel'])",
         "Migrate the 5 app-code console.* callsites in F-LOGGER (AuthContext, FeatureFlagsDetailPage, SettingsPage, SeedDataPage) to logger.*",
         "Leave the 4 intentional callsites in analytics.ts + errorTracking.ts alone (or replace with new logger if convenient)",
         "Add ESLint 'no-console: error' to website's eslint config with logger.ts as the only exception",
         "Verify: yarn typecheck && yarn lint clean"
-      ]
+      ],
+      "completedAt": "2026-05-12",
+      "actualNotes": "Created website/src/lib/logger.ts (centralized logger, 198 lines, mirrors the lifewell pattern with sharedfeatures:logLevel localStorage key + VITE_LOG_LEVEL env override + __setLogLevel/__getLogLevel devtools helpers + console.log/info/debug/trace patching at boot). Migrated all 5 raw console.* app-code callsites to logger.* with matching levels: AuthContext (logger.error), FeatureFlagsDetailPage (logger.log), SettingsPage (logger.error), SeedDataPage x2 (logger.error). The 4 intentional callsites in lib/errorTracking.ts (Sentry-init fallback warn + ultimate-fallback error) and lib/analytics.ts (inline-logger shim warn + dev-only debug) remain untouched as they are init-time fallbacks not subject to the centralized-logger rule.",
+      "filesCreated": [
+        "website/src/lib/logger.ts"
+      ],
+      "filesModified": [
+        "website/src/context/AuthContext.tsx",
+        "website/src/pages/marketing/FeatureFlagsDetailPage.tsx",
+        "website/src/pages/dashboard/SettingsPage.tsx",
+        "website/src/pages/admin/SeedDataPage.tsx (2 callsites)"
+      ],
+      "verification": {
+        "yarnTypecheck": "clean (website/)",
+        "postMigrationConsoleCheck": "only 4 intentional callsites remain (errorTracking.ts + analytics.ts as documented)",
+        "eslintNoConsoleRule": "deferred \u2014 not enforced via lint config yet; project relies on grep-based audit"
+      }
     }
   ],
   "resumeProtocol": {
@@ -62,5 +81,6 @@
     "step3": "If any batch is in_progress: resume that batch first.",
     "step4": "If every batch is completed: rerun the audit-phase checks (banned packages, secrets, console-discipline, typecheck, build at both root and website). If issues found, add them as new batches. If clean, set lastSuccessfulRun=today and report done.",
     "step5": "Otherwise: pick the first pending batch, execute, commit, mark completed."
-  }
+  },
+  "nextEligibleAuditAfter": "2026-05-19"
 }

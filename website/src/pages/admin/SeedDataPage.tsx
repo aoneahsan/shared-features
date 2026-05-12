@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { logger } from '@/lib/logger';
 import {
   Database,
   ChevronRight,
@@ -293,7 +294,7 @@ export default function SeedDataPage() {
           campaigns: campaignsSnapshot.size,
         });
       } catch (error) {
-        console.error('Error fetching stats:', error);
+        logger.error('Error fetching stats:', error);
       }
     })();
   });
@@ -400,7 +401,7 @@ export default function SeedDataPage() {
         campaigns: campaignsSnapshot.size,
       });
     } catch (error) {
-      console.error('Error refreshing stats:', error);
+      logger.error('Error refreshing stats:', error);
     }
   };
 

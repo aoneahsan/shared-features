@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { logger } from '@/lib/logger';
 import { getUserDocument, createUserDocument } from '@/services/auth-service';
 import { ADMIN_EMAIL } from '@/config/constants';
 import type { UserDocument } from '@/types';
@@ -48,7 +49,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           const fetchedDoc = await getUserDocument(firebaseUser.uid);
           setUserDoc(fetchedDoc);
         } catch (error) {
-          console.error('Failed to fetch user document:', error);
+          logger.error('Failed to fetch user document:', error);
           setUserDoc(null);
         }
       } else {

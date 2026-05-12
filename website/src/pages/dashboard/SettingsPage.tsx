@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { logger } from '@/lib/logger';
 import {
   Sun,
   Moon,
@@ -114,7 +115,7 @@ export default function SettingsPage() {
         email_notifications: data.emailNotifications,
       });
     } catch (err) {
-      console.error('Failed to save settings:', err);
+      logger.error('Failed to save settings:', err);
       showToast('Failed to save settings. Please try again.');
     } finally {
       setSaving(false);

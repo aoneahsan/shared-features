@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { logger } from '@/lib/logger';
 import { motion } from 'framer-motion';
 import {
   ToggleLeft,
@@ -119,7 +120,7 @@ function App() {
 
   // Check if a specific feature is enabled
   if (!isEnabled('advertising')) {
-    console.log('Advertising is disabled via feature flags');
+    logger.log('Advertising is disabled via feature flags');
   }
 
   // Check for deprecation
