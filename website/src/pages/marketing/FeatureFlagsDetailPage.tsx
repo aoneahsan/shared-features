@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { logger } from '@/lib/logger';
 import { motion } from 'framer-motion';
 import {
   ToggleLeft,

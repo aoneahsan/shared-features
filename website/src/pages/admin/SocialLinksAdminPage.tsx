@@ -10,12 +10,6 @@ import {
   ArrowLeft,
   AlertTriangle,
   CheckCircle,
-  Github,
-  Linkedin,
-  Twitter,
-  Facebook,
-  Instagram,
-  Youtube,
   MessageCircle,
   Send,
   Globe,
@@ -23,6 +17,7 @@ import {
   ExternalLink,
   GripVertical,
 } from 'lucide-react';
+import { Github, Linkedin, Twitter, Facebook, Instagram, Youtube } from '@/components/icons/BrandIcons';
 import {
   collection,
   getDocs,

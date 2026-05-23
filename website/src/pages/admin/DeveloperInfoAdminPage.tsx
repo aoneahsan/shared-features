@@ -10,12 +10,10 @@ import {
   CheckCircle,
   ArrowLeft,
   Globe,
-  Github,
-  Linkedin,
-  Twitter,
   MapPin,
   FileText,
 } from 'lucide-react';
+import { Github, Linkedin, Twitter } from '@/components/icons/BrandIcons';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Container } from '@/components/ui/container';

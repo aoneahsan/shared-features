@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Github,
   Package,
   Mail,
   CheckCircle2,
@@ -16,6 +15,7 @@ import {
   Scale,
   ExternalLink,
 } from 'lucide-react';
+import { Github } from '@/components/icons/BrandIcons';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';

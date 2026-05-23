@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import {
   Mail,
   Phone,
-  Linkedin,
-  Github,
   Globe,
   Package,
   Copy,
@@ -14,6 +12,7 @@ import {
   Heart,
   Bug,
 } from 'lucide-react';
+import { Linkedin, Github } from '@/components/icons/BrandIcons';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';

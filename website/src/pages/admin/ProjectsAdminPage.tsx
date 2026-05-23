@@ -12,11 +12,11 @@ import {
   CheckCircle,
   Search,
   Star,
-  Github,
   Globe,
   Smartphone,
   Package,
 } from 'lucide-react';
+import { Github } from '@/components/icons/BrandIcons';
 import {
   collection,
   getDocs,

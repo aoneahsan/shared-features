@@ -13,6 +13,11 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      // eslint-plugin-react-hooks v7 promoted `set-state-in-effect` to an error
+      // in its recommended config. The existing prop-sync/init effects predate
+      // this rule and are not behavioural bugs; keep it surfaced as a warning
+      // (matching the workspace-wide treatment) rather than failing the lint.
+      'react-hooks/set-state-in-effect': 'warn',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     },

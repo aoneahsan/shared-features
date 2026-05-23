@@ -38,8 +38,8 @@ import {
   Eye,
   Map,
   Package,
-  Github,
 } from 'lucide-react';
+import { Github } from '@/components/icons/BrandIcons';
 import { Container } from '@/components/ui/container';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';

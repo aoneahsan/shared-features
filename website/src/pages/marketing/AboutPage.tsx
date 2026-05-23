@@ -7,8 +7,6 @@ import {
   Shield,
   Code2,
   ExternalLink,
-  Github,
-  Linkedin,
   Globe,
   Package,
   Layers,
@@ -17,6 +15,7 @@ import {
   Rocket,
   CheckCircle2,
 } from 'lucide-react';
+import { Github, Linkedin } from '@/components/icons/BrandIcons';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
