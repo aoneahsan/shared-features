@@ -6,7 +6,7 @@
 
 | Property | Value |
 |----------|-------|
-| Package | `shared-features` v0.1.13 |
+| Package | `shared-features` v0.1.14 |
 | License | MIT |
 | Node | >= 24.13.0 |
 | Build | Vite (library mode) + tsc declarations |
@@ -157,12 +157,19 @@ Before every publish:
 
 ## Portfolio Info File — Weekly Update Rule (IRON-SOLID)
 
-- Maintain ONE dated portfolio info file: `SHARED-FEATURES_portfolio-info_YYYY-MM-DD.md`
-- Refresh weekly (MANDATORY); 3-day skip floor; max 10 history records
-- Required blocks: Identity & Distribution, inline SVG logo, palette, Update History, Vision/Mission, Tech Stack, Best Features, Hidden Facts, Resume bullets, Social angles, SEO keywords, Hashtags
-- After refresh: copy to `~/Documents/ahsan-notebook/static/assets/personal/projects-info-as-portfolio-item/packages/` and delete previous-dated version
+- Canonical portfolio info file: `/home/ahsan/Documents/ahsan-notebook/static/assets/personal/projects-info-as-portfolio-item/packages/SHARED-FEATURES_portfolio-info_2026-05-29.md`
+- Update at least once per week (and on any material change). Keep the last-updated date in the filename.
+- Keep a max-10-entry update history inside the file. On each refresh: prepend today's row, delete the previous dated file, write the new one.
+- Required blocks: Identity & Distribution, inline SVG logo, palette, Update History, Vision/Mission, Tech Stack, Feature Catalog, Hidden Facts, Resume bullets, Social angles, SEO/AEO metadata, Hashtags
 - Tracker: `/home/ahsan/Documents/01-code/docs/tracking/portfolio-info-files-update-tracker.json`
+- Last applied: 2026-05-29
 - Mirrored in `CLAUDE.md`
+
+---
+
+## Package Upgrades: Use `npm-check-updates`
+
+For dependency upgrades use `npx -y npm-check-updates -u && yarn install` (latest STABLE), NOT `yarn upgrade --latest`. Full rule in global `~/.claude/CLAUDE.md`. Last applied: 2026-05-29
 
 ---
 
@@ -176,7 +183,7 @@ Before every publish:
 
 ---
 
-**Last Updated**: 2026-05-05
+**Last Updated**: 2026-05-29
 
 
 ---
