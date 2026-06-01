@@ -662,3 +662,12 @@ Tracking uses Capacitor Preferences (mobile) or localStorage (web).
 ## License
 
 MIT - Ahsan Mahmood <aoneahsan@gmail.com>
+
+<!-- project-links:start -->
+## Links
+
+- Live: https://www.npmjs.com/package/shared-features
+- NPM: https://www.npmjs.com/package/shared-features
+
+_URL source of truth: `01-code/projects/project-live-urls.json` (auto-generated — do not hand-edit between these markers)._
+<!-- project-links:end -->

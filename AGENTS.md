@@ -193,3 +193,12 @@ For dependency upgrades use `npx -y npm-check-updates -u && yarn install` (lates
 When the user asks "fix SEO of this project", "is this SEO ready", "why isn't this ranking", "improve AI search visibility", "submit to search engines", or similar, run the global diagnostic + fix playbook at `~/.claude/rules/seo-aeo-ranking.md` end-to-end. It captures every lesson learned across projects: GSC indexing-funnel diagnosis (Discovered/Crawled-not-indexed), per-page-uniqueness floor for programmatic sites (1000+ words, distinct title/meta, FAQ + HowTo + Article schema), SPA prerendering so AI crawlers (GPTBot, ClaudeBot, PerplexityBot) see the same content as users, robots.txt AI-bot allowlist, machine-readable files (llms.txt, pricing.md, IndexNow), third-party citation strategy (Wikipedia/Reddit/Product Hunt), and the multi-session content-enrichment workflow.
 
 **Last applied**: not yet — run the §10 drop-in fix sequence on first invocation, then update this date and any project-specific tracker (e.g. `docs/tracking/*-seo-content-tracker.json`).
+
+<!-- project-links:start -->
+## Links
+
+- Live: https://www.npmjs.com/package/shared-features
+- NPM: https://www.npmjs.com/package/shared-features
+
+_URL source of truth: `01-code/projects/project-live-urls.json` (auto-generated — do not hand-edit between these markers)._
+<!-- project-links:end -->
