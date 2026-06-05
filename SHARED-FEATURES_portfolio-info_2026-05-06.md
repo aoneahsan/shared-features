@@ -107,7 +107,6 @@ Be the centralised, contract-stable feature surface that every Ahsan/Zaions proj
 | Language | TypeScript (strict) |
 | Build | Vite (ESM + d.ts emission) |
 | Lint | ESLint |
-| Tests | Vitest (where applicable) |
 | Distribution | NPM |
 | Package Manager (local) | yarn |
 | Website Telemetry | Firebase Analytics + Amplitude + Microsoft Clarity + Google Analytics (4-platform, wired 2026-05-06) |
