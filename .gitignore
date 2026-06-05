@@ -31,4 +31,7 @@ dist/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+# Nested sub-packages (e.g. website/) also generate .yarn cache/state
+**/.yarn/install-state.gz
+**/.yarn/cache
 .pnp.*
