@@ -157,19 +157,19 @@ Before every publish:
 
 ## Portfolio Info File — Weekly Update Rule (IRON-SOLID)
 
-- Canonical portfolio info file: `/home/ahsan/Documents/ahsan-notebook/static/assets/personal/projects-info-as-portfolio-item/packages/SHARED-FEATURES_portfolio-info_2026-05-29.md`
+- Canonical portfolio info file: `/home/ahsan/Documents/ahsan-notebook/static/assets/personal/projects-info-as-portfolio-item/packages/SHARED-FEATURES_portfolio-info_2026-06-05.md`
 - Update at least once per week (and on any material change). Keep the last-updated date in the filename.
 - Keep a max-10-entry update history inside the file. On each refresh: prepend today's row, delete the previous dated file, write the new one.
 - Required blocks: Identity & Distribution, inline SVG logo, palette, Update History, Vision/Mission, Tech Stack, Feature Catalog, Hidden Facts, Resume bullets, Social angles, SEO/AEO metadata, Hashtags
 - Tracker: `/home/ahsan/Documents/01-code/docs/tracking/portfolio-info-files-update-tracker.json`
-- Last applied: 2026-05-29
+- Last applied: 2026-06-05
 - Mirrored in `CLAUDE.md`
 
 ---
 
 ## Package Upgrades: Use `npm-check-updates`
 
-For dependency upgrades use `npx -y npm-check-updates -u && yarn install` (latest STABLE), NOT `yarn upgrade --latest`. Full rule in global `~/.claude/CLAUDE.md`. Last applied: 2026-05-29
+For dependency upgrades use `npx -y npm-check-updates -u && yarn install` (latest STABLE), NOT `yarn upgrade --latest`. Full rule in global `~/.claude/CLAUDE.md`. Last applied: 2026-06-05 (no-op — all deps already current). Holds: firebase 12.14, zustand major 5.
 
 ---
 
@@ -183,7 +183,7 @@ For dependency upgrades use `npx -y npm-check-updates -u && yarn install` (lates
 
 ---
 
-**Last Updated**: 2026-05-29
+**Last Updated**: 2026-06-05
 
 
 ---

@@ -29,7 +29,8 @@ yarn lint        # ESLint (SHOULD pass)
 
 ## Current Verified State
 
-- Build/Typecheck: All passing as of 2026-05-29 (post dep-bump: ncu minor/patch — firebase 12.14, eslint 10.4.1, typescript-eslint 8.60, lucide-react 1.17, zustand 5.0.14). ESM+CJS+d.ts dist emitted clean.
+- Build/Typecheck/Lint: All passing as of 2026-06-05 (v0.1.14). `npm-check-updates` reported all deps already at latest stable (no-op — last real bump 2026-05-29: firebase 12.14, eslint 10.4.1, typescript-eslint 8.60, lucide-react 1.17, zustand 5.0.14). `yarn typecheck` 0 errors, `yarn build` clean (ESM + CJS + d.ts, 45 modules transformed), `yarn lint` 0 warnings. No `test` script defined (no automated test suite).
+- Holds (do not bump): firebase pinned at 12.14, zustand at major 5.
 - Next audit due: 2026-05-15
 
 ## Full Codebase + SEO/AEO/Content Audit
@@ -138,23 +139,23 @@ Integration guide for consumers: `AI-INTEGRATION-GUIDE.md`
 
 ## Portfolio Info File — Weekly Update Rule (IRON-SOLID)
 
-- Canonical portfolio info file: `/home/ahsan/Documents/ahsan-notebook/static/assets/personal/projects-info-as-portfolio-item/packages/SHARED-FEATURES_portfolio-info_2026-05-29.md`
+- Canonical portfolio info file: `/home/ahsan/Documents/ahsan-notebook/static/assets/personal/projects-info-as-portfolio-item/packages/SHARED-FEATURES_portfolio-info_2026-06-05.md`
 - Update at least once per week (and on any material change). Keep the last-updated date in the filename.
 - Keep a max-10-entry update history inside the file. On each refresh: prepend today's row, delete the previous dated file, write the new one.
 - Required blocks: Identity & Distribution (NPM `shared-features`, consumer list), inline SVG logo, palette, Update History, Vision/Mission, Tech Stack, Feature Catalog (modules), Hidden Facts, Resume bullets, Social angles, SEO/AEO metadata, Hashtags
 - Tracker: `/home/ahsan/Documents/01-code/docs/tracking/portfolio-info-files-update-tracker.json`
-- Last applied: 2026-05-29
+- Last applied: 2026-06-05
 - Mirrored in `AGENTS.md`
 
 ---
 
 ## Package Upgrades: Use `npm-check-updates`
 
-For dependency upgrades use `npx -y npm-check-updates -u && yarn install` (latest STABLE), NOT `yarn upgrade --latest`. Full rule in global `~/.claude/CLAUDE.md`. Last applied: 2026-05-29
+For dependency upgrades use `npx -y npm-check-updates -u && yarn install` (latest STABLE), NOT `yarn upgrade --latest`. Full rule in global `~/.claude/CLAUDE.md`. Last applied: 2026-06-05 (no-op — all deps already current). Holds: firebase 12.14, zustand major 5.
 
 ---
 
-**Last Updated**: 2026-05-29
+**Last Updated**: 2026-06-05
 
 
 ---
