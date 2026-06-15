@@ -106,6 +106,5 @@
     "vite": "^8.0.16",
     "vite-plugin-dts": "^5.0.2",
     "zustand": "^5.0.14"
-  },
-  "packageManager": "yarn@4.14.1"
+  }
 }

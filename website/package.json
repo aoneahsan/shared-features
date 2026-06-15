@@ -3,7 +3,6 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "packageManager": "yarn@4.14.1",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && npx tsx postbuild-seo.ts",
