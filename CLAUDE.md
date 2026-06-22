@@ -3,6 +3,10 @@
 **Package**: `shared-features` v0.1.14 | **NPM**: npmjs.com/package/shared-features
 **Purpose**: Centralized shared product features for Zaions projects (ads, broadcasts, profile data, feature flags, analytics, notification events)
 
+## Task Speed Over Docs (IRON-SOLID — BEHAVIORAL)
+
+Finish the real task fast + correctly FIRST; docs/trackers/sync are a footnote (≤~20% of effort) — never let recording outpace the fix. HARD STOP when doc work outpaces the change → ship, then ONE line if anything. No new summary/status/completion files unless asked; edit/delete over add; delete stale docs. Full rule: `~/.claude/CLAUDE.md`. (Est. 2026-06-19)
+
 ---
 
 ## CRITICAL: File Freshness Rule (IRON-SOLID)
