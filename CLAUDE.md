@@ -33,9 +33,17 @@ yarn lint        # ESLint (SHOULD pass)
 
 ## Current Verified State
 
-- Build/Typecheck/Lint: All passing as of 2026-06-05 (v0.1.14). `npm-check-updates` reported all deps already at latest stable (no-op — last real bump 2026-05-29: firebase 12.14, eslint 10.4.1, typescript-eslint 8.60, lucide-react 1.17, zustand 5.0.14). `yarn typecheck` 0 errors, `yarn build` clean (ESM + CJS + d.ts, 45 modules transformed), `yarn lint` 0 warnings. No `test` script defined (no automated test suite).
-- Holds (do not bump): firebase pinned at 12.14, zustand at major 5.
-- Next audit due: 2026-05-15
+- Build/Typecheck/Lint: All passing as of 2026-06-23 (v0.1.14). `yarn typecheck` 0 errors, `yarn build` clean (ESM + CJS + d.ts, 6 entry points), `yarn lint` 0 warnings. No `test` script defined (no automated test suite).
+- 2026-06-23 finalization: fixed `AdPanel` documented `variant` prop (was a no-op TODO) to render via `getSmallPanelVariant` like `AdSlider`; refreshed README Current State.
+- Holds (do not bump): firebase pinned at 12.x major, zustand at major 5.
+
+## Manual / User-Only Tasks
+
+The ONE place for human-only work (npm publish, docs-site Firebase deploy, DNS): **`docs/MANUAL-TASKS.md`**. The agent appends; only you tick items off. Global spec: `~/.claude/rules/manual-tasks.md`.
+
+## Documentation Site
+
+Companion docs site lives in a separate PUBLIC repo: **`shared-features-docs`** (`github.com/aoneahsan/shared-features-docs`, local `01-code/projects/shared-features-docs`) — Docusaurus 3, full API/component/hook/service reference. Finalization tracker: `docs/project-finalization/00-tracker.json`.
 
 ## Full Codebase + SEO/AEO/Content Audit
 
@@ -174,7 +182,7 @@ All user-facing "share" actions follow the global contract: **web** (any browser
 
 ---
 
-**Last Updated**: 2026-06-05
+**Last Updated**: 2026-06-23
 
 
 ---

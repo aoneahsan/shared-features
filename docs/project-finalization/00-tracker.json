@@ -1,0 +1,79 @@
+{
+  "$schema": "shared-features-finalization-tracker",
+  "description": "Resumable production-finalization tracker for the shared-features npm package + its new companion docs site. First phase/sub-task with status 'pending' or 'in_progress' is the next thing to work on.",
+  "module": "shared-features",
+  "type": "npm-package (React/Capacitor shared components, hooks, services, types, notifications)",
+  "createdAt": "2026-06-23",
+  "lastUpdated": "2026-06-23",
+  "repo": { "package": "github.com/aoneahsan/shared-features (PRIVATE)", "docs": "github.com/aoneahsan/shared-features-docs (PUBLIC, NEW)" },
+  "verifyGates": {
+    "package": "yarn typecheck (exit 0) + yarn lint (exit 0) + yarn build (ESM+CJS+d.ts, exit 0)",
+    "docs": "yarn build (docusaurus -> ./build, exit 0)"
+  },
+  "userDecisions": {
+    "publishIsUserOnly": "npm publish is USER-ONLY (never run by agent)",
+    "consumerTemplatesAreIntentional": "src/templates/consumer/* TODO/placeholder markers are BY DESIGN — copy-paste templates for consuming apps to fill in; NOT package gaps",
+    "comingSoonFeatures": "README 'Available Features' Coming-Soon rows (contactInfo, developerInfo, socialLinks, etc.) are RUNTIME admin-panel flag states, not code gaps — the commonFeatures service/hook/types already support them"
+  },
+  "knownRisks": [
+    "firebase pinned at 12.x major + zustand at major 5 (intentional holds — do not bump silently)",
+    "Ad variant components use dangerouslySetInnerHTML for admin-controlled SVG icon64 (existing infra; not new code)"
+  ],
+  "gapInventory": [
+    {
+      "id": "GAP-1",
+      "title": "AdPanel `variant` prop was a documented no-op",
+      "classification": "AUTOMATABLE-BUILD",
+      "evidence": "src/components/ads/AdPanel.tsx:29 had `// TODO: variant will be used...`; README documents `<AdPanel placement=\"sidebar_panel\" variant=\"small_panel_2\" />` but the prop was renamed `_variant` and ignored.",
+      "status": "complete",
+      "resolution": "Wired AdPanel to render via getSmallPanelVariant(variant || campaign.variant || 'small_panel_2'), mirroring AdSlider. Removed the no-op TODO and AdPanel's own duplicated dangerouslySetInnerHTML. Build/typecheck/lint green; components bundle shrank."
+    },
+    {
+      "id": "GAP-2",
+      "title": "README 'Current State' block stale (claimed v0.1.13, verified 2026-03-24)",
+      "classification": "AUTOMATABLE-DOC",
+      "evidence": "README.md lines 7-15 claim version 0.1.13 + 2026-03-24; package.json is 0.1.14.",
+      "status": "complete",
+      "resolution": "Refreshed README Current State to v0.1.14 / 2026-06-23 and pointed to the new docs site."
+    },
+    {
+      "id": "GAP-3",
+      "title": "No companion documentation site",
+      "classification": "AUTOMATABLE-BUILD (Phase D)",
+      "evidence": "Package had only README + AI-INTEGRATION-GUIDE; no Docusaurus docs site / no shared-features-docs repo.",
+      "status": "complete",
+      "resolution": "Created shared-features-docs (NEW PUBLIC Docusaurus 3 site) from native-update-docs template; full API/component/hook/service reference authored source-accurate."
+    },
+    {
+      "id": "GAP-4",
+      "title": "Consumer templates contain TODO/placeholder markers",
+      "classification": "WONT-DO (by design)",
+      "evidence": "src/templates/consumer/* (notificationsStore.template.ts, useOneSignal.template.ts, NotificationBell.template.tsx, etc.) contain `// TODO: Implement with your notification service` / placeholder data.",
+      "status": "wont-do",
+      "resolution": "These are copy-paste consumer templates excluded from tsc; the placeholders are the intended fill-in points for consuming apps. Filling them in the package would be wrong."
+    },
+    {
+      "id": "GAP-5",
+      "title": "npm publish of any version bump",
+      "classification": "MANUAL (user-only)",
+      "evidence": "Publishing requires npm auth + maintainer decision.",
+      "status": "blocked",
+      "awaitingUser": true,
+      "resolution": "Recorded in docs/MANUAL-TASKS.md."
+    }
+  ],
+  "phases": [
+    { "id": "phase00", "title": "Setup + stack discovery + skills + scaffolding", "status": "complete", "completedAt": "2026-06-23" },
+    { "id": "phase01", "title": "Privacy gate + env/secret scan", "status": "complete", "completedAt": "2026-06-23", "note": "Package repo PRIVATE; only website/.env.example present (no real secrets); no keystores/.firebaserc to force-add." },
+    { "id": "phase02", "title": "Gap audit (real code vs README/API)", "status": "complete", "completedAt": "2026-06-23", "note": "gapInventory[] above." },
+    { "id": "phase03", "title": "Build automatable gaps (AdPanel variant + README refresh)", "status": "complete", "completedAt": "2026-06-23" },
+    { "id": "phaseD", "title": "CREATE shared-features-docs (NEW PUBLIC Docusaurus site)", "status": "complete", "completedAt": "2026-06-23" },
+    { "id": "phaseN1", "title": "MANUAL-TASKS consolidation", "status": "complete", "completedAt": "2026-06-23" },
+    { "id": "phaseN2", "title": "Finalize: verify gates + sync both repos", "status": "complete", "completedAt": "2026-06-23" }
+  ],
+  "runHistory": [
+    { "date": "2026-06-23", "phase": "all", "summary": "Discovered stack (npm package: 6 entrypoints, Radix UI ads/notifications/common, 4 hooks, 7 services, event system + consumer templates; in-repo marketing website/). Verified package green. Fixed AdPanel variant no-op (GAP-1). Refreshed README. Created shared-features-docs PUBLIC Docusaurus site. Wrote MANUAL-TASKS.", "commit": "pending" }
+  ],
+  "readiness": 97,
+  "resumeInstructions": "1) Read this tracker. 2) All phases complete as of 2026-06-23. 3) Only outstanding work is USER-ONLY (npm publish + docs deploy) in docs/MANUAL-TASKS.md. 4) On re-run: verify package gates (typecheck/lint/build) + docs build still green; bump lastUpdated."
+}

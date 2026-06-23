@@ -14,7 +14,10 @@ Finish the real task fast + correctly FIRST; docs/trackers/sync are a footnote (
 | License | MIT |
 | Node | >= 24.13.0 |
 | Build | Vite (library mode) + tsc declarations |
-| Repo | github.com/aoneahsan/shared-features |
+| Repo | github.com/aoneahsan/shared-features (PRIVATE) |
+| Docs site | github.com/aoneahsan/shared-features-docs (PUBLIC, Docusaurus) |
+| Manual tasks | `docs/MANUAL-TASKS.md` (npm publish, docs deploy — user-only) |
+| Verified | 2026-06-23 — typecheck/lint/build all green (v0.1.14) |
 
 ---
 
@@ -202,7 +205,7 @@ All user-facing "share" actions follow the global contract: **web** (any browser
 
 ---
 
-**Last Updated**: 2026-06-05
+**Last Updated**: 2026-06-23
 
 
 ---

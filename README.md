@@ -6,13 +6,14 @@ Centralized common features for Zaions projects. Manage ads, notifications, cont
 
 ## Current State
 
-- Package version: `0.1.13`
-- Verified on: `2026-03-24`
-- Build: `yarn build` succeeds
+- Package version: `0.1.14`
+- Verified on: `2026-06-23`
+- Build: `yarn build` succeeds (ESM + CJS + `.d.ts`, 6 entry points)
 - Typecheck: `yarn typecheck` succeeds
 - Lint: `yarn lint` succeeds
+- Docs site: **[shared-features-docs](https://github.com/aoneahsan/shared-features-docs)** (Docusaurus, public)
 - Root portfolio info file:
-  - `SHARED-FEATURES_portfolio-info_2026-03-24.md`
+  - `SHARED-FEATURES_portfolio-info_2026-05-06.md`
 
 ## Verified Package Architecture
 
