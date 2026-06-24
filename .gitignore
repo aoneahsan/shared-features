@@ -3,10 +3,21 @@ node_modules/
 
 # Build output
 dist/
+build/
+www/
+.output/
+
+# Caches / framework artifacts
+.vite/
+.next/
+.docusaurus/
+.wxt/
+coverage/
 
 # IDE
 .vscode/
 .idea/
+*.iml
 
 # OS
 .DS_Store
@@ -14,9 +25,7 @@ dist/
 # Logs
 *.log
 
-# Environment
-.env
-.env.local
+# Environment / secrets — PRIVATE repo: .env / keystores ARE tracked, do NOT ignore them.
 
 # Firebase hosting cache (per 2026-04-22: untracked across all projects)
 .firebase/hosting.*
@@ -35,3 +44,7 @@ dist/
 **/.yarn/install-state.gz
 **/.yarn/cache
 .pnp.*
+
+# Custom rules (standard across all Ahsan projects)
+*.ignore.*
+project-record-ignore/
