@@ -58,7 +58,7 @@ export default defineConfig({
         },
       },
     },
-    sourcemap: true,
+    sourcemap: false,
     minify: false,
   },
   resolve: {
@@ -66,4 +66,5 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+  logLevel: 'info',
 });

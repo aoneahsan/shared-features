@@ -13,7 +13,7 @@ Centralized common features for Zaions projects. Manage ads, notifications, cont
 - Lint: `yarn lint` succeeds
 - Docs site: **[shared-features-docs](https://github.com/aoneahsan/shared-features-docs)** (Docusaurus, public)
 - Root portfolio info file:
-  - `SHARED-FEATURES_portfolio-info_2026-05-06.md`
+  - `SHARED-FEATURES_portfolio-info_2026-06-26.md`
 
 ## Verified Package Architecture
 

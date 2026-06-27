@@ -25,6 +25,7 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 2000,
+    sourcemap: false,
   },
-  logLevel: process.env.NODE_ENV === 'production' ? 'error' : 'info',
+  logLevel: 'info',
 });
