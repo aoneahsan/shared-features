@@ -7,6 +7,9 @@ build/
 www/
 .output/
 
+# Packed tarballs from `npm pack` — regenerable, never committed
+*.tgz
+
 # Caches / framework artifacts
 .vite/
 .next/

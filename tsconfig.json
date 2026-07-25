@@ -21,18 +21,20 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
 
-    /* Declaration files */
+    /* Declaration files
+       rootDir pins the emit root to src/ so declarations land at dist/<sub>/index.d.ts,
+       which is exactly what the package.json "exports" types targets point at.
+       declarationMap stays false — published output ships no source maps. */
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
+    "rootDir": "./src",
     "declarationDir": "./dist",
     "emitDeclarationOnly": true,
 
-    /* Paths */
-    "baseUrl": ".",
+    /* Paths — relative targets, no baseUrl (forward-compatible with TypeScript 7) */
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "ignoreDeprecations": "6.0"
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "src/templates"]

@@ -1,32 +1,35 @@
 {
   "name": "shared-features",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "engines": {
     "node": ">=24.13.0"
   },
-  "description": "Shared features for Zaions projects - centralized ads, notifications, broadcasts, contacts, and more",
+  "description": "Feature flags, cross-promotion ads and in-app broadcasts for React apps, from one admin panel.",
   "author": "Ahsan Mahmood <aoneahsan@gmail.com> (https://aoneahsan.com)",
   "license": "MIT",
+  "homepage": "https://shared-features-docs.aoneahsan.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aoneahsan/shared-features"
+    "url": "git+https://github.com/aoneahsan/shared-features.git"
   },
   "bugs": {
     "url": "https://github.com/aoneahsan/shared-features/issues"
   },
+  "funding": "https://aoneahsan.com/payment?project-id=shared-features&project-identifier=shared-features",
   "keywords": [
-    "zaions",
-    "shared-features",
-    "ads",
-    "campaigns",
-    "notifications",
-    "broadcasts",
+    "feature-flags",
+    "feature-toggles",
     "in-app-notifications",
+    "broadcasts",
+    "announcements",
+    "cross-promotion",
+    "ads",
     "react",
     "firebase",
-    "cross-promotion"
+    "firestore"
   ],
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -65,6 +68,8 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
     "AI-INTEGRATION-GUIDE.md"
   ],
   "scripts": {
@@ -104,7 +109,7 @@
     "firebase": "^12.14.0",
     "globals": "^17.6.0",
     "lucide-react": "^1.17.0",
-    "typescript": "^6.0.3",
+    "typescript": "~6.0.3",
     "typescript-eslint": "^8.60.1",
     "vite": "^8.0.16",
     "vite-plugin-dts": "^5.0.2",

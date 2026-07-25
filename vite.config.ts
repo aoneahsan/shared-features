@@ -11,6 +11,10 @@ export default defineConfig({
       include: ['src'],
       exclude: ['src/templates/**'],
       outDir: 'dist',
+      // Emit declarations relative to src/ so they land at dist/<sub>/index.d.ts.
+      // Without this the plugin keeps the src/ segment (dist/src/**) and every
+      // "types" target in package.json exports resolves to nothing.
+      entryRoot: 'src',
     }),
   ],
   build: {
