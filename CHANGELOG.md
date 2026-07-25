@@ -12,6 +12,14 @@ API may still change in a minor release — see [Limitations](https://github.com
 > dates — read from the npm registry — and nothing more. Every release from `0.1.14` onward is described from
 > the commits that produced it.
 
+## [0.1.16] - 2026-07-25
+
+### Fixed
+
+- **The README stated the previous version.** The at-a-glance `Version` row is a static duplicate of
+  `package.json.version`, so it drifted the moment the version was bumped — it shipped stale in eight of the
+  fleet's packages at once. The row, and any native version string, now move with the release.
+
 ## [0.1.15] - 2026-07-25
 
 Changes on `main` that have not been published to npm. `0.1.14` remains the published `latest`.

@@ -32,7 +32,7 @@ backend — not a general-purpose feature-flag platform.
 
 | | |
 |---|---|
-| **Version** | `0.1.14` |
+| **Version** | `0.1.16` |
 | **License** | MIT |
 | **Node** | `>=24.13.0` (to build; consumers ship browser output) |
 | **Platforms** | Web · Android · iOS · Browser extension |
@@ -510,8 +510,7 @@ Stated plainly, because finding these out after integrating is worse.
 <a id="changelog"></a>
 ## 🔄 Changelog&nbsp;[#](#changelog)
 
-Latest release: **`0.1.14`** — inlined the brand SVG icons after `lucide-react` v1.11 removed its `Github`,
-`Linkedin` and `Twitter` exports.
+Latest release: **`0.1.16`** — documentation only: the at-a-glance table above reported the previous version, because it is a static duplicate of `package.json`. Full history in the changelog.
 
 Full history, including unreleased changes on `main`:
 [CHANGELOG.md](https://github.com/aoneahsan/shared-features/blob/main/CHANGELOG.md).
