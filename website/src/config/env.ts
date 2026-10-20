@@ -4,7 +4,7 @@ function requireEnv(key: string): string {
     if (import.meta.env.DEV) {
       throw new Error(`Missing required environment variable: ${key}`);
     }
-    throw new Error('Configuration error. Please contact support.');
+    return '';
   }
   return value;
 }
@@ -24,3 +24,7 @@ export const env = {
     measurementId: optionalEnv('VITE_FIREBASE_MEASUREMENT_ID'),
   },
 };
+
+export const isFirebaseConfigured = Object.entries(env.firebase)
+  .filter(([key]) => key !== 'measurementId')
+  .every(([, value]) => Boolean(value));

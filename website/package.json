@@ -2,6 +2,7 @@
   "name": "shared-features-website",
   "private": true,
   "version": "1.0.0",
+  "packageManager": "yarn@4.17.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,7 +15,7 @@
     "cap:sync:ios": "npx cap sync ios",
     "cap:open:android": "npx cap open android",
     "cap:open:ios": "npx cap open ios",
-    "sync:apps-config": "npx trapeze run apps-config.yaml --android-project android --ios-project ios/App -y",
+    "sync:apps-config": "trapeze run apps-config.yaml",
     "mobile:sync": "yarn build && yarn cap:sync && yarn sync:apps-config"
   },
   "dependencies": {

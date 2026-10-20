@@ -1,6 +1,7 @@
 {
   "name": "shared-features",
   "version": "0.1.16",
+  "packageManager": "yarn@4.17.1",
   "engines": {
     "node": ">=24.13.0"
   },

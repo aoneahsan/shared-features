@@ -28,7 +28,18 @@ coverage/
 # Logs
 *.log
 
-# Environment / secrets — PRIVATE repo: .env / keystores ARE tracked, do NOT ignore them.
+# Environment values and local secrets (repository is public)
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.jks
+*.keystore
+key.properties
+keystore.properties
+*service-account*.json
 
 # Firebase hosting cache (per 2026-04-22: untracked across all projects)
 .firebase/hosting.*

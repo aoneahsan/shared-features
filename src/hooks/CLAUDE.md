@@ -1,48 +1,20 @@
-# Hooks
+# CLAUDE.md — src/hooks/
 
-Custom React hooks exported via `shared-features/hooks`.
+**Last optimized:** 2026-10-20
+**Next routine optimization:** 2026-11-19
 
-## Hook Inventory
+## Scope
 
-| Hook | Service Dependency | Returns |
-|------|--------------------|---------|
-| `useCampaigns.ts` | `services/campaigns.ts`, `services/analytics.ts` | `{ campaigns, loading, error }` + ad modal helpers |
-| `useBroadcasts.ts` | `services/broadcasts.ts` | `{ broadcasts, loading, markAsRead, dismiss }` |
-| `useFeatureFlags.ts` | `services/featureFlags.ts` | `{ flags, loading, checkFlag, isEnabled }` |
-| `useCommonFeatures.ts` | `services/commonFeatures.ts` | 9 sub-hooks for each profile data type |
+React wrappers around package services.
 
-## Hook Conventions
+## Rules
 
-1. **`use` prefix** - All hooks start with `use` (React convention)
-2. **Return objects** - Return named objects `{ data, loading, error }`, not arrays
-3. **Wrap services** - Hooks are React wrappers around services, adding state/lifecycle
-4. **Handle loading** - Always expose `loading` boolean for UI skeleton states
-5. **Handle errors** - Catch service errors, expose via `error` field or log silently
-6. **Memoize** - Use `useMemo`/`useCallback` for computed values and callbacks
+Return typed named objects, expose loading and errors consistently, clean up listeners, and keep callback identities stable when consumers depend on them. Verify exact return fields from source before documenting a hook.
 
-## Dependency Array Rules
+## Verify
 
-- Do NOT add stable refs to dependency arrays (useState setters, useRef.current)
-- Use `eslint-disable-next-line react-hooks/exhaustive-deps` for intentional omissions with a comment explaining why
-- Service function references are stable - don't add them to deps
+Run the applicable package or website gates from the owning manifest directory.
 
-## Adding a New Hook
+## Context record
 
-1. Create `useXxx.ts` in this folder
-2. Import service functions from `@/services/`
-3. Return a typed object (define return type in `@/types/`)
-4. Export from `hooks/index.ts`
-5. Update `src/CLAUDE.md` feature areas table
-
----
-
-**Last Updated**: 2026-04-02
-
-
-## Sub-agents & Skills — Main-Context-First (IRON-SOLID)
-Default/built-in sub-agents (`general-purpose`, `Explore`, `Plan`, `claude`, `fork`, …) do NOT have
-access to `/skills`, so delegating to them silently SKIPS the skills RULE #0 requires. Do all
-skill-relevant work in the **MAIN context**; use a sub-agent ONLY when a **custom** agent exists in
-`.claude/agents/` for that job; a default `Explore`/`Plan` agent is allowed ONLY for read-only,
-no-skill search/exploration. When a relevant skill is missing, **install/enable it** rather than
-proceeding skill-less. (Owner directive 2026-07-11; full text in `~/.claude/CLAUDE.md`.)
+Reviewed against the active tree on 2026-10-20. Inherits the repository root guide.

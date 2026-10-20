@@ -3,7 +3,7 @@
 Every `package.json` unit in this repository, what each dependency is for, and every intentional pin.
 Keep this accurate on **every** add, remove or upgrade.
 
-**Last Updated:** 2026-07-25
+**Last Updated:** 2026-10-20
 
 ## Manifests in this repository
 
@@ -93,6 +93,9 @@ a changelog.
 
 Its own application with its own dependency set, not published to npm and not covered by this library's
 contract. Audit it separately when working there.
+
+Keep `@trapezedev/configure`, `apps-config.yaml`, and the exact script
+`"sync:apps-config": "trapeze run apps-config.yaml"` in this unit.
 
 ## Verify
 

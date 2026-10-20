@@ -1,79 +1,20 @@
-# Source - shared-features
+# CLAUDE.md — src/
 
-Package source code. All public API surfaces live here.
+**Last optimized:** 2026-10-20
+**Next routine optimization:** 2026-11-19
 
-## Feature Areas
+## Scope
 
-| Area | Types | Service | Hook | Components |
-|------|-------|---------|------|------------|
-| Feature Flags | `types/featureFlags.ts` | `services/featureFlags.ts` | `hooks/useFeatureFlags.ts` | - |
-| Advertising | `types/campaigns.ts` | `services/campaigns.ts`, `services/analytics.ts` | `hooks/useCampaigns.ts` | `components/ads/*` |
-| Broadcasts | `types/notifications.ts` | `services/broadcasts.ts`, `services/admin-notifications.ts` | `hooks/useBroadcasts.ts` | `components/notifications/*` |
-| Common Profile | `types/commonFeatures.ts` | `services/commonFeatures.ts`, `services/admin-commonFeatures.ts` | `hooks/useCommonFeatures.ts` | `components/common/*` |
-| Firebase Init | - | `firebase/init.ts`, `firebase/config.ts` | - | - |
-| Notification Events | notification types | event helpers | - | `notifications/events/*` |
-| Consumer Templates | notification types | template helpers | - | `templates/consumer/*` |
+Published package source and the six public entry points.
 
-## Module Structure
+## Rules
 
-```
-src/
-  index.ts              # Root exports (init, config, re-exports all below)
-  components/           # UI components (ads, notifications, common)
-  hooks/                # React hooks (4 hooks)
-  services/             # Firestore services (7 services + index)
-  types/                # TypeScript definitions (4 type files + index)
-  notifications/        # Event system (registry, hooks, templates)
-  templates/            # Consumer copy-paste templates (excluded from tsc)
-  firebase/             # Firebase app init and config
-  config/               # Package configuration (support URLs)
-  stores/               # Zustand stores (placeholder)
-  utils/                # Utility functions (placeholder)
-```
+Keep public exports compatible; use strict TypeScript and named exports. Keep peers external and package state behind the shared initialization API. Update built declarations and public docs with every API change.
 
-## Export Architecture
+## Verify
 
-6 entry points defined in `vite.config.ts` and `package.json`:
+Run the applicable package or website gates from the owning manifest directory.
 
-| Entry | Path | Exports |
-|-------|------|---------|
-| Main | `shared-features` | Init functions, config, + re-exports all below |
-| Components | `shared-features/components` | Ad components, notification UI, common UI |
-| Hooks | `shared-features/hooks` | useCampaigns, useBroadcasts, useFeatureFlags, useCommonFeatures |
-| Services | `shared-features/services` | All Firestore services + analytics |
-| Types | `shared-features/types` | All TypeScript interfaces/types |
-| Notifications | `shared-features/notifications` | Event registry, hooks, templates |
+## Context record
 
-## Adding a New Export
-
-1. Create the file in the correct folder
-2. Export from the folder's `index.ts`
-3. Verify it flows through to the entry point
-4. Run `yarn build` to confirm it appears in `dist/`
-5. Run `yarn typecheck` to confirm declarations generate
-
-## Import Rules
-
-- Use `@/` alias for absolute imports within src (e.g., `import { getConfig } from '@/firebase/config'`)
-- Never use relative paths that go up more than one level (no `../../`)
-- Peer dependencies are externalized - import them directly (e.g., `import { Flex } from '@radix-ui/themes'`)
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `index.ts` | Root package exports |
-| `vite-env.d.ts` | Vite type augmentations |
-
----
-
-**Last Updated**: 2026-04-02
-
-
-## Sub-agents & Skills — Main-Context-First (IRON-SOLID)
-Default/built-in sub-agents (`general-purpose`, `Explore`, `Plan`, `claude`, `fork`, …) do NOT have
-access to `/skills`, so delegating to them silently SKIPS the skills RULE #0 requires. Do all
-skill-relevant work in the **MAIN context**; use a sub-agent ONLY when a **custom** agent exists in
-`.claude/agents/` for that job; a default `Explore`/`Plan` agent is allowed ONLY for read-only,
-no-skill search/exploration. When a relevant skill is missing, **install/enable it** rather than
-proceeding skill-less. (Owner directive 2026-07-11; full text in `~/.claude/CLAUDE.md`.)
+Reviewed against the active tree on 2026-10-20. Inherits the repository root guide.

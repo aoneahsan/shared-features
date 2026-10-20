@@ -1,78 +1,20 @@
-# AGENTS.md - Source Code
+# AGENTS.md — src/
 
-Agent instructions for working within `src/`.
+**Last optimized:** 2026-10-20
+**Next routine optimization:** 2026-11-19
 
-## Before Modifying Any File
+## Scope
 
-1. Read the file first - understand existing patterns
-2. Check the folder's CLAUDE.md for domain-specific rules
-3. Ensure exports flow through the correct `index.ts`
-4. Run `yarn build && yarn typecheck` after changes
+Published package source and the six public entry points.
 
-## Code Patterns
+## Rules
 
-### Named Exports Only
-```typescript
-// CORRECT
-export function getCampaigns() { ... }
-export const useCampaigns = () => { ... };
+Keep public exports compatible; use strict TypeScript and named exports. Keep peers external and package state behind the shared initialization API. Update built declarations and public docs with every API change.
 
-// WRONG - no default exports
-export default function getCampaigns() { ... }
-```
+## Verify
 
-### JSDoc on Public Functions
-```typescript
-/**
- * Fetches active campaigns for the current project.
- * @param options - Filter options for campaigns
- * @returns Array of active Campaign objects
- */
-export async function getCampaigns(options?: CampaignFilterOptions): Promise<Campaign[]> { ... }
-```
+Run the applicable package or website gates from the owning manifest directory.
 
-### Error Handling Pattern
-```typescript
-try {
-  const result = await someFirestoreCall();
-  return result;
-} catch (error) {
-  if (getConfig().debug) {
-    console.error('[shared-features] Operation failed:', error);
-  }
-  return fallbackValue;
-}
-```
+## Context record
 
-### Index Re-export Pattern
-Every folder's `index.ts` re-exports its public API:
-```typescript
-// services/index.ts
-export { getCampaigns, getCampaignById } from './campaigns';
-export { trackImpression, trackClick } from './analytics';
-// ... etc
-```
-
-## Review Checklist
-
-Before completing any source change:
-- [ ] Exports added to folder `index.ts`
-- [ ] Types defined/updated in `types/`
-- [ ] No default exports introduced
-- [ ] No hardcoded Firebase config values
-- [ ] No app-specific logic added
-- [ ] `yarn build` passes
-- [ ] `yarn typecheck` passes
-
----
-
-**Last Updated**: 2026-04-02
-
-
-## Sub-agents & Skills — Main-Context-First (IRON-SOLID)
-Default/built-in sub-agents (`general-purpose`, `Explore`, `Plan`, `claude`, `fork`, …) do NOT have
-access to `/skills`, so delegating to them silently SKIPS the skills RULE #0 requires. Do all
-skill-relevant work in the **MAIN context**; use a sub-agent ONLY when a **custom** agent exists in
-`.claude/agents/` for that job; a default `Explore`/`Plan` agent is allowed ONLY for read-only,
-no-skill search/exploration. When a relevant skill is missing, **install/enable it** rather than
-proceeding skill-less. (Owner directive 2026-07-11; full text in `~/.claude/CLAUDE.md`.)
+Reviewed against the active tree on 2026-10-20. Inherits the repository root guide.

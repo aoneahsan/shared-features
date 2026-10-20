@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { isFirebaseConfigured } from '@/config/env';
 import { logger } from '@/lib/logger';
 import { getUserDocument, createUserDocument } from '@/services/auth-service';
 import { ADMIN_EMAIL } from '@/config/constants';
@@ -37,9 +38,11 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [userDoc, setUserDoc] = useState<UserDocument | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(isFirebaseConfigured);
 
   useEffect(() => {
+    if (!isFirebaseConfigured) return;
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
 

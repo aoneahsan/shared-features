@@ -1,51 +1,20 @@
-# Components
+# CLAUDE.md — src/components/
 
-Reusable UI components exported via `shared-features/components`.
+**Last optimized:** 2026-10-20
+**Next routine optimization:** 2026-11-19
 
-## Subfolders
+## Scope
 
-| Folder | Purpose | Key Components |
-|--------|---------|----------------|
-| `ads/` | Ad display components | AdBanner, AdCarousel, AdModal, AdPanel, AdSlider, AdUpdateModal, TopbarAdBanner |
-| `ads/variants/` | Panel display variants | LargePanelVariants (5), SmallPanelVariants (5) |
-| `notifications/` | Broadcast/announcement UI | BroadcastBanner, AnnouncementModal |
-| `common/` | Profile/contact cards | ContactCard, DeveloperCard, etc. |
+Reusable ads, broadcast, and common-profile React components.
 
-## Component Rules
+## Rules
 
-1. **Radix UI only** - Use `@radix-ui/themes` primitives, never raw HTML elements
-2. **Radix theme tokens** - Use theme colors/spacing, never hardcoded CSS values
-3. **Lucide React icons** - Use `lucide-react` for all icons
-4. **Named props** - Use named object props, not positional parameters
-5. **Named exports** - No default exports. Export from folder `index.ts`
-6. **Responsive** - All components must work from 320px to 1920px
-7. **No app logic** - Components consume data via props, never fetch directly
-8. **isInitialized() guard** - Document that consumers should check `isInitialized()` before rendering
+Use the established Radix Themes and icon systems, typed object props, named exports, responsive layouts, and data passed through props. Components do not create Firebase clients or fetch through ad hoc paths.
 
-## Adding a New Component
+## Verify
 
-1. Create `.tsx` file in the appropriate subfolder
-2. Use Radix UI primitives for all elements
-3. Accept data via typed props (define types in `src/types/`)
-4. Export from subfolder `index.ts`
-5. Export from `components/index.ts`
-6. Update `src/CLAUDE.md` feature areas table
+Run the applicable package or website gates from the owning manifest directory.
 
-## Ad Component Variants
+## Context record
 
-- **Small variants** (5): Sidebar placements, compact layouts
-- **Large variants** (5): Feature areas, full-width placements
-- Variants are in `ads/variants/` and used by `AdPanel`
-
----
-
-**Last Updated**: 2026-04-02
-
-
-## Sub-agents & Skills — Main-Context-First (IRON-SOLID)
-Default/built-in sub-agents (`general-purpose`, `Explore`, `Plan`, `claude`, `fork`, …) do NOT have
-access to `/skills`, so delegating to them silently SKIPS the skills RULE #0 requires. Do all
-skill-relevant work in the **MAIN context**; use a sub-agent ONLY when a **custom** agent exists in
-`.claude/agents/` for that job; a default `Explore`/`Plan` agent is allowed ONLY for read-only,
-no-skill search/exploration. When a relevant skill is missing, **install/enable it** rather than
-proceeding skill-less. (Owner directive 2026-07-11; full text in `~/.claude/CLAUDE.md`.)
+Reviewed against the active tree on 2026-10-20. Inherits the repository root guide.
